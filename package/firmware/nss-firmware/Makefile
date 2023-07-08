@@ -34,6 +34,12 @@ define Package/nss-firmware-default
 	DEPENDS:=@TARGET_qualcommax
 endef
 
+define Package/nss-firmware-ipq6018
+$(Package/nss-firmware-default)
+  TITLE:=NSS firmware for IPQ6018 devices
+  NSS_ARCHIVE:=$(VERSION_PATH)/IPQ6018.ATH.12.0.0/BIN-NSS.FW.12.1-022-CP.R.tar.bz2
+endef
+
 define Package/nss-firmware-ipq8074
 $(Package/nss-firmware-default)
 	TITLE:=IPQ8074 NSS firmware
@@ -42,6 +48,16 @@ endef
 
 define Build/Compile
 
+endef
+
+
+define Package/nss-firmware-ipq6018/install
+	mkdir -p $(PKG_BUILD_DIR)/IPQ6018
+	$(TAR) -C $(PKG_BUILD_DIR)/IPQ6018 -xf $(NSS_ARCHIVE) --strip-components=1
+	$(INSTALL_DIR) $(1)/lib/firmware/
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/IPQ6018/retail_router0.bin \
+		$(1)/lib/firmware/qca-nss0.bin
 endef
 
 define Package/nss-firmware-ipq8074/install
@@ -56,4 +72,5 @@ define Package/nss-firmware-ipq8074/install
 		$(1)/lib/firmware/qca-nss1-retail.bin
 endef
 
+$(eval $(call BuildPackage,nss-firmware-ipq6018))
 $(eval $(call BuildPackage,nss-firmware-ipq8074))
