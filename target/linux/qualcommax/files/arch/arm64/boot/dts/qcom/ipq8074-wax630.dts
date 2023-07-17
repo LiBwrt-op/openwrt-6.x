@@ -5,6 +5,7 @@
 #include "ipq8074.dtsi"
 #include "ipq8074-hk-cpu.dtsi"
 #include "ipq8074-ess.dtsi"
+#include "ipq8074-nss.dtsi"
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/leds/common.h>
@@ -15,7 +16,7 @@
 
 	aliases {
 		serial0 = &blsp1_uart5;
-		
+
 		ethernet0 = &dp6_syn;
 		ethernet1 = &dp4;
 		label-mac-device = &dp6_syn;
