@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 
 # v1.0 is for Akronite
 # v2.0 is for Hawkeye/Cypress/Maple
-ifneq (, $(findstring $(CONFIG_TARGET_SUBTARGET), "ipq807x"))
+ifneq (, $(findstring $(CONFIG_TARGET_SUBTARGET), "ipq807x" "ipq60xx"))
 NSS_CRYPTO_DIR:=v2.0
 else
 NSS_CRYPTO_DIR:=v1.0
