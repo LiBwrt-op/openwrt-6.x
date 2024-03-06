@@ -15,6 +15,11 @@ platform_do_upgrade() {
 	netgear,wax214)
 		nand_do_upgrade "$1"
 		;;
+	jdc,ax1800-pro)
+		kernelname="0:HLOS"
+		rootfsname="rootfs"
+		mmc_do_upgrade "$1"
+		;;
 	*)
 		default_do_upgrade "$1"
 		;;
