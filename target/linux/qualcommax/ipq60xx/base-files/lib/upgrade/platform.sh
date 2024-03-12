@@ -10,6 +10,8 @@ platform_check_image() {
 
 platform_do_upgrade() {
 	case "$(board_name)" in
+	redmi,ax5|\
+	xiaomi,ax1800|\
 	netgear,wax214)
 		nand_do_upgrade "$1"
 		;;
