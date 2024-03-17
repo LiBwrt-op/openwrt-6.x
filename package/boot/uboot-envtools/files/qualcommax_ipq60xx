@@ -14,6 +14,7 @@ case "$board" in
 	[ -n "$idx" ] && \
 		ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x10000" "0x10000"
 	;;
+qihoo,v6|\
 redmi,ax5|\
 xiaomi,ax1800|\
 netgear,wax214)

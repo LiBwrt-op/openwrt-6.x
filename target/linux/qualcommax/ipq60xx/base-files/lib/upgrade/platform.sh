@@ -10,6 +10,7 @@ platform_check_image() {
 
 platform_do_upgrade() {
 	case "$(board_name)" in
+	qihoo,v6|\
 	redmi,ax5|\
 	xiaomi,ax1800|\
 	netgear,wax214)

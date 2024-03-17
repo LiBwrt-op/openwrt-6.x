@@ -17,6 +17,9 @@ ipq60xx_setup_interfaces()
 	netgear,wax214)
 		ucidef_set_interfaces_lan_wan "lan"
 		;;
+	qihoo,v6)
+		ucidef_set_interfaces_lan_wan "eth0 eth1 eth2" "eth3"
+		;;
 	redmi,ax5|\
 	xiaomi,ax1800)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
