@@ -53,8 +53,8 @@ DEFAULT_PACKAGES.nas:=\
 	mdadm
 # For router targets
 DEFAULT_PACKAGES.router:=\
-	dnsmasq \
-	firewall4 \
+	dnsmasq-full \
+	firewall \
 	nftables \
 	kmod-nft-offload \
 	odhcp6c \
