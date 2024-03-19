@@ -2,20 +2,16 @@
 
 # This must run before 10-wifi-detect
 
-
 [ "${ACTION}" = "add" ] || return
-
 
 . /lib/functions.sh
 
-
-check_radio()
+check_kernel()
 {
-	local cfg="$1" to="$2"
-
-	config_get path "$cfg" path
-
-	[ "$path" = "$to" ] && PATH_EXISTS=true
+	local kernel_current=$(uname -r)
+	if [ ${kernel_current//./} -lt "6600" ]; then
+	  return 1
+	fi
 }
 
 do_migrate_radio()
@@ -32,40 +28,39 @@ do_migrate_radio()
 	logger -t wifi-migrate "Updated path of wireless.${cfg} from '${from}' to '${to}'"
 }
 
+check_path()
+{
+	local config
+	config="$1"
+
+	config_get path "$config" path
+
+	to=${path/soc\//soc@0\/}
+
+	# Checks if kernel version is less than 6.6.0, if it is and the path is using the new format,
+	# then path should be migrated to the old format. This would allow users on platforms with two partitions,
+	# to test 6.1 and 6.6.
+	check_kernel || to=${path/soc@0\//soc\/}
+
+	[ "$path" = "$to" ] || do_migrate_radio "$config" "$path" "$to"
+}
+
 migrate_radio()
 {
-	local from="$1" to="$2"
-
 	config_load wireless
 
 	# Check if there is already a section with the target path: In this case, the system
 	# was already upgraded to a version without this migration script before; better bail out,
 	# as we can't be sure we don't break more than we fix.
-	PATH_EXISTS=false
-	config_foreach check_radio wifi-device "$to"
-	$PATH_EXISTS && return
-
-	config_foreach do_migrate_radio wifi-device "$from" "$to"
+	config_foreach check_path wifi-device
 }
-
 
 WIRELESS_CHANGED=false
 
 case "$(board_name)" in
 *)
-	migrate_radio 'platform/soc/c000000.wifi' 'platform/soc@0/c000000.wifi'
-	migrate_radio 'platform/soc/c000000.wifi+1' 'platform/soc@0/c000000.wifi+1'
-
-	case "$(board_name)" in
-	linksys,mx5300)
-		migrate_radio 'soc/10000000.pci/pci0001:00/0001:00:00.0/0001:01:00.0' 'soc@0/10000000.pci/pci0001:00/0001:00:00.0/0001:01:00.0'
-		;;
-	xiaomi,ax9000)
-		migrate_radio 'soc/10000000.pci/pci0001:00/0001:00:00.0/0001:01:00.0' 'soc@0/10000000.pci/pci0001:00/0001:00:00.0/0001:01:00.0'
-		migrate_radio 'soc/20000000.pci/pci0000:00/0000:00:00.0/0000:01:00.0' 'soc@0/20000000.pci/pci0000:00/0000:00:00.0/0000:01:00.0'
-		;;
-	esac
-	;;
+	migrate_radio
+    ;;
 esac
 
 $WIRELESS_CHANGED && uci commit wireless
