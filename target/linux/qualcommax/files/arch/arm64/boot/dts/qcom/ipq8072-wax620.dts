@@ -107,7 +107,6 @@
 			label = "wlan5g:green";
 			gpios = <&led_gpio 5 GPIO_ACTIVE_HIGH>;
 		};
-
 	};
 };
 

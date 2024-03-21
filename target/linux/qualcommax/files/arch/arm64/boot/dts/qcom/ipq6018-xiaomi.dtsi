@@ -4,7 +4,9 @@
 
 #include "ipq6018.dtsi"
 #include "ipq6018-cp-cpu.dtsi"
+#include "ipq6018-cpufreq.dtsi"
 #include "ipq6018-ess.dtsi"
+#include "ipq6018-nss.dtsi"
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
@@ -71,13 +73,6 @@
 			linux,input-type = <1>;
 			debounce-interval = <60>;
 		};
-	};
-};
-
-// Overclock CPU frequency to 1.6GHz
-&cpu_opp_table {
-	opp-1608000000 {
-		opp-supported-hw = <0x3>;
 	};
 };
 
