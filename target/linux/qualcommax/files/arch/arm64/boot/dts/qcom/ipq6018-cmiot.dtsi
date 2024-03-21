@@ -89,24 +89,28 @@
 	phy-handle = <&qca8075_0>;
 	status = "okay";
 	qcom,id = <5>;
+	label = "wan";
 };
 
 &dp2 {
 	phy-handle = <&qca8075_1>;
 	status = "okay";
 	qcom,id = <1>;
+	label = "lan1";
 };
 
 &dp3 {
 	phy-handle = <&qca8075_2>;
 	status = "okay";
 	qcom,id = <2>;
+	label = "lan2";
 };
 
 &dp4 {
 	phy-handle = <&qca8075_3>;
 	status = "okay";
 	qcom,id = <4>;
+	label = "lan3";
 };
 
 &edma {
