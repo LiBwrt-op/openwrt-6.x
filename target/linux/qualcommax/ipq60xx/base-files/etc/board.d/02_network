@@ -31,6 +31,9 @@ ipq60xx_setup_interfaces()
 	xiaomi,ax1800)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
+	netgear,wax214)
+		ucidef_set_interfaces_lan_wan "lan"
+		;;
 	*)
 		echo "Unsupported hardware. Network interfaces not initialized"
 		;;

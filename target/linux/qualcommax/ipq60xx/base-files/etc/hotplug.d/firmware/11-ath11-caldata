@@ -22,6 +22,9 @@ case "$FIRMWARE" in
 	xiaomi,ax1800)
 		caldata_extract "0:art" 0x1000 0x10000
 		;;
+	jdc,ax1800-pro)
+		caldata_extract_mmc "0:ART" 0x1000 0x10000
+		;;
 	esac
 	;;
 *)

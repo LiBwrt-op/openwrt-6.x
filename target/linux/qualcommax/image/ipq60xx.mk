@@ -55,8 +55,10 @@ define Device/jdc_ax1800-pro
 	DEVICE_PACKAGES := ipq-wifi-jdc_ax1800-pro kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
 	BLOCKSIZE := 64k
 	KERNEL_SIZE := 6144k
-	IMAGES += factory.bin
-	IMAGE/factory.bin := append-kernel | pad-to 6144k |  append-rootfs | append-metadata
+	IMAGES += kernel.bin rootfs.bin factory.bin
+	IMAGE/kernel.bin := append-kernel
+	IMAGE/rootfs.bin := append-rootfs | pad-rootfs | pad-to $$(BLOCKSIZE)
+	IMAGE/factory.bin := append-kernel | pad-to $$$${KERNEL_SIZE}  |  append-rootfs | append-metadata
 endef
 TARGET_DEVICES += jdc_ax1800-pro
 

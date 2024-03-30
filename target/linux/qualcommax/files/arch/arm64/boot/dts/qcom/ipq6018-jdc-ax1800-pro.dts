@@ -26,16 +26,16 @@
 #include <dt-bindings/leds/common.h>
 
 / {
-    model = "JDCloud AX1800 Pro";
+	model = "JDCloud AX1800 Pro";
 	compatible = "jdc,ax1800-pro", "qcom,ipq6018-cp03", "qcom,ipq6018";
 
 	aliases {
 		sdhc1 = &sdhc_1;
 		serial0 = &blsp1_uart3;
-		led-boot = &led_red_1;
-		led-failsafe = &led_red_1;
-		led-running = &led_green_1;
-		led-upgrade = &led_green_1;
+		led-boot = &status_red;
+		led-failsafe = &status_red;
+		led-running = &status_green;
+		led-upgrade = &status_green;
 		ethernet1 = &dp2;
 		ethernet2 = &dp3;
 		ethernet3 = &dp4;
@@ -47,191 +47,101 @@
 		bootargs-append = " rootfstype=squashfs,ext4 swiotlb=1 coherent_pool=2M swiotlb=1";
 	};
 
-    gpio_keys {
-        compatible = "gpio-keys";
-        status = "okay";
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-0 = <&button_pins>;
+		pinctrl-names = "default";
 
-        joylink {
-            label = "joylink";
-            linux,code = <0x211>;
-            gpios = <&tlmm 0x08 GPIO_ACTIVE_LOW>;
-            linux,input-type = <0x01>;
-            debounce-interval = <0x3c>;
-        };
+		wps {
+			label = "wps";
+			linux,code = <KEY_WPS_BUTTON>;
+			gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
+			linux,input-type = <EV_KEY>;
+			debounce-interval = <60>;
+		};
 
-        reset {
-            label = "reset";
-            linux,code = <0x198>;
-            gpios = <&tlmm 0x09 GPIO_ACTIVE_LOW>;
-            linux,input-type = <0x01>;
-            debounce-interval = <0x3c>;
-        };
-    };
-    
-    leds {
-        compatible = "gpio-leds";
+		reset {
+			label = "reset";
+			linux,code = <KEY_RESTART>;
+			gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
+			linux,input-type = <EV_KEY>;
+			debounce-interval = <60>;
+		};
+	};
 
-        led_blue_1: led@35 {
-            label = "led_b1";
-            gpio = <&tlmm 0x23 GPIO_ACTIVE_HIGH>;
-        };
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-0 = <&leds_pins>;
+		pinctrl-names = "default";
 
-       led_red_1: led@37 {
-            label = "led_r1";
-            gpio = <&tlmm 0x25 GPIO_ACTIVE_HIGH>;
-        };
+		status_blue: status_blue {
+			label = "blue:status";
+			gpios = <&tlmm 34 GPIO_ACTIVE_HIGH>;
+		};
 
-        led_green_1: led@50 {
-            label = "led_g1";
-            gpio = <&tlmm 0x32 GPIO_ACTIVE_HIGH>;
-        };
+		status_red: status_red {
+			label = "red:status";
+			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
+		};
 
-        led_blue_2: led@30 {
-            label = "led_b2";
-            gpio = <&tlmm 0x1e GPIO_ACTIVE_HIGH>;
-        };
-
-        led_red_2: led@32 {
-            label = "led_r2";
-            gpio = <&tlmm 0x20 GPIO_ACTIVE_HIGH>;
-        };
-
-        led_green_2: led@33 {
-            label = "led_g2";
-            gpio = <&tlmm 0x21 GPIO_ACTIVE_HIGH>;
-        };
-
-        led_blue_3:led@31 {
-            label = "led_b3";
-            gpio = <&tlmm 0x1f GPIO_ACTIVE_HIGH>;
-        };
-
-        led_red_3: led@29 {
-            label = "led_r3";
-            gpio = <&tlmm 0x1d GPIO_ACTIVE_HIGH>;
-        };
-
-        led_green_3: led@34 {
-            label = "led_g3";
-            gpio = <&tlmm 0x22 GPIO_ACTIVE_HIGH>;
-        };
-    };
+		status_green: status_green {
+			label = "green:status";
+			gpios = <&tlmm 49 GPIO_ACTIVE_HIGH>;
+		};
+	};
 };
 
 &tlmm {
-    compatible = "qcom,ipq6000-pinctrl";
+	compatible = "qcom,ipq6000-pinctrl";
 
-    spi_1_pins: spi_1_pins {
-        mux {
-            pins = "gpio38","gpio39","gpio40","gpio41";
-            function = "blsp0_spi";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-    };
+	spi_1_pins: spi_1_pins {
+		mux {
+			pins = "gpio38","gpio39","gpio40","gpio41";
+			function = "blsp0_spi";
+			drive-strength = <0x08>;
+			bias-pull-down;
+		};
+	};
 
-    button_pins: button_pins {
-        joylink_button {
-            pins = "gpio8";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-up;
-        };
+	button_pins: button_pins {
+		mux {
+			pins = "gpio8", "gpio9";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-up;
+		};
+	};
 
-        reset_button {
-            pins = "gpio9";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-up;
-        };
-    };
+	leds_pins: leds_pins {
+		mux {
+			pins = "gpio34", "gpio36", "gpio49";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+	};
 
-    mdio_pinmux: mdio_pinmux {
-        mux_0 {
-            pins = "gpio64";
-            function = "mdc";
-            drive-strength = <0x08>;
-            bias-pull-up;
-        };
+	mdio_pinmux: mdio_pinmux {
+		mux_0 {
+			pins = "gpio64";
+			function = "mdc";
+			drive-strength = <0x08>;
+			bias-pull-up;
+		};
 
-        mux_1 {
-            pins = "gpio65";
-            function = "mdio";
-            drive-strength = <0x08>;
-            bias-pull-up;
-        };
+		mux_1 {
+			pins = "gpio65";
+			function = "mdio";
+			drive-strength = <0x08>;
+			bias-pull-up;
+		};
 
-        mux_2 {
-            pins = "gpio75";
-            function = "gpio";
-            bias-pull-up;
-        };
-    };
-
-    leds_pins: leds_pins {
-        led_b1 {
-            pins = "gpio35";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_r1 {
-            pins = "gpio37";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_g1 {
-            pins = "gpio50";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_b2 {
-            pins = "gpio30";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_r2 {
-            pins = "gpio32";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_g2 {
-            pins = "gpio33";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_b3 {
-            pins = "gpio31";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_r3 {
-            pins = "gpio29";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-
-        led_g3 {
-            pins = "gpio34";
-            function = "gpio";
-            drive-strength = <0x08>;
-            bias-pull-down;
-        };
-    };
+		mux_2 {
+			pins = "gpio75";
+			function = "gpio";
+		bias-pull-up;
+		};
+	};
 };
 
 
@@ -308,63 +218,63 @@
 
 	pinctrl-0 = <&mdio_pinmux>;
 	pinctrl-names = "default";
-	reset-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
+	reset-gpios = <&tlmm 74 GPIO_ACTIVE_LOW>;
 
-    ethernet_0: ethernet-phy-package@0 {
-        compatible = "qcom,qca8075-package";
-        #address-cells = <1>;
-        #size-cells = <0>;
-        reg = <0>;
+	ethernet_0: ethernet-phy-package@0 {
+		compatible = "qcom,qca8075-package";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0>;
 		qcom,package-mode = "psgmii";
 
-        qca8075_1: ethernet-phy@1 {
-            compatible = "ethernet-phy-ieee802.3-c22";
-            reg = <1>;
-        };
+		qca8075_1: ethernet-phy@1 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <1>;
+		};
 
-        qca8075_2: ethernet-phy@2 {
-            compatible = "ethernet-phy-ieee802.3-c22";
-            reg = <2>;
-        };
+		qca8075_2: ethernet-phy@2 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <2>;
+		};
 
-        qca8075_3: ethernet-phy@3 {
-            compatible = "ethernet-phy-ieee802.3-c22";
-            reg = <3>;
-        };
+		qca8075_3: ethernet-phy@3 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <3>;
+		};
 
-        qca8075_4: ethernet-phy@4 {
-            compatible = "ethernet-phy-ieee802.3-c22";
-            reg = <4>;
-        };
-    };
+		qca8075_4: ethernet-phy@4 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <4>;
+		};
+	};
 };
 
 &switch {
 	status = "okay";
 
-    switch_lan_bmp = <(ESS_PORT3 | ESS_PORT4 | ESS_PORT5)>; /* lan port bitmap */
+	switch_lan_bmp = <(ESS_PORT3 | ESS_PORT4 | ESS_PORT5)>; /* lan port bitmap */
 	switch_wan_bmp = <ESS_PORT2>; /* wan port bitmap */
 
 	qcom,port_phyinfo {
-        port@1 {
-            port_id = <2>;
-            phy_address = <1>;
-        };
+		port@1 {
+			port_id = <2>;
+			phy_address = <1>;
+		};
 
-        port@2 {
-            port_id = <3>;
-            phy_address = <2>;
-        };
+		port@2 {
+			port_id = <3>;
+			phy_address = <2>;
+		};
 
-        port@3 {
-            port_id = <4>;
-            phy_address = <3>;
-        };
+		port@3 {
+			port_id = <4>;
+			phy_address = <3>;
+		};
 
-        port@4 {
-            port_id = <5>;
-            phy_address = <4>;
-        };
+		port@4 {
+			port_id = <5>;
+			phy_address = <4>;
+		};
 	};
 };
 
@@ -374,30 +284,30 @@
 
 &wifi {
 	status = "okay";
-    qcom,ath11k-calibration-variant = "JDC-AX1800-Pro";
+	qcom,ath11k-calibration-variant = "JDC-AX1800-Pro";
 	qcom,ath11k-fw-memory-mode = <1>;
 };
 
 
 &dp2 {
-    phy-handle = <&qca8075_1>;
-    status = "okay";
+	phy-handle = <&qca8075_1>;
+	status = "okay";
 };
 
 &dp3 {
-    phy-handle = <&qca8075_2>;
-    status = "okay";
+	phy-handle = <&qca8075_2>;
+	status = "okay";
 };
 
 &dp4 {
-    phy-handle = <&qca8075_3>;
-    status = "okay";
+	phy-handle = <&qca8075_3>;
+	status = "okay";
 };
 
 &dp5 {
-    phy-handle = <&qca8075_4>;
+	phy-handle = <&qca8075_4>;
 	phy-mode = "psgmii";
-    status = "okay";
+	status = "okay";
 };
 
 &sdhc_1 {

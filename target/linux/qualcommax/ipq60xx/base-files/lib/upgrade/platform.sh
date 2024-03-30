@@ -15,6 +15,8 @@ platform_do_upgrade() {
 	qihoo,v6|\
 	redmi,ax5|\
 	xiaomi,ax1800|\
+	glinet,gl-axt1800|\
+	glinet,gl-ax1800|\
 	netgear,wax214)
 		nand_do_upgrade "$1"
 		;;
