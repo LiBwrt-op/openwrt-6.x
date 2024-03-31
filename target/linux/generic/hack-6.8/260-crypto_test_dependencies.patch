@@ -14,7 +14,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/crypto/Kconfig
 +++ b/crypto/Kconfig
-@@ -148,15 +148,15 @@ config CRYPTO_MANAGER
+@@ -149,15 +149,15 @@ config CRYPTO_MANAGER
  	  cbc(aes).
  
  config CRYPTO_MANAGER2

@@ -29,7 +29,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/fs/locks.c
 +++ b/fs/locks.c
-@@ -2897,6 +2897,8 @@ static const struct seq_operations locks
+@@ -2898,6 +2898,8 @@ static const struct seq_operations locks
  
  static int __init proc_locks_init(void)
  {
@@ -158,7 +158,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  				IPC_SEM_IDS, sysvipc_sem_proc_show);
 --- a/ipc/shm.c
 +++ b/ipc/shm.c
-@@ -154,6 +154,8 @@ pure_initcall(ipc_ns_init);
+@@ -155,6 +155,8 @@ pure_initcall(ipc_ns_init);
  
  void __init shm_init(void)
  {
@@ -246,7 +246,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  				&vmalloc_op,
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -2135,10 +2135,12 @@ void __init init_mm_internals(void)
+@@ -2140,10 +2140,12 @@ void __init init_mm_internals(void)
  	start_shepherd_timer();
  #endif
  #ifdef CONFIG_PROC_FS
@@ -330,7 +330,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -4144,6 +4144,8 @@ static __net_initdata struct pernet_oper
+@@ -4151,6 +4151,8 @@ static __net_initdata struct pernet_oper
  
  static int __init proto_init(void)
  {
@@ -385,7 +385,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/ipv4/proc.c
 +++ b/net/ipv4/proc.c
-@@ -556,5 +556,8 @@ static __net_initdata struct pernet_oper
+@@ -562,5 +562,8 @@ static __net_initdata struct pernet_oper
  
  int __init ip_misc_proc_init(void)
  {
@@ -408,7 +408,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/net/ipv4/inet_timewait_sock.c
 +++ b/net/ipv4/inet_timewait_sock.c
-@@ -266,7 +266,7 @@ void __inet_twsk_schedule(struct inet_ti
+@@ -251,7 +251,7 @@ void __inet_twsk_schedule(struct inet_ti
  	 */
  
  	if (!rearm) {

@@ -12,7 +12,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/drivers/net/phy/Kconfig
 +++ b/drivers/net/phy/Kconfig
-@@ -66,6 +66,80 @@ config SFP
+@@ -74,6 +74,80 @@ config SFP
  	depends on HWMON || HWMON=n
  	select MDIO_I2C
  
@@ -92,7 +92,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +
  comment "MII PHY device drivers"
  
- config AIR_EN8811H_PHY
+ config AMD_PHY
 --- a/drivers/net/phy/Makefile
 +++ b/drivers/net/phy/Makefile
 @@ -26,6 +26,21 @@ libphy-$(CONFIG_LED_TRIGGER_PHY)	+= phy_
