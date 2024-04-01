@@ -4,7 +4,6 @@
 
 #include "ipq6018.dtsi"
 #include "ipq6018-ess.dtsi"
-#include "ipq6018-cp-cpu.dtsi"
 #include "ipq6018-cpufreq.dtsi"
 #include "ipq6018-256m.dtsi"
 #include "ipq6018-nss.dtsi"
@@ -234,3 +233,19 @@
 	status = "okay";
 	qcom,ath11k-fw-memory-mode = <2>;
  };
+
+ &CPU0 {
+	/delete-property/ cpu-supply;
+};
+
+&CPU1 {
+	/delete-property/ cpu-supply;
+};
+
+&CPU2 {
+	/delete-property/ cpu-supply;
+};
+
+&CPU3 {
+	/delete-property/ cpu-supply;
+};
