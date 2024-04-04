@@ -88,7 +88,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
 --- a/kernel/module/Kconfig
 +++ b/kernel/module/Kconfig
-@@ -394,4 +394,11 @@ config MODULES_TREE_LOOKUP
+@@ -399,4 +399,11 @@ config MODULES_TREE_LOOKUP
  	def_bool y
  	depends on PERF_EVENTS || TRACING || CFI_CLANG
  
