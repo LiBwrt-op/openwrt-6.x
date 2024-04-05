@@ -139,3 +139,19 @@ define Device/zn_m2
 	DEVICE_PACKAGES := ipq-wifi-zn_m2
 endef
 TARGET_DEVICES += zn_m2
+
+define Device/yuncore_fap650
+    $(call Device/FitImage)
+    $(call Device/UbiFit)
+    DEVICE_VENDOR := Yuncore
+    DEVICE_MODEL := FAP650
+    BLOCKSIZE := 128k
+    PAGESIZE := 2048
+    DEVICE_DTS_CONFIG := config@cp03-c1
+    SOC := ipq6018
+    DEVICE_PACKAGES := ipq-wifi-yuncore_fap650
+    IMAGES := factory.ubi factory.ubin sysupgrade.bin
+    IMAGE/factory.ubin := append-ubi | qsdk-ipq-factory-nand
+endef
+TARGET_DEVICES += yuncore_fap650
+
