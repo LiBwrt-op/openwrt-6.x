@@ -88,6 +88,20 @@ define Device/redmi_ax5
 endef
 TARGET_DEVICES += redmi_ax5
 
+define Device/redmi_ax5-jdcloud
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := Redmi
+	DEVICE_MODEL := AX5 JDCloud
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6018
+	DEVICE_PACKAGES := ipq-wifi-redmi_ax5-jdcloud
+	#BLOCKSIZE := 64k
+	KERNEL_SIZE := 6144k
+	IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | append-metadata
+endef
+TARGET_DEVICES += redmi_ax5-jdcloud
+
 define Device/xiaomi_ax1800
 	$(call Device/FitImage)
 	$(call Device/UbiFit)

@@ -43,6 +43,7 @@ platform_do_upgrade() {
 	netgear,wax214)
 		nand_do_upgrade "$1"
 		;;
+	redmi,ax5-jdcloud|\
 	jdc,ax1800-pro)
 		kernelname="0:HLOS"
 		rootfsname="rootfs"

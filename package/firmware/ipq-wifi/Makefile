@@ -51,6 +51,7 @@ ALLWIFIBOARDS:= \
 	qnap_301w \
   qihoo_v6 \
   redmi_ax5 \
+  redmi_ax5-jdcloud \
 	redmi_ax6 \
 	wallys_dr40x9 \
   xiaomi_ax1800 \
@@ -63,7 +64,7 @@ ALLWIFIBOARDS:= \
 	zte_mf269 \
 	zte_mf287 \
 	zte_mf287plus \
-	zyxel_nbg7815 \
+	zyxel_nbg7815
 
 ALLWIFIPACKAGES:=$(foreach BOARD,$(ALLWIFIBOARDS),ipq-wifi-$(BOARD))
 
@@ -177,6 +178,7 @@ $(eval $(call generate-ipq-wifi-package,qnap_301w,QNAP 301w))
 $(eval $(call generate-ipq-wifi-package,prpl_haze,prpl Haze))
 $(eval $(call generate-ipq-wifi-package,qihoo_v6,Qihoo V6))
 $(eval $(call generate-ipq-wifi-package,redmi_ax5,Redmi AX5))
+$(eval $(call generate-ipq-wifi-package,redmi_ax5-jdcloud,Redmi AX5 JDCloud))
 $(eval $(call generate-ipq-wifi-package,redmi_ax6,Redmi AX6))
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax1800,Xiaomi AX1800))
