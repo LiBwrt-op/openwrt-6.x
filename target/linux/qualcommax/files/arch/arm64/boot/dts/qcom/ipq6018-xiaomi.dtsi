@@ -3,6 +3,7 @@
 /dts-v1/;
 
 #include "ipq6018.dtsi"
+#include "ipq6018-256m.dtsi"
 #include "ipq6018-cp-cpu.dtsi"
 #include "ipq6018-cpufreq.dtsi"
 #include "ipq6018-ess.dtsi"
