@@ -61,7 +61,7 @@ DEFAULT_PACKAGES.router:=\
 	odhcpd-ipv6only \
 	ppp \
 	ppp-mod-pppoe \
-  luci default-settings-chn \
+  default-settings-chn \
 
 ifneq ($(DUMP),)
   all: dumpinfo
