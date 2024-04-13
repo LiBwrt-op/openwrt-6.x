@@ -2,13 +2,18 @@
 
 START=99
 
-. /lib/functions.sh
-
 boot() {
 	case $(board_name) in
-		yuncore,fap650)
-			fw_setenv owrt_bootcount 0
-		;;
-		esac
+	edgecore,eap102|\
+	yuncore,ax880)
+		fw_setenv upgrade_available 0
+		# Unset changed flag after sysupgrade complete
+		fw_setenv changed
+	;;
+	linksys,mx4200v1|\
+	linksys,mx4200v2|\
+	linksys,mx5300)
+		mtd resetbc s_env || true
+	;;
+	esac
 }
-
