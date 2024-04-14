@@ -3,6 +3,7 @@
 /dts-v1/;
 
 #include "ipq6018-xiaomi.dtsi"
+#include "ipq6018-512m.dtsi"
 
 / {
 	model = "Redmi AX5 JDCloud";
