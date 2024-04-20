@@ -13,7 +13,7 @@
 	aliases {
 		led-boot = &led_blue;
 		led-failsafe = &led_red;
-		led-running = &led_green;
+		led-running = &led_blue;
 		led-upgrade = &led_red;
 	};
 
@@ -277,21 +277,18 @@
 		led_red: red@0 {
 			color = <LED_COLOR_ID_RED>;
 			function = LED_FUNCTION_INDICATOR;
-			linux,default-trigger = "none";
 			reg = <0>;
 		};
 
 		led_green: green@1 {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_INDICATOR;
-			linux,default-trigger = "none";
 			reg = <1>;
 		};
 
 		led_blue: blue@2 {
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_INDICATOR;
-			linux,default-trigger = "default-on";
 			reg = <2>;
 		};
 	};
@@ -490,7 +487,6 @@
 	qcom,coexist-support = <1>;
 	qcom,coexist-gpio-pin = <0x34>;
 
-	ieee80211-freq-limit = <2401000 2473000>;
 	qcom,ath10k-calibration-variant = "linksys-whw03v2";
 
 	nvmem-cell-names = "pre-calibration", "mac-address";
@@ -500,7 +496,7 @@
 &wifi1 {
 	status = "okay";
 
-	ieee80211-freq-limit = <5170000 5250000>;
+	ieee80211-freq-limit = <5170000 5330000>;
 	qcom,ath10k-calibration-variant = "linksys-whw03v2";
 
 	nvmem-cell-names = "pre-calibration", "mac-address";
@@ -510,7 +506,7 @@
 &wifi2 {
 	status = "okay";
 
-	ieee80211-freq-limit = <5735000 5835000>;
+	ieee80211-freq-limit = <5490000 5835000>;
 	qcom,ath10k-calibration-variant = "linksys-whw03v2";
 
 	nvmem-cell-names = "pre-calibration", "mac-address";
