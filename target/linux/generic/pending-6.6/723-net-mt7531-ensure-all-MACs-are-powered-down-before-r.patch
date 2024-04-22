@@ -15,7 +15,7 @@ Signed-off-by: Alexander Couzens <lynxis@fe80.eu>
 
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -2263,6 +2263,10 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2424,6 +2424,10 @@ mt7530_setup(struct dsa_switch *ds)
  		return -EINVAL;
  	}
  
