@@ -53,6 +53,7 @@ ALLWIFIBOARDS:= \
   redmi_ax5 \
   redmi_ax5-jdcloud \
 	redmi_ax6 \
+	spectrum_sax1v1k \
 	wallys_dr40x9 \
   xiaomi_ax1800 \
 	xiaomi_ax3600 \
@@ -181,6 +182,7 @@ $(eval $(call generate-ipq-wifi-package,qihoo_v6,Qihoo V6))
 $(eval $(call generate-ipq-wifi-package,redmi_ax5,Redmi AX5))
 $(eval $(call generate-ipq-wifi-package,redmi_ax5-jdcloud,Redmi AX5 JDCloud))
 $(eval $(call generate-ipq-wifi-package,redmi_ax6,Redmi AX6))
+$(eval $(call generate-ipq-wifi-package,spectrum_sax1v1k,Spectrum SAX1V1K))
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax1800,Xiaomi AX1800))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
