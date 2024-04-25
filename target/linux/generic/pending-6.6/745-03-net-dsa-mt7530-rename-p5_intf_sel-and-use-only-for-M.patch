@@ -96,7 +96,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  
  	mutex_unlock(&priv->reg_mutex);
  }
-@@ -2476,13 +2472,11 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2480,13 +2476,11 @@ mt7530_setup(struct dsa_switch *ds)
  	if (ret)
  		return ret;
  
@@ -114,7 +114,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  		 */
  		for_each_child_of_node(dn, mac_np) {
  			if (!of_device_is_compatible(mac_np,
-@@ -2506,17 +2500,16 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2510,17 +2504,16 @@ mt7530_setup(struct dsa_switch *ds)
  				}
  				id = of_mdio_parse_addr(ds->dev, phy_node);
  				if (id == 0)
@@ -135,7 +135,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  			mt7530_setup_port5(ds, interface);
  	}
  
-@@ -2654,9 +2647,6 @@ mt7531_setup(struct dsa_switch *ds)
+@@ -2658,9 +2651,6 @@ mt7531_setup(struct dsa_switch *ds)
  			   MT7531_EXT_P_MDIO_12);
  	}
  

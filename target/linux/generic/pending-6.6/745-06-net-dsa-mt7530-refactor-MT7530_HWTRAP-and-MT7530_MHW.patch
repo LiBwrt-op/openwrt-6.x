@@ -171,7 +171,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  		dev_err(priv->dev,
  			"MT7530 with a 20MHz XTAL is not supported!\n");
  		return -EINVAL;
-@@ -2401,12 +2402,12 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2405,12 +2406,12 @@ mt7530_setup(struct dsa_switch *ds)
  			   RD_TAP_MASK, RD_TAP(16));
  
  	/* Enable port 6 */
@@ -189,7 +189,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  		mt7530_pll_setup(priv);
  
  	mt753x_trap_frames(priv);
-@@ -2586,7 +2587,7 @@ mt7531_setup(struct dsa_switch *ds)
+@@ -2590,7 +2591,7 @@ mt7531_setup(struct dsa_switch *ds)
  	}
  
  	/* Waiting for MT7530 got to stable */
