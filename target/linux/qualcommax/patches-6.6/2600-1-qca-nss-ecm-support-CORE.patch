@@ -99,7 +99,7 @@
  
 --- a/include/net/addrconf.h
 +++ b/include/net/addrconf.h
-@@ -518,4 +518,9 @@ int if6_proc_init(void);
+@@ -514,4 +514,9 @@ int if6_proc_init(void);
  void if6_proc_exit(void);
  #endif
  
@@ -687,7 +687,7 @@
  out:
  	fib6_info_release(rt);
  	return err;
-@@ -6329,6 +6339,20 @@ static int ip6_route_dev_notify(struct n
+@@ -6336,6 +6346,20 @@ static int ip6_route_dev_notify(struct n
  	return NOTIFY_OK;
  }
  
@@ -728,7 +728,7 @@
  
  static void
  ipv6_link_dev_addr(struct inet6_dev *idev, struct inet6_ifaddr *ifp)
-@@ -2069,6 +2070,36 @@ struct inet6_ifaddr *ipv6_get_ifaddr(str
+@@ -2068,6 +2069,36 @@ struct inet6_ifaddr *ipv6_get_ifaddr(str
  
  	return result;
  }
