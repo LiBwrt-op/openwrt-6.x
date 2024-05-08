@@ -8,7 +8,15 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/net/netfilter/Kconfig
 +++ b/net/netfilter/Kconfig
-@@ -1025,6 +1025,15 @@ config NETFILTER_XT_TARGET_NOTRACK
+@@ -729,7 +729,6 @@ config NF_FLOW_TABLE
+ 	tristate "Netfilter flow table module"
+ 	depends on NETFILTER_INGRESS
+ 	depends on NF_CONNTRACK
+-	depends on NF_TABLES
+ 	help
+ 	  This option adds the flow table core infrastructure.
+ 
+@@ -1025,6 +1024,15 @@ config NETFILTER_XT_TARGET_NOTRACK
  	depends on NETFILTER_ADVANCED
  	select NETFILTER_XT_TARGET_CT
  
@@ -36,7 +44,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  obj-$(CONFIG_NETFILTER_XT_TARGET_LED) += xt_LED.o
 --- /dev/null
 +++ b/net/netfilter/xt_FLOWOFFLOAD.c
-@@ -0,0 +1,702 @@
+@@ -0,0 +1,703 @@
 +/*
 + * Copyright (C) 2018-2021 Felix Fietkau <nbd@nbd.name>
 + *
@@ -101,7 +109,8 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +		proto = veth->h_vlan_encapsulated_proto;
 +		break;
 +	case htons(ETH_P_PPP_SES):
-+		proto = nf_flow_pppoe_proto(skb);
++		if (!nf_flow_pppoe_proto(skb, &proto))
++			return NF_ACCEPT;
 +		break;
 +	default:
 +		proto = skb->protocol;
