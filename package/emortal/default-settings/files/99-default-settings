@@ -14,10 +14,12 @@ fi
 
 ln -sf "/sbin/ip" "/usr/bin/ip"
 
+sed -i '/DISTRIB_ID/d' /etc/openwrt_release
+echo "DISTRIB_ID='BWRT'" >> /etc/openwrt_release
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_REVISION='r24.5.5'" >> /etc/openwrt_release
+echo "DISTRIB_REVISION='r24.5.11'" >> /etc/openwrt_release
 sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='BWrt r24.5.5'" >> /etc/openwrt_release
+echo "DISTRIB_DESCRIPTION='BWrt r24.5.11'" >> /etc/openwrt_release
 
 sed -i "/log-facility/d" "/etc/dnsmasq.conf"
 echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
