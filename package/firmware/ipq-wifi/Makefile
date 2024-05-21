@@ -41,6 +41,7 @@ ALLWIFIBOARDS:= \
 	jdc_ax1800-pro \
   linksys_mx4200 \
 	linksys_mx5300 \
+	linksys_mx8500 \
 	netgear_lbr20 \
 	netgear_rax120v2 \
 	netgear_wax214 \
@@ -170,6 +171,7 @@ $(eval $(call generate-ipq-wifi-package,glinet_gl-axt1800,GL.iNet GL-AXT1800))
 $(eval $(call generate-ipq-wifi-package,jdc_ax1800-pro,JD Cloud AX1800 Pro))
 $(eval $(call generate-ipq-wifi-package,linksys_mx4200,Linksys MX4200))
 $(eval $(call generate-ipq-wifi-package,linksys_mx5300,Linksys MX5300))
+$(eval $(call generate-ipq-wifi-package,linksys_mx8500,Linksys MX8500))
 $(eval $(call generate-ipq-wifi-package,netgear_lbr20,Netgear LBR20))
 $(eval $(call generate-ipq-wifi-package,netgear_rax120v2,Netgear RAX120v2))
 $(eval $(call generate-ipq-wifi-package,netgear_wax214,Netgear WAX214))

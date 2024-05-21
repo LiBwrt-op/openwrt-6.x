@@ -466,6 +466,28 @@ define Device/confiabits_mt7981
 endef
 TARGET_DEVICES += confiabits_mt7981
 
+define Device/cudy_m3000-v1
+  DEVICE_VENDOR := Cudy
+  DEVICE_MODEL := M3000
+  DEVICE_VARIANT := v1
+  DEVICE_DTS := mt7981b-cudy-m3000-v1
+  DEVICE_DTS_DIR := ../dts
+  SUPPORTED_DEVICES += R37
+  DEVICE_DTS_LOADADDR := 0x44000000
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 65536k
+  KERNEL_IN_UBI := 1
+  KERNEL := kernel-bin | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+  KERNEL_INITRAMFS := kernel-bin | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
+  IMAGES := sysupgrade.bin
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware
+endef
+TARGET_DEVICES += cudy_m3000-v1
+
 define Device/cudy_re3000-v1
   DEVICE_VENDOR := Cudy
   DEVICE_MODEL := RE3000
@@ -484,6 +506,23 @@ define Device/cudy_re3000-v1
   DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware
 endef
 TARGET_DEVICES += cudy_re3000-v1
+
+define Device/cudy_tr3000-v1
+  DEVICE_VENDOR := Cudy
+  DEVICE_MODEL := TR3000
+  DEVICE_VARIANT := v1
+  DEVICE_DTS := mt7981b-cudy-tr3000-v1
+  DEVICE_DTS_DIR := ../dts
+  SUPPORTED_DEVICES += R47
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 65536k
+  KERNEL_IN_UBI := 1
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  DEVICE_PACKAGES := kmod-usb3 kmod-mt7981-firmware mt7981-wo-firmware
+endef
+TARGET_DEVICES += cudy_tr3000-v1
 
 define Device/cudy_wr3000-v1
   DEVICE_VENDOR := Cudy
@@ -785,6 +824,7 @@ define Device/mediatek_mt7988a-rfb
 	mt7988a-rfb-sd \
 	mt7988a-rfb-snfi-nand \
 	mt7988a-rfb-spim-nand \
+	mt7988a-rfb-spim-nand-factory \
 	mt7988a-rfb-spim-nor \
 	mt7988a-rfb-eth1-aqr \
 	mt7988a-rfb-eth1-i2p5g-phy \
@@ -816,7 +856,7 @@ define Device/mediatek_mt7988a-rfb
   ARTIFACT/emmc-bl31-uboot.fip	:= mt7988-bl31-uboot rfb-emmc
   ARTIFACT/nor-preloader.bin	:= mt7988-bl2 nor-comb
   ARTIFACT/nor-bl31-uboot.fip	:= mt7988-bl31-uboot rfb-nor
-  ARTIFACT/snand-preloader.bin	:= mt7988-bl2 spim-nand-comb
+  ARTIFACT/snand-preloader.bin	:= mt7988-bl2 spim-nand-ubi-comb
   ARTIFACT/snand-bl31-uboot.fip	:= mt7988-bl31-uboot rfb-snand
   ARTIFACT/sdcard.img.gz	:= mt798x-gpt sdmmc |\
 				   pad-to 17k | mt7988-bl2 sdmmc-comb |\
@@ -910,6 +950,54 @@ define Device/openembed_som7981
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += openembed_som7981
+
+define Build/append-openwrt-one-eeprom
+        dd if=$(STAGING_DIR_IMAGE)/mt7981_eeprom_mt7976_dbdc.bin >> $@
+endef
+
+define Device/openwrt_one
+  DEVICE_VENDOR := OpenWrt
+  DEVICE_MODEL := One
+  DEVICE_DTS := mt7981b-openwrt-one
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_DTC_FLAGS := --pad 4096
+  DEVICE_DTS_LOADADDR := 0x43f00000
+  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-rtc-pcf8563 kmod-usb3 kmod-nvme kmod-phy-airoha-en8811h
+  KERNEL_LOADADDR := 0x44000000
+  KERNEL := kernel-bin | gzip
+  KERNEL_INITRAMFS := kernel-bin | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
+  KERNEL_INITRAMFS_SUFFIX := .itb
+  KERNEL_IN_UBI := 1
+  UBOOTENV_IN_UBI := 1
+  IMAGES := sysupgrade.itb
+  IMAGE_SIZE := $$(shell expr 64 + $$(CONFIG_TARGET_ROOTFS_PARTSIZE))m
+  IMAGE/sysupgrade.itb := append-kernel | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb external-with-rootfs | pad-rootfs | append-metadata
+  ARTIFACTS := \
+	nor-preloader.bin nor-bl31-uboot.fip \
+	snand-preloader.bin snand-bl31-uboot.fip \
+	factory.ubi snand-factory.bin nor-factory.bin
+  ARTIFACT/nor-preloader.bin		:= mt7981-bl2 nor-ddr4
+  ARTIFACT/nor-bl31-uboot.fip		:= mt7981-bl31-uboot openwrt_one-nor
+  ARTIFACT/snand-preloader.bin		:= mt7981-bl2 spim-nand-ubi-ddr4
+  ARTIFACT/snand-bl31-uboot.fip		:= mt7981-bl31-uboot openwrt_one-snand
+  ARTIFACT/factory.ubi			:= ubinize-image fit squashfs-sysupgrade.itb
+  ARTIFACT/snand-factory.bin		:= mt7981-bl2 spim-nand-ubi-ddr4 | pad-to 256k | \
+					   mt7981-bl2 spim-nand-ubi-ddr4 | pad-to 512k | \
+					   mt7981-bl2 spim-nand-ubi-ddr4 | pad-to 768k | \
+					   mt7981-bl2 spim-nand-ubi-ddr4 | pad-to 1024k | \
+					   ubinize-image fit squashfs-sysupgrade.itb
+  ARTIFACT/nor-factory.bin		:= mt7981-bl2 nor-ddr4 | pad-to 256k | \
+					   append-openwrt-one-eeprom | pad-to 1024k | \
+					   mt7981-bl31-uboot openwrt_one-nor | pad-to 512k | \
+					   append-image-stage initramfs.itb
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  UBINIZE_PARTS := fip=:$(STAGING_DIR_IMAGE)/mt7981_openwrt_one-snand-u-boot.fip recovery=:$(KDIR)/tmp/openwrt-mediatek-filogic-openwrt_one-initramfs.itb \
+		   $(if $(wildcard $(TOPDIR)/openwrt-mediatek-filogic-openwrt_one-calibration.itb), calibration=:$(TOPDIR)/openwrt-mediatek-filogic-openwrt_one-calibration.itb)
+endef
+TARGET_DEVICES += openwrt_one
 
 define Device/qihoo_360t7
   DEVICE_VENDOR := Qihoo
