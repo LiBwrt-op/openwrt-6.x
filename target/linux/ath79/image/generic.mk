@@ -204,6 +204,16 @@ define Device/8dev_carambola2
 endef
 TARGET_DEVICES += 8dev_carambola2
 
+define Device/8dev_carambola3
+  SOC := qca9531
+  DEVICE_VENDOR := 8devices
+  DEVICE_MODEL := Carambola3
+  DEVICE_PACKAGES := kmod-usb2
+  IMAGE_SIZE := 32768k
+  SUPPORTED_DEVICES += carambola3
+endef
+TARGET_DEVICES += 8dev_carambola3
+
 define Device/8dev_lima
   SOC := qca9531
   DEVICE_VENDOR := 8devices
@@ -934,6 +944,22 @@ define Device/compex_wpj563
 endef
 TARGET_DEVICES += compex_wpj563
 
+define Device/dell_apl26-0ae
+  SOC := qca9550
+  DEVICE_VENDOR := Dell
+  DEVICE_MODEL := SonicPoint
+  DEVICE_VARIANT := ACe (APL26-0AE)
+  DEVICE_ALT0_VENDOR := SonicWall
+  DEVICE_ALT0_MODEL := SonicPoint
+  DEVICE_ALT0_VARIANT := ACe (APL26-0AE)
+  DEVICE_PACKAGES := ath10k-firmware-qca988x-ct kmod-ath10k-ct kmod-usb2
+  KERNEL_SIZE := 5952k
+  IMAGE_SIZE := 31680k
+  IMAGE/sysupgrade.bin = append-kernel | pad-to $$$$(BLOCKSIZE) | \
+	append-rootfs | pad-rootfs | check-size | append-metadata
+endef
+TARGET_DEVICES += dell_apl26-0ae
+
 define Device/devolo_dlan-pro-1200plus-ac
   SOC := ar9344
   DEVICE_VENDOR := devolo
@@ -1528,17 +1554,28 @@ define Device/engenius_ews511ap
 endef
 TARGET_DEVICES += engenius_ews511ap
 
-define Device/engenius_ews660ap
+define Device/engenius_ews_dual_ap
   $(Device/senao_loader_okli)
   SOC := qca9558
   DEVICE_VENDOR := EnGenius
-  DEVICE_MODEL := EWS660AP
   DEVICE_PACKAGES := ath10k-firmware-qca988x-ct kmod-ath10k-ct
   IMAGE_SIZE := 11584k
   LOADER_FLASH_OFFS := 0x220000
+endef
+
+define Device/engenius_ews660ap
+  $(Device/engenius_ews_dual_ap)
+  DEVICE_MODEL := EWS660AP
   SENAO_IMGNAME := ar71xx-generic-ews660ap
 endef
 TARGET_DEVICES += engenius_ews660ap
+
+define Device/engenius_ens1750
+  $(Device/engenius_ews_dual_ap)
+  DEVICE_MODEL := ENS1750
+  SENAO_IMGNAME := ar71xx-generic-ens1750
+endef
+TARGET_DEVICES += engenius_ens1750
 
 define Device/enterasys_ws-ap3705i
   SOC := ar9344

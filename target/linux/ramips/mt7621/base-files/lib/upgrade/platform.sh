@@ -71,6 +71,7 @@ platform_do_upgrade() {
 	dlink,covr-x1860-a1|\
 	dlink,dap-x1860-a1|\
 	dlink,dir-1960-a1|\
+	dlink,dir-2150-a1|\
 	dlink,dir-2640-a1|\
 	dlink,dir-2660-a1|\
 	dlink,dir-3040-a1|\
@@ -128,6 +129,12 @@ platform_do_upgrade() {
 	z-router,zr-2660|\
 	zyxel,nwa50ax|\
 	zyxel,nwa55axe)
+		nand_do_upgrade "$1"
+		;;
+	elecom,wrc-x1800gs)
+		[ "$(fw_printenv -n bootmenu_delay)" != "0" ] || \
+			fw_setenv bootmenu_delay 3
+		iodata_mstc_set_flag "bootnum" "persist" "0x4" "1,2" "1"
 		nand_do_upgrade "$1"
 		;;
 	iodata,wn-ax1167gr2|\

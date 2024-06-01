@@ -146,6 +146,7 @@ ath79_setup_interfaces()
 	elecom,wab-i1750-ps|\
 	elecom,wab-s1167-ps|\
 	elecom,wab-s600-ps|\
+	engenius,ens1750|\
 	engenius,enstationac-v1|\
 	engenius,ews511ap|\
 	engenius,ews660ap|\
@@ -286,6 +287,10 @@ ath79_setup_interfaces()
 	compex,wpj558-16m)
 		ucidef_add_switch "switch0" \
 			"1:wan" "5:lan" "6@eth0"
+		;;
+	dell,apl26-0ae)
+		ucidef_add_switch "switch0" \
+			"0@eth0" "2:lan:1" "3:lan:2" "6@eth1"
 		;;
 	devolo,dlan-pro-1200plus-ac|\
 	devolo,magic-2-wifi)
@@ -552,6 +557,10 @@ ath79_setup_interfaces()
 		ucidef_set_interface_wan "eth1"
 		ucidef_add_switch "switch0" \
 			"0@eth0" "2:lan:1" "3:lan:3" "4:lan:2"
+		;;
+	ubnt,amplifi-router-hd)
+		ucidef_add_switch "switch0" \
+			"0@eth0" "2:lan:1" "3:lan:3" "4:lan:2" "5:lan:4" "1:wan"
 		;;
 	ubnt,edgeswitch-5xp)
 		ucidef_set_interface_wan "eth1"

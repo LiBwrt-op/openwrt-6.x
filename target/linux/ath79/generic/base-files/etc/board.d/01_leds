@@ -10,6 +10,10 @@ case "$board" in
 	ucidef_set_led_netdev "lan" "LAN" "orange:eth0" "eth0"
 	ucidef_set_led_switch "wan" "WAN" "orange:eth1" "switch0" "0x04"
 	;;
+8dev,carambola3)
+	ucidef_set_led_netdev "lan" "LAN" "green:lan" "eth0" "link"
+	ucidef_set_led_netdev "wan" "WAN" "green:wan" "eth1" "link"
+	;;
 alcatel,hh40v)
 	ucidef_set_led_netdev "lan_data" "LAN Data" "green:lan" "eth1" "tx rx"
 	ucidef_set_led_netdev "lan_link" "LAN Link" "orange:lan" "eth1" "link"
@@ -227,6 +231,10 @@ compex,wpj531-16m)
 	ucidef_set_led_rssi "sig2" "SIG2" "yellow:sig2" "wlan0" "75" "100"
 	ucidef_set_led_rssi "sig3" "SIG3" "green:sig3" "wlan0" "65" "100"
 	ucidef_set_led_rssi "sig4" "SIG4" "green:sig4" "wlan0" "50" "100"
+	;;
+dell,apl26-0ae)
+	ucidef_set_led_switch "lan1" "LAN1" "amber:lan-1" "switch0" "0x04"
+	ucidef_set_led_switch "lan2" "LAN2" "amber:lan-2" "switch0" "0x08"
 	;;
 devolo,dlan-pro-1200plus-ac|\
 devolo,magic-2-wifi)

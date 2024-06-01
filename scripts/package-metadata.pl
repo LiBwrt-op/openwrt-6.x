@@ -373,7 +373,7 @@ sub and_condition($) {
 
 sub gen_condition ($) {
 	my $condition = shift;
-	# remove '!()', just as include/package-ipkg.mk does
+	# remove '!()', just as include/package-pack.mk does
 	$condition =~ s/[()!]//g;
 	return join("", map(and_condition($_), split('\|\|', $condition)));
 }
@@ -722,7 +722,7 @@ sub gen_image_cyclonedxsbom() {
 		if ($image_packages{$name}) {
 			$version = $image_packages{$name};
 		}
-		$version =~ s/-\d+$// if $version;
+		$version =~ s/-r\d+$// if $version;
 		if ($name =~ /^(kernel|kmod-)/ and $version =~ /^(\d+\.\d+\.\d+)/) {
 			$version = $1;
 		}
@@ -775,7 +775,7 @@ sub gen_package_cyclonedxsbom() {
 		}
 
 		my $version = $pkg->{version};
-		$version =~ s/-\d+$// if $version;
+		$version =~ s/-r\d+$// if $version;
 		if ($name =~ /^(kernel|kmod-)/ and $version =~ /^(\d+\.\d+\.\d+)/) {
 			$version = $1;
 		}

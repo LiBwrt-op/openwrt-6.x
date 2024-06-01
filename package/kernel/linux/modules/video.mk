@@ -83,6 +83,7 @@ define KernelPackage/fb
   DEPENDS:=@DISPLAY_SUPPORT
   KCONFIG:= \
 	CONFIG_FB \
+	CONFIG_FB_DEVICE=y \
 	CONFIG_FB_MXS=n \
 	CONFIG_FB_SM750=n \
 	CONFIG_FRAMEBUFFER_CONSOLE=y \
@@ -1180,7 +1181,9 @@ define KernelPackage/video-dma
   KCONFIG:= \
 	CONFIG_VIDEOBUF2_DMA_CONTIG \
 	CONFIG_VIDEOBUF2_DMA_SG
-  FILES:= $(LINUX_DIR)/drivers/media/common/videobuf2/videobuf2-dma-*.ko
+  FILES:= \
+	$(LINUX_DIR)/drivers/media/common/videobuf2/videobuf2-dma-contig.ko \
+	$(LINUX_DIR)/drivers/media/common/videobuf2/videobuf2-dma-sg.ko
   AUTOLOAD:=$(call AutoLoad,66,videobuf2-dma-contig videobuf2-dma-sg)
   $(call AddDepends/video)
 endef
