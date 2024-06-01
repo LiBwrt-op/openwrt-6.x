@@ -15,9 +15,9 @@ fi
 ln -sf "/sbin/ip" "/usr/bin/ip"
 
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_REVISION='r1.2'" >> /etc/openwrt_release
+echo "DISTRIB_REVISION='r1.3'" >> /etc/openwrt_release
 sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='OpenWRT r1.2'" >> /etc/openwrt_release
+echo "DISTRIB_DESCRIPTION='OpenWRT r1.3'" >> /etc/openwrt_release
 
 sed -i "/log-facility/d" "/etc/dnsmasq.conf"
 echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"

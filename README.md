@@ -26,8 +26,8 @@
 3. 下载源代码，更新 feeds 并选择配置
 
    ```bash
-   git clone -b main --single-branch https://github.com/breeze303/openwrt-ipq60xx.git
-   cd openwrt-ipq60xx
+   git clone -b main --single-branch https://github.com/breeze303/openwrt-6.x.git
+   cd openwrt-6.x
    ./scripts/feeds update -a && ./scripts/feeds install -a
    make menuconfig
    ```
@@ -43,7 +43,7 @@
 5. 二次编译：
 
    ```bash
-   cd openwrt-ipq60xx
+   cd openwrt-6.x
    git fetch && git reset --hard origin/main
    ./scripts/feeds update -a && ./scripts/feeds install -a
    make defconfig
