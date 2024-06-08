@@ -63,23 +63,24 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
  static int nat46_netdev_up(struct net_device *dev)
  {
  	netif_start_queue(dev);
-@@ -64,8 +89,13 @@ static int nat46_netdev_down(struct net_
- 
+@@ -65,9 +90,14 @@ static int nat46_netdev_down(struct net_
  static netdev_tx_t nat46_netdev_xmit(struct sk_buff *skb, struct net_device *dev)
  {
--	dev->stats.rx_packets++;
--	dev->stats.rx_bytes += skb->len;
+ 	int ret = 0;
 +	struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
 +
 +	u64_stats_update_begin(&tstats->syncp);
-+	tstats->rx_packets++;
-+	tstats->rx_bytes += skb->len;
++	u64_stats_inc(&tstats->rx_packets);
++	u64_stats_add(&tstats->rx_bytes, skb->len);
 +	u64_stats_update_end(&tstats->syncp);
 +	put_cpu_ptr(tstats);
+ 
+-	dev->stats.rx_packets++;
+-	dev->stats.rx_bytes += skb->len;
  	if(ETH_P_IP == ntohs(skb->protocol)) {
- 		nat46_ipv4_input(skb);
+ 		ret = nat46_ipv4_input(skb);
  	}
-@@ -77,22 +107,38 @@ static netdev_tx_t nat46_netdev_xmit(str
+@@ -81,22 +111,39 @@ static netdev_tx_t nat46_netdev_xmit(str
  }
  
  void nat46_netdev_count_xmit(struct sk_buff *skb, struct net_device *dev) {
@@ -88,8 +89,8 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 +	struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
 +
 +	u64_stats_update_begin(&tstats->syncp);
-+	tstats->tx_packets++;
-+	tstats->tx_bytes += skb->len;
++	u64_stats_inc(&tstats->tx_packets);
++	u64_stats_add(&tstats->tx_bytes, skb->len);
 +	u64_stats_update_end(&tstats->syncp);
 +	put_cpu_ptr(tstats);
  }
@@ -104,10 +105,10 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 +	struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
 +
 +	u64_stats_update_begin(&tstats->syncp);
-+	tstats->rx_packets += rx_packets;
-+	tstats->rx_bytes += rx_bytes;
-+	tstats->tx_packets += tx_packets;
-+	tstats->tx_bytes += tx_bytes;
++	u64_stats_add(&tstats->rx_packets, rx_packets);
++	u64_stats_add(&tstats->rx_bytes, rx_bytes);
++	u64_stats_add(&tstats->tx_packets, tx_packets);
++	u64_stats_add(&tstats->tx_bytes, tx_bytes);
  	dev->stats.rx_dropped += rx_dropped;
  	dev->stats.tx_dropped += tx_dropped;
 +	u64_stats_update_end(&tstats->syncp);
@@ -118,13 +119,14 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 +static void nat46_get_stats64(struct net_device *dev,
 +		struct rtnl_link_stats64 *tot)
 +{
-+	dev_get_tstats64(dev, tot);
++	netdev_stats_to_stats64(tot, &dev->stats);
++	dev_fetch_sw_netstats(tot, dev->tstats);
 +}
 +
  void *netdev_nat46_instance(struct net_device *dev) {
  	nat46_netdev_priv_t *priv = netdev_priv(dev);
  	return priv->nat46;
-@@ -116,6 +162,7 @@ static void nat46_netdev_setup(struct ne
+@@ -120,6 +167,7 @@ static void nat46_netdev_setup(struct ne
  	priv->nat46 = nat46;
  
  	dev->netdev_ops = &nat46_netdev_ops;

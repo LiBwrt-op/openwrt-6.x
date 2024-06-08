@@ -14,31 +14,10 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 
 --- a/nat46/modules/nat46-core.c
 +++ b/nat46/modules/nat46-core.c
-@@ -21,6 +21,7 @@
+@@ -1996,6 +1996,27 @@ done:
  
- #include "nat46-glue.h"
- #include "nat46-core.h"
-+#include "nat46-module.h"
  
- static uint16_t xlate_pkt_in_err_v4_to_v6(nat46_instance_t *nat46, struct iphdr *iph,
- 			struct sk_buff *old_skb, uint16_t *sport, uint16_t *dport);
-@@ -2134,6 +2135,11 @@ void nat46_ipv4_input(struct sk_buff *ol
-   nat46debug(5, "nat46_ipv4_input protocol: %d, len: %d, flags: %02x", hdr4->protocol, old_skb->len, IPCB(old_skb)->flags);
-   if(0 == (ntohs(hdr4->frag_off) & 0x3FFF) ) { /* Checking for MF */
-     check_for_l4 = 1;
-+    if (add_dummy_header) {
-+      if (0 == (ntohs(hdr4->frag_off) & IP_DF)) {
-+        add_frag_header = 1;
-+      }
-+    }
-   } else {
-     add_frag_header = 1;
-     if (0 == (ntohs(hdr4->frag_off) & 0x1FFF)) { /* Checking for Frag Offset */
-@@ -2263,3 +2269,24 @@ bool nat46_get_rule_config(struct net_de
- 	return true;
- }
- EXPORT_SYMBOL(nat46_get_rule_config);
-+
+ 
 +/*
 + * Function to get MAP-T rules and flags.
 + */
@@ -59,6 +38,22 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 +	return true;
 +}
 +EXPORT_SYMBOL(nat46_get_info);
++
+ void ip6_update_csum(struct sk_buff * skb, struct ipv6hdr * ip6hdr, int do_atomic_frag)
+ {
+   u32 sum1=0;
+@@ -2254,6 +2275,11 @@ int nat46_ipv4_input(struct sk_buff *old
+     }
+     hdr4 = ip_hdr(old_skb);
+     check_for_l4 = 1;
++    if (add_dummy_header) {
++      if (0 == (ntohs(hdr4->frag_off) & IP_DF)) {
++        add_frag_header = 1;
++      }
++    }
+   } else {
+     add_frag_header = 1;
+     if (0 == (ntohs(hdr4->frag_off) & 0x1FFF)) {
 --- a/nat46/modules/nat46-core.h
 +++ b/nat46/modules/nat46-core.h
 @@ -32,6 +32,9 @@
@@ -81,20 +76,29 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
  #endif
 --- a/nat46/modules/nat46-module.c
 +++ b/nat46/modules/nat46-module.c
-@@ -57,6 +57,9 @@ MODULE_DESCRIPTION("NAT46 stateless tran
+@@ -56,12 +56,16 @@ MODULE_AUTHOR("Andrew Yourtchenko <ayour
+ MODULE_DESCRIPTION("NAT46 stateless translation");
+ 
  int debug = 0;
- module_param(debug, int, 0);
- MODULE_PARM_DESC(debug, "debugging messages level (default=1)");
 +bool add_dummy_header = 0;
+ int zero_csum_pass = 0;
+ int ip_tos_ignore = 0;
+ 
+ module_param(debug, int, 0);
+ MODULE_PARM_DESC(debug, "debugging messages level (default=0)");
+ 
 +module_param(add_dummy_header, bool, 0);
 +MODULE_PARM_DESC(add_dummy_header, "Add dummy fragment header");
++
+ module_param(zero_csum_pass, int, 0);
+ MODULE_PARM_DESC(zero_csum_pass, "pass all-zero checksum unchanged (default=0)");
  
- static struct proc_dir_entry *nat46_proc_entry;
- static struct proc_dir_entry *nat46_proc_parent;
 --- a/nat46/modules/nat46-module.h
 +++ b/nat46/modules/nat46-module.h
-@@ -14,3 +14,4 @@
+@@ -14,5 +14,6 @@
   */
  
  extern int debug;
 +extern bool add_dummy_header;
+ extern int zero_csum_pass;
+ extern int ip_tos_ignore;

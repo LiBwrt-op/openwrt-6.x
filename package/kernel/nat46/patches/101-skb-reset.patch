@@ -12,7 +12,7 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 
 --- a/nat46/modules/nat46-core.c
 +++ b/nat46/modules/nat46-core.c
-@@ -1605,6 +1605,7 @@ void nat46_ipv6_input(struct sk_buff *ol
+@@ -1710,6 +1710,7 @@ int nat46_ipv6_input(struct sk_buff *old
  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,4,0)
    nf_reset(new_skb);
  #else
@@ -20,7 +20,7 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
    nf_reset_ct(new_skb);
  #endif
  
-@@ -1814,6 +1815,7 @@ void nat46_ipv4_input(struct sk_buff *ol
+@@ -1936,6 +1937,7 @@ int nat46_ipv4_input(struct sk_buff *old
  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,4,0)
    nf_reset(new_skb);
  #else

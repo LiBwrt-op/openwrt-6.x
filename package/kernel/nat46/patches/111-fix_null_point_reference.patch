@@ -14,27 +14,27 @@ Signed-off-by: Pavithra R <pavir@codeaurora.org>
 
 --- a/nat46/modules/nat46-core.c
 +++ b/nat46/modules/nat46-core.c
-@@ -1758,6 +1758,11 @@ void nat46_ipv6_input(struct sk_buff *ol
+@@ -1847,6 +1847,11 @@ int nat46_ipv6_input(struct sk_buff *old
    int l3_infrag_payload_len = ntohs(ip6h->payload_len);
    int check_for_l4 = 0;
  
 +  if (nat46 == NULL) {
 +    printk("nat46:%p skb is dropped for no valid instance found\n", old_skb);
-+    return;
++    return err;
 +  }
 +
    nat46debug(4, "nat46_ipv6_input packet");
  
    if(ip6_input_not_interested(nat46, ip6h, old_skb)) {
-@@ -2222,6 +2227,11 @@ void nat46_ipv4_input(struct sk_buff *ol
+@@ -2353,6 +2358,11 @@ int nat46_ipv4_input(struct sk_buff *old
  
    char v6saddr[16], v6daddr[16];
  
 +  if (nat46 == NULL) {
 +    printk("nat46:%p skb is dropped for no valid instance found\n", old_skb);
-+    return;
++    return err;
 +  }
 +
-   tclass = hdr4->tos;
- 
    memset(v6saddr, 1, 16);
+   memset(v6daddr, 2, 16);
+ 
