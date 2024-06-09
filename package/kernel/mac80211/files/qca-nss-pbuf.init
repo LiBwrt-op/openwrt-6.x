@@ -108,6 +108,13 @@ apply_nss_config() {
       extra_pbuf_core0=10000000 n2h_high_water_core0=72512 n2h_wifi_pool_buf=36864 apply_sysctl
       ;;
     # 512MB profile
+    cmiot,ax18|\
+    zn,m2|\
+	  qihoo,v6|\
+	  redmi,ax5|\
+	  redmi,ax5-jdcloud|\
+    jdc,ax1800-pro|\
+	  xiaomi,ax1800|\
     edimax,cax1800 | \
     compex,wpq873 | \
     linksys,mx4200v1 | \
