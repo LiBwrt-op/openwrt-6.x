@@ -86,13 +86,9 @@ platform_do_upgrade() {
 	bananapi,bpi-r3-mini|\
 	bananapi,bpi-r4|\
 	bananapi,bpi-r4-poe|\
-	mediatek,mt7988a-rfb|\
 	jdcloud,re-cp-03|\
-	openwrt,one|\
-	tplink,tl-xdr4288|\
-	tplink,tl-xdr6086|\
-	tplink,tl-xdr6088|\
-	xiaomi,redmi-router-ax6000-ubootmod)
+	mediatek,mt7988a-rfb|\
+	openwrt,one)
 		[ -e /dev/fit0 ] && fitblk /dev/fit0
 		[ -e /dev/fitrw ] && fitblk /dev/fitrw
 		bootdev="$(fitblk_get_bootdev)"
@@ -148,6 +144,16 @@ platform_do_upgrade() {
 		;;
 	mercusys,mr90x-v1)
 		CI_UBIPART="ubi0"
+		nand_do_upgrade "$1"
+		;;
+	nokia,ea0326gmp|\
+	tplink,tl-xdr4288|\
+	tplink,tl-xdr6086|\
+	tplink,tl-xdr6088|\
+	xiaomi,redmi-router-ax6000-ubootmod)
+		[ -e /dev/fit0 ] && fitblk /dev/fit0
+		[ -e /dev/fitrw ] && fitblk /dev/fitrw
+		CI_KERNPART="fit"
 		nand_do_upgrade "$1"
 		;;
 	ubnt,unifi-6-plus)

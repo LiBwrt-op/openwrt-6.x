@@ -85,7 +85,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  }
  
  static int
-@@ -2405,11 +2418,11 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2401,11 +2414,11 @@ mt7530_setup(struct dsa_switch *ds)
  		mt7530_rmw(priv, MT7530_TRGMII_RD(i),
  			   RD_TAP_MASK, RD_TAP(16));
  
@@ -102,7 +102,7 @@ Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
  
  	if ((val & MT7530_XTAL_MASK) == MT7530_XTAL_40MHZ)
  		mt7530_pll_setup(priv);
-@@ -2492,8 +2505,11 @@ mt7530_setup(struct dsa_switch *ds)
+@@ -2488,8 +2501,11 @@ mt7530_setup(struct dsa_switch *ds)
  			break;
  		}
  

@@ -27,6 +27,7 @@ mediatek_setup_interfaces()
 	jdcloud,re-cp-03|\
 	mediatek,mt7981-rfb|\
 	netcore,n60|\
+	ruijie,rg-x60-pro|\
 	unielec,u7981-01*|\
 	zbtlink,zbt-z8102ax)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" eth1
@@ -47,6 +48,7 @@ mediatek_setup_interfaces()
 		;;
 	cmcc,rax3000m|\
 	h3c,magic-nx30-pro|\
+	nokia,ea0326gmp|\
 	zbtlink,zbt-z8103ax)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" eth1
 		;;
@@ -94,7 +96,8 @@ mediatek_setup_interfaces()
 	yuncore,ax835)
 		ucidef_set_interfaces_lan_wan lan wan
 		;;
-	tplink,tl-xdr6086)
+	tplink,tl-xdr6086|\
+	wavlink,wl-wn586x3)
 		ucidef_set_interfaces_lan_wan "lan1 lan2" eth1
 		;;
 	xiaomi,mi-router-ax3000t|\
@@ -142,11 +145,6 @@ mediatek_setup_macs()
 		lan_mac=$(macaddr_add "$wan_mac" 1)
 		label_mac=$wan_mac
 		;;
-	jdcloud,re-cp-03)
-		wan_mac=$(mmc_get_mac_binary factory 0x2a)
-		lan_mac=$(mmc_get_mac_binary factory 0x24)
-		label_mac=$lan_mac
-		;;
 	mercusys,mr90x-v1)
 		label_mac=$(get_mac_binary "/tmp/tp_data/default-mac" 0)
 		lan_mac=$label_mac
@@ -159,6 +157,11 @@ mediatek_setup_macs()
 		lan_mac=$(mtd_get_mac_ascii factory lanMac)
 		wan_mac=$(macaddr_add "$lan_mac" 1)
 		label_mac=$wan_mac
+		;;
+	ruijie,rg-x60-pro)
+		label_mac=$(mtd_get_mac_ascii product_info ethaddr)
+		wan_mac=$label_mac
+		lan_mac=$(macaddr_add "$label_mac" 1)
 		;;
 	smartrg,sdg-8612|\
 	smartrg,sdg-8614|\

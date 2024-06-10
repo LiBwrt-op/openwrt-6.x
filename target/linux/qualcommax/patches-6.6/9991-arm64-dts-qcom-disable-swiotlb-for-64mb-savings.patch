@@ -55,7 +55,7 @@
  	keys {
 --- a/arch/arm64/boot/dts/qcom/ipq8072-ax880.dts
 +++ b/arch/arm64/boot/dts/qcom/ipq8072-ax880.dts
-@@ -29,7 +29,7 @@
+@@ -30,7 +30,7 @@
  
  	chosen {
  		stdout-path = "serial0:115200n8";

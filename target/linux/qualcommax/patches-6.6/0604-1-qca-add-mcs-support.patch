@@ -64,7 +64,7 @@
  #endif
 --- a/net/bridge/br_netlink.c
 +++ b/net/bridge/br_netlink.c
-@@ -656,6 +656,7 @@ void br_info_notify(int event, const str
+@@ -657,6 +657,7 @@ void br_info_notify(int event, const str
  		kfree_skb(skb);
  		goto errout;
  	}
