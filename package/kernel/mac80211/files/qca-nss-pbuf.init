@@ -121,6 +121,8 @@ apply_nss_config() {
     redmi,ax6 | \
     xiaomi,ax3600 | \
     zte,mf269 | \
+    glinet,gl-ax1800 | \
+    glinet,gl-axt1800 | \
     512m*)
       extra_pbuf_core0=3100000  n2h_high_water_core0=30624 n2h_wifi_pool_buf=8192 apply_sysctl
       ;;
