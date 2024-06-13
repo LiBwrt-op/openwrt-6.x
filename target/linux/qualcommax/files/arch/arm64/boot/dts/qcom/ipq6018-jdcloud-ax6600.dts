@@ -8,6 +8,9 @@
 /dts-v1/;
 
 #include "ipq6018.dtsi"
+#include "ipq6018-512m.dtsi"
+#include "ipq6018-ess.dtsi"
+#include "ipq6018-nss.dtsi"
 // #include "ipq6018-cpr-regulator.dtsi"
 #include "ipq6000-cpu-opp.dtsi"
 #include <dt-bindings/input/input.h>
@@ -408,13 +411,6 @@
 				port_mac_sel = "QGMAC_PORT";
 			};
 		};
-	};
-
-	nss-macsec0 {
-		compatible = "qcom,nss-macsec";
-		phy_addr = <0x18>;
-		phy_access_mode = <0>;
-		mdiobus = <&mdio>;
 	};
 
 	keys {
