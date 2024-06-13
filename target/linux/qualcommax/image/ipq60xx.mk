@@ -66,7 +66,7 @@ define Device/jdc_ax6600
 	DEVICE_VENDOR := JD Cloud
 	DEVICE_MODEL := JDC AX6600
 	DEVICE_DTS_CONFIG := config@cp03-c2
-	DEVICE_DTS := ipq6018-jdc-ax6600
+	DEVICE_DTS := ipq6018-jdcloud-ax6600
 	SOC := ipq6018
 	DEVICE_PACKAGES := ipq-wifi-jdc_ax6600 kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
 	BLOCKSIZE := 64k
