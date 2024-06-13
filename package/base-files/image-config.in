@@ -165,10 +165,10 @@ if VERSIONOPT
 	config VERSION_DIST
 		string
 		prompt "Release distribution"
-		default "OpenWrt"
+		default "LiBwrt"
 		help
 			This is the name of the release distribution.
-			If unspecified, it defaults to OpenWrt.
+			If unspecified, it defaults to LiBwrt.
 
 	config VERSION_NUMBER
 		string
