@@ -60,6 +60,21 @@ define Device/jdc_ax1800-pro
 endef
 TARGET_DEVICES += jdc_ax1800-pro
 
+define Device/jdc_ax6600
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := JD Cloud
+	DEVICE_MODEL := JDC AX6600
+	DEVICE_DTS_CONFIG := config@cp03-c2
+	DEVICE_DTS := ipq6018-jdc-ax6600
+	SOC := ipq6018
+	DEVICE_PACKAGES := ipq-wifi-jdc_ax6600 kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
+	BLOCKSIZE := 64k
+	KERNEL_SIZE := 6144k
+	IMAGE/factory.bin := append-kernel | pad-to $${KERNEL_SIZE}  |  append-rootfs | append-metadata
+endef
+TARGET_DEVICES += jdc_ax6600
+
 define Device/netgear_wax214
        $(call Device/FitImage)
        $(call Device/UbiFit)
