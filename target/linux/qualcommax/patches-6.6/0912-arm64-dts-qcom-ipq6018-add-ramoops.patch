@@ -5,9 +5,9 @@
  			no-map;
  		};
 +
-+		ramoops_region: ramoops@50000000 {
++		ramoops_region: ramoops@50200000 {
 +			compatible = "ramoops";
-+			reg = <0x0 0x50000000 0x0 0x100000>;
++			reg = <0x0 0x50200000 0x0 0x100000>;
 +			no-map;
 +			record-size = <0x1000>;
 +		};

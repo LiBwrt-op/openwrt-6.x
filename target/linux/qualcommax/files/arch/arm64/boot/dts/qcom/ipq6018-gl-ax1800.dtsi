@@ -39,7 +39,7 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
-		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1";
+		bootargs-append = " root=/dev/ubiblock0_1";
 	};
 
 
@@ -270,6 +270,7 @@
 
 	switch_lan_bmp = <(ESS_PORT2|ESS_PORT3)>; /* lan port bitmap */
 	switch_wan_bmp = <ESS_PORT1>; /* wan port bitmap */
+	switch_mac_mode = <MAC_MODE_PSGMII>;
 	
 	qcom,port_phyinfo {
 		port@0 {

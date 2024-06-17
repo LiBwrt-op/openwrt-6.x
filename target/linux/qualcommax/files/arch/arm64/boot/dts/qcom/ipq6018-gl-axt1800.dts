@@ -59,7 +59,7 @@
 	};
 
 	pwm_pins: pwm_pinmux {
-		pwm {
+		pinmux {
 			pins = "gpio30";
 			function = "pwm13";
 			drive-strength = <8>;
@@ -105,11 +105,9 @@
 				220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239
 				240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255>;
 	};
-
 };
 
-
-&pwm{
+&pwm {
 	pinctrl-0 = <&pwm_pins>;
 	pinctrl-names = "default";
 	status = "okay";
