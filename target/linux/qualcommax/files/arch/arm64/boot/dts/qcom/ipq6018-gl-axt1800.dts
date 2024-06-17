@@ -126,5 +126,5 @@
 };
 
 &wifi {
-	qcom,ath11k-calibration-variant = "GL-iNet-AX1800";
+	qcom,ath11k-calibration-variant = "GL-iNet-GL-AXT1800";
 };
