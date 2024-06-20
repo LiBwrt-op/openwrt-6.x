@@ -79,7 +79,7 @@
 +obj-$(CONFIG_SKB_RECYCLER) += skbuff_recycle.o
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -6016,10 +6016,16 @@ static int process_backlog(struct napi_s
+@@ -6043,10 +6043,16 @@ static int process_backlog(struct napi_s
  
  	napi->weight = READ_ONCE(dev_rx_weight);
  	while (again) {
