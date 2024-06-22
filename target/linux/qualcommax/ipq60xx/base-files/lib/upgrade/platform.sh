@@ -44,7 +44,8 @@ platform_do_upgrade() {
 		nand_do_upgrade "$1"
 		;;
 	redmi,ax5-jdcloud|\
-	jdc,ax1800-pro)
+	jdcloud,ax1800-pro|\
+    jdcloud,ax6600)
 		kernelname="0:HLOS"
 		rootfsname="rootfs"
 		mmc_do_upgrade "$1"

@@ -27,7 +27,7 @@
 
 / {
 	model = "JDCloud AX1800 Pro";
-	compatible = "jdc,ax1800-pro", "qcom,ipq6018-cp03", "qcom,ipq6018";
+	compatible = "jdcloud,ax1800-pro", "qcom,ipq6018-cp03", "qcom,ipq6018";
 
 	aliases {
 		sdhc1 = &sdhc_1;

@@ -45,20 +45,35 @@ define Device/glinet_gl-axt1800
 endef
 TARGET_DEVICES += glinet_gl-axt1800
 
-define Device/jdc_ax1800-pro
+define Device/jdcloud_ax1800-pro
 	$(call Device/FitImage)
 	$(call Device/EmmcImage)
-	DEVICE_VENDOR := JD Cloud
-	DEVICE_MODEL := JDC AX1800 Pro
+	DEVICE_VENDOR := JDCloud
+	DEVICE_MODEL := AX1800 Pro
 	DEVICE_DTS_CONFIG := config@cp03-c2
-	DEVICE_DTS := ipq6018-jdc-ax1800-pro
+	DEVICE_DTS := ipq6018-jdcloud-ax1800-pro
 	SOC := ipq6018
-	DEVICE_PACKAGES := ipq-wifi-jdc_ax1800-pro kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
+	DEVICE_PACKAGES := ipq-wifi-jdcloud_ax1800-pro kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
 	BLOCKSIZE := 64k
 	KERNEL_SIZE := 6144k
 	IMAGE/factory.bin := append-kernel | pad-to $${KERNEL_SIZE}  |  append-rootfs | append-metadata
 endef
-TARGET_DEVICES += jdc_ax1800-pro
+TARGET_DEVICES += jdcloud_ax1800-pro
+
+define Device/jdcloud_ax6600
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := JDCloud
+	DEVICE_MODEL := AX6600
+	DEVICE_DTS_CONFIG := config@cp03-c3
+	DEVICE_DTS := ipq6018-jdcloud-ax6600
+	SOC := ipq6018
+	DEVICE_PACKAGES := ipq-wifi-jdcloud_ax6600 kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
+	BLOCKSIZE := 64k
+	KERNEL_SIZE := 6144k
+	IMAGE/factory.bin := append-kernel | pad-to $${KERNEL_SIZE}  |  append-rootfs | append-metadata
+endef
+TARGET_DEVICES += jdcloud_ax6600
 
 define Device/netgear_wax214
        $(call Device/FitImage)

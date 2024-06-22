@@ -12,9 +12,7 @@ case "$FIRMWARE" in
 	8devices,mango-dvk)
 		caldata_extract "0:ART" 0x1000 0x20000
 		;;
-	netgear,wax214)
-		caldata_extract "0:art" 0x1000 0x10000
-		;;
+	netgear,wax214|\
 	cmiot,ax18|\
 	zn,m2|\
 	qihoo,v6|\
@@ -25,7 +23,8 @@ case "$FIRMWARE" in
 		caldata_extract "0:art" 0x1000 0x10000
 		;;
 	redmi,ax5-jdcloud|\
-	jdc,ax1800-pro)
+	jdcloud,ax1800-pro|\
+    jdcloud,ax6600)
 		caldata_extract_mmc "0:ART" 0x1000 0x10000
 		;;
 	yuncore,fap650)
