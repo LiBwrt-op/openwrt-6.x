@@ -16,7 +16,7 @@ DEFAULT_PACKAGES += \
 	kmod-leds-gpio kmod-gpio-button-hotplug \
 	kmod-qca-nss-dp kmod-ath11k-ahb \
 	wpad-openssl uboot-envtools \
-	e2fsprogs kmod-fs-ext4 losetup cpufreq\
+	e2fsprogs kmod-fs-ext4 losetup cpufreq autocore\
 	nss-firmware-ipq6018 kmod-qca-nss-drv-bridge-mgr kmod-qca-nss-drv-clmapmgr kmod-qca-nss-drv-eogremgr kmod-qca-nss-drv-gre \
 	kmod-qca-nss-drv-igs kmod-qca-nss-drv-l2tpv2 kmod-qca-nss-drv-lag-mgr kmod-qca-nss-drv-map-t kmod-qca-mcs kmod-qca-nss-ecm \
 	kmod-qca-nss-drv-match kmod-qca-nss-drv-mirror kmod-qca-nss-drv-pppoe kmod-qca-nss-drv-pptp kmod-qca-nss-drv-pvxlanmgr kmod-qca-nss-drv-qdisc \
