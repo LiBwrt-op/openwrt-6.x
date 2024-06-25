@@ -24,7 +24,7 @@
 	};
 
 	chosen {
-		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1";
+		bootargs-append = " root=/dev/ubiblock0_1";
 	};
 
 	keys {

@@ -92,6 +92,8 @@
 };
 
 &tlmm {
+	gpio-reserved-ranges = <20 1>;
+
 	compatible = "qcom,ipq6000-pinctrl";
 
 	spi_1_pins: spi_1_pins {

@@ -32,7 +32,7 @@
 	};
 
 	chosen {
-		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1 coherent_pool=2M";
+		bootargs-append = " root=/dev/ubiblock0_1";
 	};
 
 	leds {
