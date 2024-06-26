@@ -27,7 +27,7 @@ HOST_CFLAGS += $(HOST_FPIC)
 
 HOST_CONFIGURE_ARGS += \
 	--disable-elf-shlibs \
-	--enable-libuuid \
+	--disable-libuuid \
 	--disable-tls \
 	--disable-nls \
 	--enable-threads=pth \
@@ -38,18 +38,8 @@ define Host/Prepare
 	rm -rf $(HOST_BUILD_DIR)/doc
 endef
 
-define Host/Install
-	$(Host/Install/Default)
-	$(MAKE) -C $(HOST_BUILD_DIR)/lib/uuid install
-	mkdir -p $(STAGING_DIR_HOST)/include/e2fsprogs
-	$(CP) $(STAGING_DIR_HOST)/include/uuid $(STAGING_DIR_HOST)/include/e2fsprogs/
-	rm -rf $(STAGING_DIR_HOST)/include/uuid
-	$(INSTALL_DATA) $(HOST_BUILD_DIR)/lib/uuid/libuuid.a $(STAGING_DIR_HOST)/lib/
-endef
-
-define Host/Clean
-	rm -f $(STAGING_DIR_HOST)/bin/e2fsck
-	rm -f $(STAGING_DIR_HOST)/bin/tune2fs
+define Host/Uninstall
+	-$(call Host/Compile/Default,uninstall)
 endef
 
 $(eval $(call HostBuild))
