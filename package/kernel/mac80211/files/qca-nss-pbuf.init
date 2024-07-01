@@ -113,7 +113,7 @@ apply_nss_config() {
 	  qihoo,v6|\
 	  redmi,ax5|\
 	  redmi,ax5-jdcloud|\
-    jdc,ax1800-pro|\
+    jdcloud,ax1800-pro|\
 	  xiaomi,ax1800|\
     edimax,cax1800 | \
     compex,wpq873 | \
