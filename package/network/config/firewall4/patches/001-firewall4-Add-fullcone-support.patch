@@ -26,7 +26,7 @@ Renew: ZiMing Mo <msylgj@immortalwrt.org>
  	option forward		REJECT
  # Uncomment this line to disable ipv6 rules
  #	option disable_ipv6	1
-+	option flow_offloading 1
++	option flow_offloading 0
 +	option fullcone 1
 +	option fullcone6 0
 
