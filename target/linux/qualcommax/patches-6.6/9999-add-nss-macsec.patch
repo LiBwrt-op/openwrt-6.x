@@ -1,8 +1,8 @@
 --- a/arch/arm64/boot/dts/qcom/ipq8074-nss.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074-nss.dtsi
-@@ -268,4 +268,10 @@
- 			};
- 		};
+@@ -9,6 +9,12 @@
+ 		regulator-always-on;
+ 		regulator-boot-on;
  	};
 +	nss-macsec1 {
 +		compatible = "qcom,nss-macsec";
@@ -11,3 +11,5 @@
 +		mdiobus = <&mdio>;
 +	};
  };
+ 
+ &soc {
