@@ -37,6 +37,11 @@ yuncore,fap650)
 	[ -n "$idx" ] && \
 		ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x10000" "0x10000"
 	;;
+linksys,mr7350)
+	idx="$(find_mtd_index u_env)"
+	[ -n "$idx" ] && \
+		ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x40000" "0x20000" "2"
+	;;
 esac
 
 config_load ubootenv
