@@ -55,7 +55,19 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
  #define PHY_PMA_MGBT_POLARITY	0x82
  #define PHY_MDI_MDI_X_MASK	GENMASK(1, 0)
  #define PHY_MDI_MDI_X_NORMAL	0x3
-@@ -260,6 +267,35 @@ out:
+@@ -228,7 +235,10 @@ static int gpy_ack_interrupt(struct phy_
+ 
+ 	/* Clear all pending interrupts */
+ 	ret = phy_read(phydev, PHY_ISTAT);
+-	return ret < 0 ? ret : 0;
++	if (ret < 0)
++		return ret;
++
++	return gpy_led_write(phydev);
+ }
+ 
+ static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
+@@ -270,6 +280,35 @@ out:
  	return ret;
  }
  
@@ -90,16 +102,4 @@ Signed-off-by: David Bauer <mail@david-bauer.net>
 +
  static int gpy_config_init(struct phy_device *phydev)
  {
- 	int ret;
-@@ -271,7 +307,10 @@ static int gpy_config_init(struct phy_de
- 
- 	/* Clear all pending interrupts */
- 	ret = phy_read(phydev, PHY_ISTAT);
--	return ret < 0 ? ret : 0;
-+	if (ret < 0)
-+		return ret;
-+
-+	return gpy_led_write(phydev);
- }
- 
- static int gpy_probe(struct phy_device *phydev)
+ 	/* Nothing to configure. Configuration Requirement Placeholder */
