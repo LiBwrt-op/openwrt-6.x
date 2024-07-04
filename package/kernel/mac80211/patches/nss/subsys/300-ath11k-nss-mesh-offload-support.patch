@@ -96,7 +96,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
  };
  
  /**
-@@ -1777,6 +1795,7 @@ struct ieee80211_channel_switch {
+@@ -1782,6 +1800,7 @@ struct ieee80211_channel_switch {
   *	this is not pure P2P vif.
   * @IEEE80211_VIF_DISABLE_SMPS_OVERRIDE: disable user configuration of
   *	SMPS mode via debugfs.
@@ -104,7 +104,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
   */
  enum ieee80211_vif_flags {
  	IEEE80211_VIF_BEACON_FILTER		= BIT(0),
-@@ -1784,6 +1803,7 @@ enum ieee80211_vif_flags {
+@@ -1789,6 +1808,7 @@ enum ieee80211_vif_flags {
  	IEEE80211_VIF_SUPPORTS_UAPSD		= BIT(2),
  	IEEE80211_VIF_GET_NOA_UPDATE		= BIT(3),
  	IEEE80211_VIF_DISABLE_SMPS_OVERRIDE	= BIT(4),
@@ -112,7 +112,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
  };
  
  
-@@ -2771,6 +2791,7 @@ enum ieee80211_hw_flags {
+@@ -2776,6 +2796,7 @@ enum ieee80211_hw_flags {
  	IEEE80211_HW_DETECTS_COLOR_COLLISION,
  	IEEE80211_HW_MLO_MCAST_MULTI_LINK_TX,
  	IEEE80211_HW_SUPPORTS_NSS_OFFLOAD,
@@ -120,7 +120,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
  
  	/* keep last, obviously */
  	NUM_IEEE80211_HW_FLAGS
-@@ -4271,6 +4292,8 @@ struct ieee80211_prep_tx_info {
+@@ -4276,6 +4297,8 @@ struct ieee80211_prep_tx_info {
   * @set_sar_specs: Update the SAR (TX power) settings.
   * @sta_set_decap_offload: Called to notify the driver when a station is allowed
   *	to use rx decapsulation offload
@@ -129,7 +129,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
   * @add_twt_setup: Update hw with TWT agreement parameters received from the peer.
   *	This callback allows the hw to check if requested parameters
   *	are supported and if there is enough room for a new agreement.
-@@ -4654,6 +4677,12 @@ struct ieee80211_ops {
+@@ -4659,6 +4682,12 @@ struct ieee80211_ops {
  	void (*sta_set_decap_offload)(struct ieee80211_hw *hw,
  				      struct ieee80211_vif *vif,
  				      struct ieee80211_sta *sta, bool enabled);
@@ -142,7 +142,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
  	void (*add_twt_setup)(struct ieee80211_hw *hw,
  			      struct ieee80211_sta *sta,
  			      struct ieee80211_twt_setup *twt);
-@@ -7512,4 +7541,100 @@ int ieee80211_set_active_links(struct ie
+@@ -7517,4 +7546,100 @@ int ieee80211_set_active_links(struct ie
  void ieee80211_set_active_links_async(struct ieee80211_vif *vif,
  				      u16 active_links);
  
@@ -1229,7 +1229,7 @@ Signed-off-by: Gautham Kumar Senthilkumaran <quic_gauthamk@quicinc.com>
  	struct ieee80211_sub_if_data *ap_sdata;
  
  	if (unlikely(!ieee80211_sdata_running(sdata) || skb->len < ETH_HLEN)) {
-@@ -4360,9 +4371,15 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4358,9 +4369,15 @@ void __ieee80211_subif_start_xmit(struct
  			goto out;
  		}
  

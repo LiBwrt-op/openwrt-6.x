@@ -23,11 +23,10 @@ Signed-off-by: Aaradhana Sahu <quic_aarasahu@quicinc.com>
  						      IEEE80211_FCTL_TODS);
 -
 -		fastrx.internal_forward = 0;
--		break;
 +		fastrx.da_offs = offsetof(struct ieee80211_hdr, addr3);
 +		fastrx.sa_offs = offsetof(struct ieee80211_hdr, addr4);
-+		break; 
-+		
+ 		break;
++
  	default:
  		goto clear;
  	}

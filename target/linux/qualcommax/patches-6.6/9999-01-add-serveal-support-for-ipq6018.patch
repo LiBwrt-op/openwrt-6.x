@@ -40,7 +40,7 @@
 +			reg = <0x0 0x50100000 0x0 0x00100000>;
 +		};
  
- 		ramoops_region: ramoops@50200000 {
+ 		ramoops_region: ramoops@50000000 {
  			compatible = "ramoops";
 @@ -424,8 +445,12 @@
  		gcc: gcc@1800000 {
