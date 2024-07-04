@@ -1170,7 +1170,6 @@ endef
 
 $(eval $(call KernelPackage,crypto-xts))
 
-<<<<<<< HEAD
 define KernelPackage/crypto-qce
   TITLE:=QTI Crypto Engine (QCE)
   KCONFIG:= \
@@ -1188,17 +1187,3 @@ define KernelPackage/crypto-qce
 endef
 
 $(eval $(call KernelPackage,crypto-qce))
-=======
-
-define KernelPackage/crypto-xxhash
-  TITLE:=xxHash non-cryptographic hash algorithm
-  DEPENDS:=+kmod-crypto-hash +kmod-lib-xxhash
-  KCONFIG:=CONFIG_CRYPTO_XXHASH
-  FILES:=$(LINUX_DIR)/crypto/xxhash_generic.ko
-  AUTOLOAD:=$(call AutoLoad,09,xxhash_generic)
-  $(call AddDepends/crypto)
-endef
-
-$(eval $(call KernelPackage,crypto-xxhash))
-
->>>>>>> op/main
