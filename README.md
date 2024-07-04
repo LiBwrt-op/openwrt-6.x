@@ -26,7 +26,7 @@
 3. 下载源代码，更新 feeds 并选择配置
 
    ```bash
-   git clone -b main --single-branch https://github.com/King-Of-Knights/openwrt-6.x.git
+   git clone --depth 1 -b main --single-branch https://github.com/breeze303/openwrt-6.x.git
    cd openwrt-6.x
    ./scripts/feeds update -a && ./scripts/feeds install -a
    make menuconfig
