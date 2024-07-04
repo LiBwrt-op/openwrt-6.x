@@ -81,6 +81,18 @@ endef
 $(eval $(call KernelPackage,crypto-authenc))
 
 
+define KernelPackage/crypto-blake2b
+  TITLE:=Support for BLAKE2b cryptographic hash function (RFC 7693)
+  DEPENDS:=+kmod-crypto-hash
+  KCONFIG:=CONFIG_CRYPTO_BLAKE2B
+  FILES:=$(LINUX_DIR)/crypto/blake2b_generic.ko
+  AUTOLOAD:=$(call AutoLoad,09,blake2b_generic)
+  $(call AddDepends/crypto)
+endef
+
+$(eval $(call KernelPackage,crypto-blake2b))
+
+
 define KernelPackage/crypto-cbc
   TITLE:=Cipher Block Chaining CryptoAPI module
   DEPENDS:=+kmod-crypto-manager
@@ -1158,20 +1170,15 @@ endef
 
 $(eval $(call KernelPackage,crypto-xts))
 
-define KernelPackage/crypto-qce
-  TITLE:=QTI Crypto Engine (QCE)
-  KCONFIG:= \
-	CONFIG_CRYPTO_DEV_QCE \
-	CONFIG_CRYPTO_DEV_QCE_AEAD=y \
-	CONFIG_CRYPTO_DEV_QCE_ENABLE_ALL=y \
-	CONFIG_CRYPTO_DEV_QCE_SHA=y \
-	CONFIG_CRYPTO_DEV_QCE_SKCIPHER=y \
-	CONFIG_CRYPTO_DEV_QCE_SW_MAX_LEN=512
-  FILES:= \
-	$(LINUX_DIR)/drivers/crypto/qce/qcrypto.ko
-  AUTOLOAD:=$(call AutoLoad,09,qcrypto)
-  DEPENDS:=@TARGET_qualcommax +kmod-crypto-manager +kmod-crypto-hash +kmod-crypto-des
+
+define KernelPackage/crypto-xxhash
+  TITLE:=xxHash non-cryptographic hash algorithm
+  DEPENDS:=+kmod-crypto-hash +kmod-lib-xxhash
+  KCONFIG:=CONFIG_CRYPTO_XXHASH
+  FILES:=$(LINUX_DIR)/crypto/xxhash_generic.ko
+  AUTOLOAD:=$(call AutoLoad,09,xxhash_generic)
   $(call AddDepends/crypto)
 endef
 
-$(eval $(call KernelPackage,crypto-qce))
+$(eval $(call KernelPackage,crypto-xxhash))
+
