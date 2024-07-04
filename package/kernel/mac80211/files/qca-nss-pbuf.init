@@ -120,6 +120,7 @@ apply_nss_config() {
 	  redmi,ax5|\
 	  redmi,ax5-jdcloud|\
     jdcloud,ax1800-pro|\
+    jdcloud,ax6600|\
 	  xiaomi,ax1800|\
     edimax,cax1800|\
     compex,wpq873|\
