@@ -135,6 +135,7 @@
 		ranges;
 
 		wifi@1,0 {
+			status = "okay";
 			compatible = "pci17cb,1104";
 			qcom,ath11k-calibration-variant = "JDC-AX1800-Pro";
 			reg = <0x00010000 0 0 0 0>;
