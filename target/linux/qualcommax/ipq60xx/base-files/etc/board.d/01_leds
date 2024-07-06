@@ -20,7 +20,7 @@ case "$board" in
     redmi,ax5-jdcloud|\
     jdcloud,ax1800-pro|\
     jdcloud,ax6600)
-        ucidef_set_led_netdev "wan" "WAN" "net_blue" "eth3"
+        ucidef_set_led_netdev "wan" "WAN" "green:wan" "eth3" "link"
         ;;
     yuncore,fap650)
 	ucidef_set_led_netdev "wlan5ghz" "WLAN 5GHz LED" "blue:wlan-5ghz" "wlan0" "tx rx"
