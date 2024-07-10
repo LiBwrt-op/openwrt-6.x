@@ -25,4 +25,3 @@
 &ramoops_region {
 	reg = <0x0 0x4e200000 0x0 0x100000>;
 };
-
