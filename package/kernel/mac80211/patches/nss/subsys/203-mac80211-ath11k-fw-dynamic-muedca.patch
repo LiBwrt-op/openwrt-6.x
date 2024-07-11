@@ -237,19 +237,19 @@ Signed-off-by: Muna Sinada <msinada@codeaurora.org>
 +	),
 +	TP_fast_assign(
 +		WIPHY_ASSIGN;
-+		__entry->mu_qos_info = params->mu_qos_info
-+		__entry->be_aifsn = params->ac_be.aifsn
-+		__entry->be_ecw_min_max = params->ac_be.ecw_min_max
-+		__entry->be_mu_edca_timer = params->ac_be.mu_edca_timer
-+		__entry->bk_aifsn = params->ac_bk.aifsn
-+		__entry->bk_ecw_min_max = params->ac_bk.ecw_min_max
-+		__entry->bk_mu_edca_timer = params->ac_bk.mu_edca_timer
-+		__entry->vi_aifsn = params->ac_vi.aifsn
-+		__entry->vi_ecw_min_max = params->ac_vi.ecw_min_max
-+		__entry->vi_mu_edca_timer = params->ac_vi.mu_edca_timer
-+		__entry->vo_aifsn = params->ac_vo.aifsn
-+		__entry->vo_ecw_min_max = params->ac_vo.ecw_min_max
-+		__entry->vo_mu_edca_timer = params->ac_vo.mu_edca_timer
++		__entry->mu_qos_info = params->mu_qos_info;
++		__entry->be_aifsn = params->ac_be.aifsn;
++		__entry->be_ecw_min_max = params->ac_be.ecw_min_max;
++		__entry->be_mu_edca_timer = params->ac_be.mu_edca_timer;
++		__entry->bk_aifsn = params->ac_bk.aifsn;
++		__entry->bk_ecw_min_max = params->ac_bk.ecw_min_max;
++		__entry->bk_mu_edca_timer = params->ac_bk.mu_edca_timer;
++		__entry->vi_aifsn = params->ac_vi.aifsn;
++		__entry->vi_ecw_min_max = params->ac_vi.ecw_min_max;
++		__entry->vi_mu_edca_timer = params->ac_vi.mu_edca_timer;
++		__entry->vo_aifsn = params->ac_vo.aifsn;
++		__entry->vo_ecw_min_max = params->ac_vo.ecw_min_max;
++		__entry->vo_mu_edca_timer = params->ac_vo.mu_edca_timer;
 +	),
 +	TP_printk(WIPHY_PR_FMT ", MU QOS info: %u", WIPHY_PR_ARG,
 +		  __entry->mu_qos_info)
