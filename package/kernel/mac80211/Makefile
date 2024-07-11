@@ -11,7 +11,11 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=mac80211
 
 PKG_VERSION:=6.6.15
+<<<<<<< HEAD
 PKG_RELEASE:=14
+=======
+PKG_RELEASE:=15
+>>>>>>> qos/qualcommax-6.x-nss-wifi
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=COPYING
 
@@ -309,6 +313,13 @@ ifdef CONFIG_ATH11K_NSS_SUPPORT
 	IREMAP_CFLAGS+=-I$(STAGING_DIR)/usr/include/qca-nss-drv -I$(STAGING_DIR)/usr/include/qca-nss-clients
 endif
 
+<<<<<<< HEAD
+=======
+ifeq ($(CONFIG_NSS_FIRMWARE_VERSION_11_4),y)
+	C_DEFINES+=-DCONFIG_NSS_FIRMWARE_VERSION_11_4
+endif
+
+>>>>>>> qos/qualcommax-6.x-nss-wifi
 config-$(CONFIG_PACKAGE_MAC80211_NSS_SUPPORT) += MAC80211_NSS_SUPPORT
 
 MAKE_OPTS:= \
