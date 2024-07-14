@@ -380,7 +380,7 @@ define KernelPackage/ath11k/config
        choice
             prompt "Memory Profile"
             depends on PACKAGE_kmod-ath11k
-            default ATH11K_MEM_PROFILE_512M
+            default ATH11K_MEM_PROFILE_1G
             help
             	This option allows you to select the memory profile.
             	It should correspond to the total RAM of your board.
