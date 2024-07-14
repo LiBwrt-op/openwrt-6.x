@@ -6,9 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware/qca-wireless.git
-PKG_SOURCE_DATE:=2024-06-30
-PKG_SOURCE_VERSION:=e82cba7e7ce79a04d2b658c20ac9be387ccc1dd9
-PKG_MIRROR_HASH:=c71ad9785bf382a80b4c9042f1f19da8737dc85cd11e49f18881dee94df61efd
+PKG_SOURCE_DATE:=2024-07-04
+PKG_SOURCE_VERSION:=fcdb2e74a6e4518266679292071c8f47f87b4df2
+PKG_MIRROR_HASH:=bfa2388468eb74221c7d1696089bb8ad3ca2b3b27ebff657f1962a6bbe6ccc11
 PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
@@ -29,6 +29,7 @@ endef
 ALLWIFIBOARDS:= \
 	8devices_mango \
 	arcadyan_aw1000 \
+	asus_rt-ax89x \
 	buffalo_wxr-5950ax12 \
   cmiot_ax18 \
 	cmcc_rm2-6 \
@@ -163,6 +164,7 @@ endef
 
 $(eval $(call generate-ipq-wifi-package,8devices_mango,8devices Mango))
 $(eval $(call generate-ipq-wifi-package,arcadyan_aw1000,Arcadyan AW1000))
+$(eval $(call generate-ipq-wifi-package,asus_rt-ax89x,Asus RT-AX89X))
 $(eval $(call generate-ipq-wifi-package,buffalo_wxr-5950ax12,Buffalo WXR-5950AX12))
 $(eval $(call generate-ipq-wifi-package,cmiot_ax18,CMIOT AX18))
 $(eval $(call generate-ipq-wifi-package,cmcc_rm2-6,CMCC RM2-6))
