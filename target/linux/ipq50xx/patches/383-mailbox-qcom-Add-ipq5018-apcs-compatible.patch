@@ -1,0 +1,25 @@
+From bf7c9ce914d992c3993d2d18c95a2f2ae130ce1e Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Tue, 14 Mar 2023 17:09:04 +0000
+Subject: [PATCH 3/4] mailbox: qcom: Add ipq5018 apcs compatible
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index cec34f0af6ce..4938e60a1a2a 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -143,6 +143,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+ 
+ /* .data is the offset of the ipc register within the global block */
+ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
++	{ .compatible = "qcom,ipq5018-apcs-apps-global", .data = &ipq6018_apcs_data },
+ 	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
+ 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
+ 	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
+-- 
+2.25.1
+

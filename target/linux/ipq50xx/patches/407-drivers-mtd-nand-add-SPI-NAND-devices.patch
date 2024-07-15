@@ -1,0 +1,75 @@
+From 8963f2d66180d5002209b93cfdc1dca4b9c521e1 Mon Sep 17 00:00:00 2001
+From: Vandhiadevan Karunamoorthy <vkarunam@codeaurora.org>
+Date: Tue, 2 Nov 2021 17:30:11 +0530
+Subject: [PATCH 7/7] drivers: mtd: nand: add SPI NAND devices
+
+This changes add the below given list of SPI NAND
+1. W25N01JW
+2. GD5F1GQ5REYIG
+3. F50D1G41LB
+4. GD5F4GQ6REYIHR
+5. W25N02JWZEIF
+6. MX35UF1GE4AC
+7. F50D2G41KA-83YIG2V
+8. DS35M1GA
+9. GD5F2GQ5REYIG
+
+Change-Id: Ib8f669b86e8cb8a30462a868fb4bbc5606142bba
+Signed-off-by: Vandhiadevan Karunamoorthy <vkarunam@codeaurora.org>
+
+Pick from https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/d9b8a8fcc227d9da867dca22f9c6e9a1e690650d
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/mtd/nand/raw/nand_ids.c | 35 +++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/drivers/mtd/nand/raw/nand_ids.c b/drivers/mtd/nand/raw/nand_ids.c
+index 03e472055d9e..b91ef498c9e3 100644
+--- a/drivers/mtd/nand/raw/nand_ids.c
++++ b/drivers/mtd/nand/raw/nand_ids.c
+@@ -66,6 +66,41 @@ struct nand_flash_dev nand_flash_ids[] = {
+ 		{ .id = {0x2c, 0x15} },
+ 		SZ_2K, SZ_128, SZ_128K, 0, 2, 128, NAND_ECC_INFO(8, SZ_512) },
+ 
++	{"MX35UF4GE4AD-Z4I SPI NAND 1G 1.8V",
++		{ .id = {0xc2, 0xb7} },
++		SZ_4K, SZ_512, SZ_256K, 0, 2, 256, NAND_ECC_INFO(8, SZ_512) },
++	{"GD5F1GQ5REYIH SPI NAND 1G 1.8V",
++		{ .id = {0xc8, 0x21} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"W25N01JW SPI NAND 1.8V 1G-BIT",
++		{ .id = {0xef, 0xbc} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"GD5F1GQ5REYIG SPI NAND 1G",
++		{ .id = {0xc8, 0x41} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 128, NAND_ECC_INFO(8, SZ_512) },
++	{"F50D1G41LB(2M) SPI NAND 1G 1.8V",
++		{ .id = {0xc8, 0x11} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"GD5F4GQ6REYIHR SPI NAND 4G 1.8V",
++		{ .id = {0xc8, 0x25} },
++		SZ_2K, SZ_512, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"W25N02JWZEIF SPI NAND 2G 1.8V",
++		{ .id = {0xef, 0xbf} },
++		SZ_2K, SZ_256, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"MX35UF1GE4AC SPI NAND 1G 1.8V",
++		{ .id = {0xc2, 0x92} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"F50D2G41KA-83YIG2V SPI NAND 2G 1.8V",
++		{ .id = {0xc8, 0x51} },
++		SZ_2K, SZ_256, SZ_128K, 0, 2, 128, NAND_ECC_INFO(8, SZ_512) },
++	{"DS35M1GA SPI NAND 1G 1.8V",
++		{ .id = {0xe5, 0x21} },
++		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
++	{"GD5F2GQ5REYIG SPI NAND 2G",
++		{ .id = {0xc8, 0x42} },
++		SZ_2K, SZ_256, SZ_128K, 0, 2, 128, NAND_ECC_INFO(8, SZ_512) },
++
++
+ 	LEGACY_ID_NAND("NAND 4MiB 5V 8-bit",   0x6B, 4, SZ_8K, SP_OPTIONS),
+ 	LEGACY_ID_NAND("NAND 4MiB 3,3V 8-bit", 0xE3, 4, SZ_8K, SP_OPTIONS),
+ 	LEGACY_ID_NAND("NAND 4MiB 3,3V 8-bit", 0xE5, 4, SZ_8K, SP_OPTIONS),
+-- 
+2.25.1
+

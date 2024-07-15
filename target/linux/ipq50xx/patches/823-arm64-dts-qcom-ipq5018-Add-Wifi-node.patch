@@ -1,0 +1,261 @@
+From 263e16c91fa3386e8a0776b0bdcd4adde74b68c8 Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Fri, 17 Mar 2023 21:47:05 +0000
+Subject: [PATCH 3/4] arm64: dts: qcom: ipq5018: Add Wifi node
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 238 ++++++++++++++++++++++++++
+ 1 file changed, 238 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index 6d0746e0486c..1ef5d33d2234 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -506,5 +506,243 @@
+ 			qcom,pvxlan-enabled;
+ 			qcom,udp-st-enabled;
+ 		};
++
++		q6v5_wcss: remoteproc@cd00000 {
++			compatible = "qcom,ipq5018-q6-mpd";
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++
++			reg = <0x0cd00000 0x4040>;
++
++			interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
++					      <&wcss_smp2p_in 0 0>,
++					      <&wcss_smp2p_in 1 0>,
++					      <&wcss_smp2p_in 2 0>,
++					      <&wcss_smp2p_in 3 0>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			resets = <&gcc GCC_WCSSAON_RESET>,
++				 <&gcc GCC_WCSS_BCR>,
++				 <&gcc GCC_WCSS_Q6_BCR>,
++				 <&gcc GCC_CE_BCR>;
++			reset-names = "wcss_aon_reset",
++				      "wcss_reset",
++				      "wcss_q6_reset",
++				      "ce_reset";
++
++			clocks = <&gcc GCC_Q6_AXIS_CLK>,
++				 <&gcc GCC_WCSS_AHB_S_CLK>,
++				 <&gcc GCC_WCSS_ECAHB_CLK>,
++				 <&gcc GCC_WCSS_ACMT_CLK>,
++				 <&gcc GCC_WCSS_AXI_M_CLK>,
++				 <&gcc GCC_Q6_AXIM_CLK>,
++				 <&gcc GCC_Q6_AXIM2_CLK>,
++				 <&gcc GCC_Q6_AHB_CLK>,
++				 <&gcc GCC_Q6_AHB_S_CLK>,
++				 <&gcc GCC_WCSS_AXI_S_CLK>;
++			clock-names = "gcc_q6_axis_clk",
++				      "gcc_wcss_ahb_s_clk",
++				      "gcc_wcss_ecahb_clk",
++				      "gcc_wcss_acmt_clk",
++				      "gcc_wcss_axi_m_clk",
++				      "gcc_q6_axim_clk",
++				      "gcc_q6_axim2_clk",
++				      "gcc_q6_ahb_clk",
++				      "gcc_q6_ahb_s_clk",
++				      "gcc_wcss_axi_s_clk";
++
++			qcom,smem-states = <&wcss_smp2p_out 0>,
++					   <&wcss_smp2p_out 1>;
++			qcom,smem-state-names = "shutdown",
++						"stop";
++
++			glink-edge {
++				interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 8>;
++
++				qrtr_requests {
++					qcom,glink-channels = "IPCRTR";
++				};
++			};
++		};
++
++		wifi0: wifi@c000000 {
++			compatible = "qcom,cnss-qca5018", "qcom,ipq5018-wifi";
++			reg = <0xc000000 0x1000000>;
++
++			qcom,rproc = <&q6v5_wcss>;
++			interrupts = <GIC_SPI 288 IRQ_TYPE_EDGE_RISING>, /* o_wcss_apps_intr[0] =  */
++				<GIC_SPI 289 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 290 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 292 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 293 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 294 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 295 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 297 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 298 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 299 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 300 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 301 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 302 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 303 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 304 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 305 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 306 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 307 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 308 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 309 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 310 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 311 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 312 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 313 IRQ_TYPE_EDGE_RISING>, /* o_wcss_apps_intr[25] */
++
++				<GIC_SPI 314 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 315 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 316 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 317 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 318 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 319 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 320 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 321 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 322 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 323 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 324 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
++
++				<GIC_SPI 326 IRQ_TYPE_EDGE_RISING>,
++
++				<GIC_SPI 327 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 328 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 329 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 330 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 331 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 332 IRQ_TYPE_EDGE_RISING>,
++
++				<GIC_SPI 333 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 334 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 335 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 342 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 336 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 337 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 338 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 339 IRQ_TYPE_EDGE_RISING>; /* o_wcss_apps_intr[51] */
++
++			interrupt-names = "misc-pulse1",
++					"misc-latch",
++					"sw-exception",
++					"ce0",
++					"ce1",
++					"ce2",
++					"ce3",
++					"ce4",
++					"ce5",
++					"ce6",
++					"ce7",
++					"ce8",
++					"ce9",
++					"ce10",
++					"ce11",
++					"host2wbm-desc-feed",
++					"host2reo-re-injection",
++					"host2reo-command",
++					"host2rxdma-monitor-ring3",
++					"host2rxdma-monitor-ring2",
++					"host2rxdma-monitor-ring1",
++					"reo2ost-exception",
++					"wbm2host-rx-release",
++					"reo2host-status",
++					"reo2host-destination-ring4",
++					"reo2host-destination-ring3",
++					"reo2host-destination-ring2",
++					"reo2host-destination-ring1",
++					"rxdma2host-monitor-destination-mac3",
++					"rxdma2host-monitor-destination-mac2",
++					"rxdma2host-monitor-destination-mac1",
++					"ppdu-end-interrupts-mac3",
++					"ppdu-end-interrupts-mac2",
++					"ppdu-end-interrupts-mac1",
++					"rxdma2host-monitor-status-ring-mac3",
++					"rxdma2host-monitor-status-ring-mac2",
++					"rxdma2host-monitor-status-ring-mac1",
++					"host2rxdma-host-buf-ring-mac3",
++					"host2rxdma-host-buf-ring-mac2",
++					"host2rxdma-host-buf-ring-mac1",
++					"rxdma2host-destination-ring-mac3",
++					"rxdma2host-destination-ring-mac2",
++					"rxdma2host-destination-ring-mac1",
++					"host2tcl-input-ring4",
++					"host2tcl-input-ring3",
++					"host2tcl-input-ring2",
++					"host2tcl-input-ring1",
++					"wbm2host-tx-completions-ring4",
++					"wbm2host-tx-completions-ring3",
++					"wbm2host-tx-completions-ring2",
++					"wbm2host-tx-completions-ring1",
++					"tcl2host-status-ring";
++
++			status = "disabled";
++		};
++
++		wifi1: wifi1@c000000 {
++			compatible = "qcom,cnss-qcn6122", "qcom,qcn6122-wifi";
++			msi-parent = <&v2m0>;
++			interrupts = <GIC_SPI 416 IRQ_TYPE_EDGE_RISING>;
++			status = "disabled";
++		};
++
++		wifi2: wifi2@c000000 {
++			compatible = "qcom,cnss-qcn6122", "qcom,qcn6122-wifi";
++			msi-parent = <&v2m0>;
++			interrupts = <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>;
++			status = "disabled";
++		};
++
++		wifi3: wifi3@f00000 {
++			compatible  = "qcom,cnss-qcn9000";
++			qcom,wlan-ramdump-dynamic = <0x400000>;
++			qrtr_node_id = <0x20>;
++			qca,auto-restart;
++			status = "disabled";
++		};
++
++		wifi4: wifi4@f00000 {
++			compatible  = "qcom,cnss-qcn9000";
++			qcom,wlan-ramdump-dynamic = <0x400000>;
++			qrtr_node_id = <0x21>;
++			qca,auto-restart;
++			status = "disabled";
++		};
++
++		wcss: wcss-smp2p {
++			compatible = "qcom,smp2p";
++			qcom,smem = <435>, <428>;
++
++			interrupt-parent = <&intc>;
++			interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
++
++			mboxes = <&apcs_glb 9>;
++
++			qcom,local-pid = <0>;
++			qcom,remote-pid = <1>;
++
++			wcss_smp2p_out: master-kernel {
++				qcom,entry-name = "master-kernel";
++				qcom,smp2p-feature-ssr-ack;
++				#qcom,smem-state-cells = <1>;
++			};
++
++			wcss_smp2p_in: slave-kernel {
++				qcom,entry-name = "slave-kernel";
++				interrupt-controller;
++				#interrupt-cells = <2>;
++			};
++		};
+ 	};
+ };
+-- 
+2.25.1
+

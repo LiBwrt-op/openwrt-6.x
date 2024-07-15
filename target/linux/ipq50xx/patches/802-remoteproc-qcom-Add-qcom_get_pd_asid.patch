@@ -1,0 +1,60 @@
+From 5b634205941367936b834b03ed219370e979fbf4 Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Tue, 7 Mar 2023 14:41:05 +0000
+Subject: [PATCH 2/4] remoteproc: qcom: Add qcom_get_pd_asid
+
+Spilt from <1678164097-13247-9-git-send-email-quic_mmanikan@quicinc.com>
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/remoteproc/qcom_common.c | 23 +++++++++++++++++++++++
+ drivers/remoteproc/qcom_common.h |  1 +
+ 2 files changed, 24 insertions(+)
+
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 9028cea2d81e..2e17b274db34 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -252,5 +252,28 @@ void qcom_remove_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr)
+ }
+ EXPORT_SYMBOL_GPL(qcom_remove_ssr_subdev);
+ 
++/**
++ * qcom_get_pd_asid() - get the pd asid number from DT node
++ * @node:	device tree node
++ *
++ * Returns asid if node name has 'pd' string
++ */
++s8 qcom_get_pd_asid(struct device_node *node)
++{
++	char *str;
++	u8 pd_asid;
++
++	if (!node)
++		return -EINVAL;
++
++	str = strstr(node->name, "pd");
++	if (!str)
++		return 0;
++
++	str += strlen("pd");
++	return kstrtos8(str, 10, &pd_asid) ? -EINVAL : pd_asid;
++}
++EXPORT_SYMBOL(qcom_get_pd_asid);
++
+ MODULE_DESCRIPTION("Qualcomm Remoteproc helper driver");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
+index 34e5188187dc..27c913003ce3 100644
+--- a/drivers/remoteproc/qcom_common.h
++++ b/drivers/remoteproc/qcom_common.h
+@@ -62,5 +62,6 @@ static inline void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon)
+ {
+ }
+ #endif
++s8 qcom_get_pd_asid(struct device_node *node);
+ 
+ #endif
+-- 
+2.25.1
+

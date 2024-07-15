@@ -1,0 +1,52 @@
+From 206c1e12a3836ce6863b259bd3273863af195586 Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Thu, 2 Mar 2023 17:04:24 +0000
+Subject: [PATCH 2/2] arm: dts: qcom: Add ipq5018 support
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ arch/arm/boot/dts/Makefile                   | 1 +
+ arch/arm/boot/dts/qcom-ipq5018-mp03.1-c2.dts | 4 ++++
+ arch/arm/boot/dts/qcom-ipq5018.dtsi          | 7 +++++++
+ 3 files changed, 12 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom-ipq5018-mp03.1-c2.dts
+ create mode 100644 arch/arm/boot/dts/qcom-ipq5018.dtsi
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index b21b3a64641a..6f88cb1c5d84 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -842,6 +842,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-ipq4019-ap.dk04.1-c3.dtb \
+ 	qcom-ipq4019-ap.dk07.1-c1.dtb \
+ 	qcom-ipq4019-ap.dk07.1-c2.dtb \
++	qcom-ipq5018-mp03.1-c2.dtb \
+ 	qcom-ipq8064-ap148.dtb \
+ 	qcom-ipq8064-rb3011.dtb \
+ 	qcom-msm8226-samsung-s3ve3g.dtb \
+diff --git a/arch/arm/boot/dts/qcom-ipq5018-mp03.1-c2.dts b/arch/arm/boot/dts/qcom-ipq5018-mp03.1-c2.dts
+new file mode 100644
+index 000000000000..361695870ed6
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom-ipq5018-mp03.1-c2.dts
+@@ -0,0 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0+
++
++#include "../../../arm64/boot/dts/qcom/ipq5018-mp03.1-c2.dts"
++#include "qcom-ipq5018.dtsi"
+diff --git a/arch/arm/boot/dts/qcom-ipq5018.dtsi b/arch/arm/boot/dts/qcom-ipq5018.dtsi
+new file mode 100644
+index 000000000000..b14bd7558d3b
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom-ipq5018.dtsi
+@@ -0,0 +1,7 @@
++// SPDX-License-Identifier: GPL-2.0
++
++/ {
++	pmu {
++		compatible = "arm,cortex-a7-pmu";
++	};
++};
+-- 
+2.25.1
+

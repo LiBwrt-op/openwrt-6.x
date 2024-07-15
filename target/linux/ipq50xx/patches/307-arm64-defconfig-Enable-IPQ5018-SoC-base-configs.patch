@@ -1,0 +1,39 @@
+From 0bb78c90f9a682277e73301e8325953d47ca6990 Mon Sep 17 00:00:00 2001
+From: Varadarajan Narayanan <varada@codeaurora.org>
+Date: Mon, 28 Sep 2020 10:45:40 +0530
+Subject: [PATCH 7/7] arm64: defconfig: Enable IPQ5018 SoC base configs
+
+Enables clk & pinctrl related configs
+
+Signed-off-by: Varadarajan Narayanan <varada@codeaurora.org>
+
+Pick from <1601270140-4306-8-git-send-email-varada@codeaurora.org>
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ arch/arm64/configs/defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index c9a867ac32d4..dd04f9414c4d 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -401,6 +401,7 @@ CONFIG_PINCTRL_IMX8MM=y
+ CONFIG_PINCTRL_IMX8QXP=y
+ CONFIG_PINCTRL_IMX8DXL=y
+ CONFIG_PINCTRL_MSM=y
++CONFIG_PINCTRL_IPQ5018=y
+ CONFIG_PINCTRL_IPQ8074=y
+ CONFIG_PINCTRL_IPQ6018=y
+ CONFIG_PINCTRL_MSM8916=y
+@@ -702,6 +703,7 @@ CONFIG_QCOM_A53PLL=y
+ CONFIG_QCOM_CLK_APCS_MSM8916=y
+ CONFIG_QCOM_CLK_SMD_RPM=y
+ CONFIG_QCOM_CLK_RPMH=y
++CONFIG_IPQ_GCC_5018=y
+ CONFIG_IPQ_GCC_8074=y
+ CONFIG_IPQ_GCC_6018=y
+ CONFIG_MSM_GCC_8916=y
+-- 
+2.25.1
+

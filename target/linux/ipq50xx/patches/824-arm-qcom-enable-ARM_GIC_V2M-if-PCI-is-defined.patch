@@ -1,0 +1,32 @@
+From 8be6129cc81dd8eb9a110a1b12afbc1334bf621c Mon Sep 17 00:00:00 2001
+From: Kathiravan T <kathirav@codeaurora.org>
+Date: Tue, 16 Mar 2021 13:35:57 +0530
+Subject: [PATCH 4/4] arm: qcom: enable ARM_GIC_V2M if PCI is defined
+
+Enable ARM_GIC_V2M if PCI is enabled in ARCH_QCOM.
+
+Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+Change-Id: I18789ec868d4dfd58cf90f933fe71edc44bdafb4
+
+Pick from https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/e09e0034811ae7007b533cc89c4c81d8e47bff77
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ arch/arm/mach-qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
+index ecbf3c4eb878..3b5efbf250af 100644
+--- a/arch/arm/mach-qcom/Kconfig
++++ b/arch/arm/mach-qcom/Kconfig
+@@ -7,6 +7,7 @@ menuconfig ARCH_QCOM
+ 	select ARM_AMBA
+ 	select PINCTRL
+ 	select QCOM_SCM if SMP
++	select ARM_GIC_V2M if PCI
+ 	help
+ 	  Support for Qualcomm's devicetree based systems.
+ 
+-- 
+2.25.1
+

@@ -1,0 +1,133 @@
+From 424c7e86813fc1395ab95f67e0ccd5db314fbca5 Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Tue, 7 Mar 2023 14:41:05 +0000
+Subject: [PATCH 1/4] firmware: qcom_scm: Add necessary function to load userpd
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/firmware/qcom_scm.c | 79 +++++++++++++++++++++++++++++++++++++
+ drivers/firmware/qcom_scm.h |  3 ++
+ include/linux/qcom_scm.h    |  3 ++
+ 3 files changed, 85 insertions(+)
+
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index a85466cfda58..02aa599ebdcf 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -651,6 +651,85 @@ static const struct reset_control_ops qcom_scm_pas_reset_ops = {
+ 	.deassert = qcom_scm_pas_reset_deassert,
+ };
+ 
++/**
++ * qcom_scm_pas_power_up() - Bring up internal radio userpd
++ * @peripheral:	peripheral id
++ *
++ * Return 0 on success.
++ */
++int qcom_scm_pas_power_up(u32 peripheral)
++{
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_PIL,
++		.cmd = QCOM_SCM_PIL_PAS_POWER_UP,
++		.arginfo = QCOM_SCM_ARGS(1),
++		.args[0] = peripheral,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++	int ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qcom_scm_pas_power_up);
++
++/**
++ * qcom_scm_pas_power_down() - Shut down internal radio userpd
++ * @peripheral: peripheral id
++ *
++ * Returns 0 on success.
++ */
++int qcom_scm_pas_power_down(u32 peripheral)
++{
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_PIL,
++		.cmd = QCOM_SCM_PIL_PAS_POWER_DOWN,
++		.arginfo = QCOM_SCM_ARGS(1),
++		.args[0] = peripheral,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++	int ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qcom_scm_pas_power_down);
++
++/**
++ * qcom_scm_pas_load_seg() - copy userpd PIL segments data to dma blocks
++ * @peripheral:		peripheral id
++ * @phno:		program header no
++ * @dma:		handle of dma region
++ * @seg_cnt:		no of dma blocks
++ *
++ * Returns 0 if trustzone successfully loads userpd PIL segments from dma
++ * blocks to DDR
++ */
++int qcom_scm_pas_load_seg(u32 peripheral, int phno, dma_addr_t dma, int seg_cnt)
++{
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_PIL,
++		.cmd = QCOM_SCM_PIL_PAS_LOAD_SEG,
++		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL, QCOM_SCM_RW, QCOM_SCM_VAL),
++		.args[0] = peripheral,
++		.args[1] = phno,
++		.args[2] = dma,
++		.args[3] = seg_cnt,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++	int ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qcom_scm_pas_load_seg);
++
+ int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val)
+ {
+ 	struct qcom_scm_desc desc = {
+diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+index 343ba3a470b5..eb5268308f2b 100644
+--- a/drivers/firmware/qcom_scm.h
++++ b/drivers/firmware/qcom_scm.h
+@@ -86,6 +86,9 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+ #define QCOM_SCM_PIL_PAS_SHUTDOWN	0x06
+ #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
+ #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
++#define QCOM_SCM_PIL_PAS_POWER_UP	0x17
++#define QCOM_SCM_PIL_PAS_POWER_DOWN	0x18
++#define QCOM_SCM_PIL_PAS_LOAD_SEG	0x19
+ 
+ #define QCOM_SCM_SVC_IO			0x05
+ #define QCOM_SCM_IO_READ		0x01
+diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+index 081dfc69eb8b..503a05f5e629 100644
+--- a/include/linux/qcom_scm.h
++++ b/include/linux/qcom_scm.h
+@@ -49,6 +49,9 @@ extern int qcom_scm_pas_mem_setup(u32 peripheral, phys_addr_t addr,
+ extern int qcom_scm_pas_auth_and_reset(u32 peripheral);
+ extern int qcom_scm_pas_shutdown(u32 peripheral);
+ extern bool qcom_scm_pas_supported(u32 peripheral);
++extern int qcom_scm_pas_power_up(u32 peripheral);
++extern int qcom_scm_pas_power_down(u32 peripheral);
++extern int qcom_scm_pas_load_seg(u32 peripheral, int phno, dma_addr_t dma, int seg_cnt);
+ 
+ extern int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+ extern int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
+-- 
+2.25.1
+

@@ -1,0 +1,63 @@
+From c75fc58f0f506f2e4bcdebdb0f85977fae1099e9 Mon Sep 17 00:00:00 2001
+From: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Date: Mon, 18 May 2020 14:00:32 +0530
+Subject: [PATCH 1/1] qcom: smp2p: add subsystem ack support
+
+when subsystem ack support is added the APSS will ack for every smp2p
+interrupt it received.
+
+this is required for subsystem restart to re-negotiate the smp2p
+features.
+
+Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Change-Id: Ic596ed07b0886a50240c3ff2ac140d904621eb20
+
+Pick from https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/27084c62072d4a7db112a9761ba49be384ae09dd
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/soc/qcom/smp2p.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+index d42bcca3b98e..82ef4edb8ded 100644
+--- a/drivers/soc/qcom/smp2p.c
++++ b/drivers/soc/qcom/smp2p.c
+@@ -123,6 +123,7 @@ struct smp2p_entry {
+  * @mbox_chan:	apcs ipc mailbox channel handle
+  * @inbound:	list of inbound entries
+  * @outbound:	list of outbound entries
++ * @need_ssr_ack fw expects ack for irq
+  */
+ struct qcom_smp2p {
+ 	struct device *dev;
+@@ -146,6 +147,7 @@ struct qcom_smp2p {
+ 
+ 	struct list_head inbound;
+ 	struct list_head outbound;
++	bool need_ssr_ack;
+ };
+ 
+ static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
+@@ -236,6 +238,9 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+ 		}
+ 	}
+ 
++	if (smp2p->need_ssr_ack)
++		qcom_smp2p_kick(smp2p);
++
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -352,6 +357,8 @@ static int qcom_smp2p_outbound_entry(struct qcom_smp2p *smp2p,
+ 
+ 	/* Make the logical entry reference the physical value */
+ 	entry->value = &out->entries[out->valid_entries].value;
++	smp2p->need_ssr_ack = of_property_read_bool(node,
++						"qcom,smp2p-feature-ssr-ack");
+ 
+ 	out->valid_entries++;
+ 
+-- 
+2.25.1
+

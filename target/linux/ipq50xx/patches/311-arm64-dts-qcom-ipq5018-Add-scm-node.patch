@@ -1,0 +1,30 @@
+From 7c7f17c89b150040be98b754c201221294378f8d Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Tue, 7 Mar 2023 07:32:05 +0000
+Subject: [PATCH 1/2] arm64: dts: qcom: ipq5018: Add scm node
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index 487cc15da457..fdfa0f25c52b 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -65,6 +65,12 @@
+ 		method = "smc";
+ 	};
+ 
++	firmware {
++		scm {
++			compatible = "qcom,scm";
++		};
++	};
++
+ 	reserved-memory {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+-- 
+2.25.1
+
