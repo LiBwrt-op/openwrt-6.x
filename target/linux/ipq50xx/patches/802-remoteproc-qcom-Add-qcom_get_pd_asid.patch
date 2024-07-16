@@ -11,11 +11,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/remoteproc/qcom_common.h |  1 +
  2 files changed, 24 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index 9028cea2d81e..2e17b274db34 100644
 --- a/drivers/remoteproc/qcom_common.c
 +++ b/drivers/remoteproc/qcom_common.c
-@@ -252,5 +252,28 @@ void qcom_remove_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr)
+@@ -505,5 +505,28 @@ void qcom_remove_ssr_subdev(struct rproc
  }
  EXPORT_SYMBOL_GPL(qcom_remove_ssr_subdev);
  
@@ -44,17 +42,12 @@ index 9028cea2d81e..2e17b274db34 100644
 +
  MODULE_DESCRIPTION("Qualcomm Remoteproc helper driver");
  MODULE_LICENSE("GPL v2");
-diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
-index 34e5188187dc..27c913003ce3 100644
 --- a/drivers/remoteproc/qcom_common.h
 +++ b/drivers/remoteproc/qcom_common.h
-@@ -62,5 +62,6 @@ static inline void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon)
- {
+@@ -71,5 +71,6 @@ static inline bool qcom_sysmon_shutdown_
+ 	return false;
  }
  #endif
 +s8 qcom_get_pd_asid(struct device_node *node);
  
  #endif
--- 
-2.25.1
-

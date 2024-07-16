@@ -8,11 +8,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 13 +++++++++++++
  1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 8acf0ca6f470..5389f90fb46c 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -172,6 +172,19 @@
+@@ -167,6 +167,19 @@
  				<0x0b001000 0x1000>,  /*GICH*/
  				<0x0b004000 0x1000>;  /*GICV*/
  			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
@@ -32,6 +30,3 @@ index 8acf0ca6f470..5389f90fb46c 100644
  		};
  
  		apcs_glb: mailbox@b111000 {
--- 
-2.25.1
-

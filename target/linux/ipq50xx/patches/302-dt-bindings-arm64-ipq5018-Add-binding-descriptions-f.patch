@@ -20,11 +20,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5018.h
  create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq5018.h
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-index d14362ad4132..530a8fe2687c 100644
 --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
 +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-@@ -17,6 +17,8 @@
+@@ -18,6 +18,8 @@ description: |
    - dt-bindings/clock/qcom,gcc-apq8084.h
    - dt-bindings/reset/qcom,gcc-apq8084.h
    - dt-bindings/clock/qcom,gcc-ipq4019.h
@@ -33,7 +31,7 @@ index d14362ad4132..530a8fe2687c 100644
    - dt-bindings/clock/qcom,gcc-ipq6018.h
    - dt-bindings/reset/qcom,gcc-ipq6018.h
    - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
-@@ -39,6 +40,7 @@ Required properties :
+@@ -40,6 +42,7 @@ properties:
      enum:
        - qcom,gcc-apq8084
        - qcom,gcc-ipq4019
@@ -41,9 +39,6 @@ index d14362ad4132..530a8fe2687c 100644
        - qcom,gcc-ipq6018
        - qcom,gcc-ipq8064
        - qcom,gcc-mdm9607
-diff --git a/include/dt-bindings/clock/qcom,gcc-ipq5018.h b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
-new file mode 100644
-index 000000000000..069165f73d0b
 --- /dev/null
 +++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
 @@ -0,0 +1,183 @@
@@ -230,9 +225,6 @@ index 000000000000..069165f73d0b
 +#define GMAC1_RX_DIV_CLK_SRC				200
 +#define GMAC1_TX_DIV_CLK_SRC				201
 +#endif
-diff --git a/include/dt-bindings/reset/qcom,gcc-ipq5018.h b/include/dt-bindings/reset/qcom,gcc-ipq5018.h
-new file mode 100644
-index 000000000000..cd9c4e1d19e8
 --- /dev/null
 +++ b/include/dt-bindings/reset/qcom,gcc-ipq5018.h
 @@ -0,0 +1,119 @@
@@ -355,6 +347,3 @@ index 000000000000..cd9c4e1d19e8
 +#define	GCC_GEPHY_MISC_ARES			111
 +
 +#endif
--- 
-2.25.1
-

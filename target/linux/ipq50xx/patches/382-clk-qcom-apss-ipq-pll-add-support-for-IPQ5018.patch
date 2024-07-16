@@ -8,11 +8,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/clk/qcom/apss-ipq-pll.c | 49 +++++++++++++++++++++++++++++++++
  1 file changed, 49 insertions(+)
 
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index 720df770e79b..97d6acb0c6b0 100644
 --- a/drivers/clk/qcom/apss-ipq-pll.c
 +++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -24,6 +24,17 @@ static const u8 ipq_pll_offsets[][PLL_OFF_MAX_REGS] = {
+@@ -24,6 +24,17 @@ static const u8 ipq_pll_offsets[][PLL_OF
  		[PLL_OFF_TEST_CTL] = 0x30,
  		[PLL_OFF_TEST_CTL_U] = 0x34,
  	},
@@ -30,7 +28,7 @@ index 720df770e79b..97d6acb0c6b0 100644
  };
  
  static struct clk_alpha_pll ipq_pll_huayra = {
-@@ -44,6 +55,38 @@ static struct clk_alpha_pll ipq_pll_huayra = {
+@@ -44,6 +55,38 @@ static struct clk_alpha_pll ipq_pll_huay
  	},
  };
  
@@ -81,7 +79,7 @@ index 720df770e79b..97d6acb0c6b0 100644
  static struct apss_pll_data ipq6018_pll_data = {
  	.pll = &ipq_pll_huayra,
  	.pll_config = &ipq6018_pll_config,
-@@ -101,6 +149,7 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+@@ -101,6 +149,7 @@ static int apss_ipq_pll_probe(struct pla
  }
  
  static const struct of_device_id apss_ipq_pll_match_table[] = {
@@ -89,6 +87,3 @@ index 720df770e79b..97d6acb0c6b0 100644
  	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_data },
  	{ }
  };
--- 
-2.25.1
-

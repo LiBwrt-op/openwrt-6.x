@@ -8,11 +8,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 42 +++++++++++++++++++++++++++
  1 file changed, 42 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 668a931c892e..c214ac5580eb 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -209,5 +209,47 @@
+@@ -263,5 +263,47 @@
  				status = "disabled";
  			};
  		};
@@ -60,6 +58,3 @@ index 668a931c892e..c214ac5580eb 100644
 +		};
  	};
  };
--- 
-2.25.1
-

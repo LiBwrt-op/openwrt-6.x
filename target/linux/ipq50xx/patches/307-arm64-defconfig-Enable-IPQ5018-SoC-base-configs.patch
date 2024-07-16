@@ -14,11 +14,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/configs/defconfig | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index c9a867ac32d4..dd04f9414c4d 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
-@@ -401,6 +401,7 @@ CONFIG_PINCTRL_IMX8MM=y
+@@ -505,6 +505,7 @@ CONFIG_PINCTRL_IMX8QM=y
  CONFIG_PINCTRL_IMX8QXP=y
  CONFIG_PINCTRL_IMX8DXL=y
  CONFIG_PINCTRL_MSM=y
@@ -26,14 +24,11 @@ index c9a867ac32d4..dd04f9414c4d 100644
  CONFIG_PINCTRL_IPQ8074=y
  CONFIG_PINCTRL_IPQ6018=y
  CONFIG_PINCTRL_MSM8916=y
-@@ -702,6 +703,7 @@ CONFIG_QCOM_A53PLL=y
- CONFIG_QCOM_CLK_APCS_MSM8916=y
+@@ -975,6 +976,7 @@ CONFIG_QCOM_CLK_APCS_MSM8916=y
+ CONFIG_QCOM_CLK_APCC_MSM8996=y
  CONFIG_QCOM_CLK_SMD_RPM=y
  CONFIG_QCOM_CLK_RPMH=y
 +CONFIG_IPQ_GCC_5018=y
  CONFIG_IPQ_GCC_8074=y
  CONFIG_IPQ_GCC_6018=y
  CONFIG_MSM_GCC_8916=y
--- 
-2.25.1
-

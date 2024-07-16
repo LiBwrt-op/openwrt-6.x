@@ -9,11 +9,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm/mach-qcom/Kconfig | 5 +++++
  2 files changed, 6 insertions(+)
 
-diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 4f098edfbf20..23aff930c2de 100644
 --- a/arch/arm/Makefile
 +++ b/arch/arm/Makefile
-@@ -152,6 +152,7 @@ textofs-$(CONFIG_PM_H1940)      := 0x00108000
+@@ -148,6 +148,7 @@ ifeq ($(CONFIG_ARCH_SA1100),y)
  textofs-$(CONFIG_SA1111) := 0x00208000
  endif
  textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
@@ -21,11 +19,9 @@ index 4f098edfbf20..23aff930c2de 100644
  textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
  textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
  textofs-$(CONFIG_ARCH_MESON) := 0x00208000
-diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-index ecbf3c4eb878..9870d1b1f604 100644
 --- a/arch/arm/mach-qcom/Kconfig
 +++ b/arch/arm/mach-qcom/Kconfig
-@@ -12,6 +12,11 @@ menuconfig ARCH_QCOM
+@@ -17,6 +17,11 @@ config ARCH_IPQ40XX
  	select CLKSRC_QCOM
  	select HAVE_ARM_ARCH_TIMER
  
@@ -37,6 +33,3 @@ index ecbf3c4eb878..9870d1b1f604 100644
  config ARCH_MSM8X60
  	bool "Enable support for MSM8X60"
  	select CLKSRC_QCOM
--- 
-2.25.1
-

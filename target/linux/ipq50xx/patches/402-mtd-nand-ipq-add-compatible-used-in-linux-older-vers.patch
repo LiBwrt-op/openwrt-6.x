@@ -17,13 +17,11 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mtd/nand/raw/qcom_nandc.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 673468d35d28..375ae6a2d799 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -3042,6 +3042,10 @@ static const struct of_device_id qcom_nandc_of_match[] = {
- 		.compatible = "qcom,ipq8074-nand",
- 		.data = &ipq8074_nandc_props,
+@@ -3184,6 +3184,10 @@ static const struct of_device_id qcom_na
+ 		.compatible = "qcom,sdx55-nand",
+ 		.data = &sdx55_nandc_props,
  	},
 +	{
 +		.compatible = "qcom,ebi2-nandc-bam-v1.5.0",
@@ -32,6 +30,3 @@ index 673468d35d28..375ae6a2d799 100644
  	{}
  };
  MODULE_DEVICE_TABLE(of, qcom_nandc_of_match);
--- 
-2.25.1
-

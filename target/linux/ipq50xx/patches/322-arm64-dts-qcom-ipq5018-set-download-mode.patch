@@ -8,8 +8,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index fdfa0f25c52b..668a931c892e 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 @@ -68,6 +68,7 @@
@@ -32,6 +30,3 @@ index fdfa0f25c52b..668a931c892e 100644
  		blsp1_uart1: serial@78af000 {
  			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
  			reg = <0x078af000 0x200>;
--- 
-2.25.1
-

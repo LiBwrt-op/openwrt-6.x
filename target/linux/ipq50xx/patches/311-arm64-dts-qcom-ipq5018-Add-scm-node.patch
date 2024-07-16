@@ -8,8 +8,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 487cc15da457..fdfa0f25c52b 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 @@ -65,6 +65,12 @@
@@ -25,6 +23,3 @@ index 487cc15da457..fdfa0f25c52b 100644
  	reserved-memory {
  		#address-cells = <2>;
  		#size-cells = <2>;
--- 
-2.25.1
-

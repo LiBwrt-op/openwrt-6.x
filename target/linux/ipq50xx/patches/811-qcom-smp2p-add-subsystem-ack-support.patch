@@ -19,11 +19,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/soc/qcom/smp2p.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-index d42bcca3b98e..82ef4edb8ded 100644
 --- a/drivers/soc/qcom/smp2p.c
 +++ b/drivers/soc/qcom/smp2p.c
-@@ -123,6 +123,7 @@ struct smp2p_entry {
+@@ -124,6 +124,7 @@ struct smp2p_entry {
   * @mbox_chan:	apcs ipc mailbox channel handle
   * @inbound:	list of inbound entries
   * @outbound:	list of outbound entries
@@ -31,7 +29,7 @@ index d42bcca3b98e..82ef4edb8ded 100644
   */
  struct qcom_smp2p {
  	struct device *dev;
-@@ -146,6 +147,7 @@ struct qcom_smp2p {
+@@ -147,6 +148,7 @@ struct qcom_smp2p {
  
  	struct list_head inbound;
  	struct list_head outbound;
@@ -39,7 +37,7 @@ index d42bcca3b98e..82ef4edb8ded 100644
  };
  
  static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
-@@ -236,6 +238,9 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+@@ -237,6 +239,9 @@ static irqreturn_t qcom_smp2p_intr(int i
  		}
  	}
  
@@ -49,7 +47,7 @@ index d42bcca3b98e..82ef4edb8ded 100644
  	return IRQ_HANDLED;
  }
  
-@@ -352,6 +357,8 @@ static int qcom_smp2p_outbound_entry(struct qcom_smp2p *smp2p,
+@@ -353,6 +358,8 @@ static int qcom_smp2p_outbound_entry(str
  
  	/* Make the logical entry reference the physical value */
  	entry->value = &out->entries[out->valid_entries].value;
@@ -58,6 +56,3 @@ index d42bcca3b98e..82ef4edb8ded 100644
  
  	out->valid_entries++;
  
--- 
-2.25.1
-

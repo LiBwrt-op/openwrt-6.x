@@ -25,11 +25,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/clk/qcom/clk-rcg2.c | 7 +++++++
  2 files changed, 8 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-index c25b57c3cbc8..4ff199e06e4f 100644
 --- a/drivers/clk/qcom/clk-rcg.h
 +++ b/drivers/clk/qcom/clk-rcg.h
-@@ -155,6 +155,7 @@ struct clk_rcg2 {
+@@ -164,6 +164,7 @@ struct clk_rcg2_gfx3d {
  
  extern const struct clk_ops clk_rcg2_ops;
  extern const struct clk_ops clk_rcg2_floor_ops;
@@ -37,11 +35,9 @@ index c25b57c3cbc8..4ff199e06e4f 100644
  extern const struct clk_ops clk_edp_pixel_ops;
  extern const struct clk_ops clk_byte_ops;
  extern const struct clk_ops clk_byte2_ops;
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 89c1adeb84d4..17ab2665bf6e 100644
 --- a/drivers/clk/qcom/clk-rcg2.c
 +++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -387,6 +387,13 @@ const struct clk_ops clk_rcg2_floor_ops = {
+@@ -471,6 +471,13 @@ const struct clk_ops clk_rcg2_floor_ops
  };
  EXPORT_SYMBOL_GPL(clk_rcg2_floor_ops);
  
@@ -55,6 +51,3 @@ index 89c1adeb84d4..17ab2665bf6e 100644
  struct frac_entry {
  	int num;
  	int den;
--- 
-2.25.1
-

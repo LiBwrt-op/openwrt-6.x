@@ -18,13 +18,11 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/clk/qcom/clk-alpha-pll.h |   7 ++
  2 files changed, 162 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index a69f53e435ed..ed8a26fac199 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -114,6 +114,19 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x38,
- 		[PLL_OFF_ALPHA_VAL] = 0x40,
+@@ -139,6 +139,19 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MA
+ 		[PLL_OFF_OPMODE] = 0x28,
+ 		[PLL_OFF_STATUS] = 0x38,
  	},
 +
 +	[CLK_ALPHA_PLL_TYPE_STROMER] = {
@@ -42,7 +40,7 @@ index a69f53e435ed..ed8a26fac199 100644
  };
  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
  
-@@ -125,6 +138,8 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+@@ -150,6 +163,8 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
  #define ALPHA_BITWIDTH		32U
  #define ALPHA_SHIFT(w)		min(w, ALPHA_BITWIDTH)
  
@@ -51,7 +49,7 @@ index a69f53e435ed..ed8a26fac199 100644
  #define PLL_HUAYRA_M_WIDTH		8
  #define PLL_HUAYRA_M_SHIFT		8
  #define PLL_HUAYRA_M_MASK		0xff
-@@ -206,7 +221,7 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
+@@ -254,7 +269,7 @@ static void clk_alpha_pll_write_config(s
  void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
  			     const struct alpha_pll_config *config)
  {
@@ -60,7 +58,7 @@ index a69f53e435ed..ed8a26fac199 100644
  
  	regmap_write(regmap, PLL_L_VAL(pll), config->l);
  	regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
-@@ -236,14 +251,143 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+@@ -284,14 +299,143 @@ void clk_alpha_pll_configure(struct clk_
  	mask |= config->pre_div_mask;
  	mask |= config->post_div_mask;
  	mask |= config->vco_mask;
@@ -204,7 +202,7 @@ index a69f53e435ed..ed8a26fac199 100644
  static int clk_alpha_pll_hwfsm_enable(struct clk_hw *hw)
  {
  	int ret;
-@@ -905,6 +1049,16 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
+@@ -941,6 +1085,16 @@ const struct clk_ops clk_alpha_pll_hwfsm
  	.set_rate = clk_alpha_pll_hwfsm_set_rate,
  };
  EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
@@ -219,13 +217,11 @@ index a69f53e435ed..ed8a26fac199 100644
 +};
 +EXPORT_SYMBOL_GPL(clk_alpha_pll_stromer_ops);
  
- const struct clk_ops clk_trion_fixed_pll_ops = {
+ const struct clk_ops clk_alpha_pll_fixed_trion_ops = {
  	.enable = clk_trion_pll_enable,
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 15f27f4b06df..68a2d2494f5d 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.h
 +++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -14,6 +14,7 @@ enum {
+@@ -17,6 +17,7 @@ enum {
  	CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
  	CLK_ALPHA_PLL_TYPE_AGERA,
  	CLK_ALPHA_PLL_TYPE_ZONDA,
@@ -233,7 +229,7 @@ index 15f27f4b06df..68a2d2494f5d 100644
  	CLK_ALPHA_PLL_TYPE_MAX,
  };
  
-@@ -106,6 +107,9 @@ struct alpha_pll_config {
+@@ -123,6 +124,9 @@ struct alpha_pll_config {
  	u32 post_div_mask;
  	u32 vco_val;
  	u32 vco_mask;
@@ -243,7 +239,7 @@ index 15f27f4b06df..68a2d2494f5d 100644
  };
  
  extern const struct clk_ops clk_alpha_pll_ops;
-@@ -113,6 +119,7 @@ extern const struct clk_ops clk_alpha_pll_hwfsm_ops;
+@@ -131,6 +135,7 @@ extern const struct clk_ops clk_alpha_pl
  extern const struct clk_ops clk_alpha_pll_postdiv_ops;
  extern const struct clk_ops clk_alpha_pll_huayra_ops;
  extern const struct clk_ops clk_alpha_pll_postdiv_ro_ops;
@@ -251,6 +247,3 @@ index 15f27f4b06df..68a2d2494f5d 100644
  
  extern const struct clk_ops clk_alpha_pll_fabia_ops;
  extern const struct clk_ops clk_alpha_pll_fixed_fabia_ops;
--- 
-2.25.1
-

@@ -335,7 +335,7 @@ endef
 
 define KernelPackage/ath11k/config
 
-       config ATH11K_THERMAL
+      config ATH11K_THERMAL
                bool "Enable thermal sensors and throttling support"
                depends on PACKAGE_kmod-ath11k
                default y if TARGET_qualcommax
@@ -356,14 +356,15 @@ define KernelPackage/ath11k/config
                help
                   Say Y to enable access to the HTT statistics via debugfs.
 
-       config ATH11K_NSS_SUPPORT
+      config ATH11K_NSS_SUPPORT
                bool "Enable NSS WiFi offload"
                select ATH11K_MEM_PROFILE_512M if (TARGET_qualcommax_ipq807x_DEVICE_edimax_cax1800 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_compex_wpq873 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_linksys_mx4200v1 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6 || \
                	 TARGET_qualcommax_ipq807x_DEVICE_xiaomi_ax3600 || \
-               	 TARGET_qualcommax_ipq807x_DEVICE_zte_mf269 )
+               	 TARGET_qualcommax_ipq807x_DEVICE_zte_mf269 || \
+                 TARGET_qualcommax_ipq60xx )
                select ATH11K_MEM_PROFILE_256M if TARGET_qualcommax_ipq807x_DEVICE_netgear_wax218
                default y
                help
@@ -381,6 +382,7 @@ define KernelPackage/ath11k/config
             prompt "Memory Profile"
             depends on PACKAGE_kmod-ath11k
             default ATH11K_MEM_PROFILE_1G
+            default ATH11K_MEM_PROFILE_512M if TARGET_qualcommax_ipq60xx
             help
             	This option allows you to select the memory profile.
             	It should correspond to the total RAM of your board.
@@ -408,7 +410,7 @@ define KernelPackage/ath11k-ahb
   $(call KernelPackage/mac80211/Default)
   TITLE:=Qualcomm 802.11ax AHB wireless chipset support
   URL:=https://wireless.wiki.kernel.org/en/users/drivers/ath11k
-  DEPENDS+= @TARGET_qualcommax +kmod-ath11k +kmod-qrtr-smd
+  DEPENDS+= @(TARGET_ipq50xx||TARGET_qualcommax) +kmod-ath11k +kmod-qrtr-smd
   FILES:=$(PKG_BUILD_DIR)/drivers/net/wireless/ath/ath11k/ath11k_ahb.ko
   AUTOLOAD:=$(call AutoProbe,ath11k_ahb)
 endef

@@ -8,11 +8,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index cec34f0af6ce..4938e60a1a2a 100644
 --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
 +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -143,6 +143,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+@@ -159,6 +159,7 @@ static int qcom_apcs_ipc_remove(struct p
  
  /* .data is the offset of the ipc register within the global block */
  static const struct of_device_id qcom_apcs_ipc_of_match[] = {
@@ -20,6 +18,3 @@ index cec34f0af6ce..4938e60a1a2a 100644
  	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
  	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
  	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
--- 
-2.25.1
-

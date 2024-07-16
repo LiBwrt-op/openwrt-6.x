@@ -8,12 +8,10 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 75 +++++++++++++++++++++++++++
  1 file changed, 75 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 71da4ba4f6bb..0bc0f271b251 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -271,5 +271,80 @@
- 			clocks-name = "gcc_mdio_ahb_clk";
+@@ -325,5 +325,80 @@
+ 			clock-names = "gcc_mdio_ahb_clk";
  			status = "disabled";
  		};
 +
@@ -93,6 +91,3 @@ index 71da4ba4f6bb..0bc0f271b251 100644
 +		};
  	};
  };
--- 
-2.25.1
-

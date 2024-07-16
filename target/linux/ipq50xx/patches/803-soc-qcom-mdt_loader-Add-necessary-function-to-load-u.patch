@@ -12,8 +12,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  include/linux/soc/qcom/mdt_loader.h |   9 +
  2 files changed, 323 insertions(+)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 6034cd8992b0..3e3146add4ae 100644
 --- a/drivers/soc/qcom/mdt_loader.c
 +++ b/drivers/soc/qcom/mdt_loader.c
 @@ -16,6 +16,40 @@
@@ -57,7 +55,7 @@ index 6034cd8992b0..3e3146add4ae 100644
  
  static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
  {
-@@ -286,6 +320,259 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+@@ -292,6 +326,259 @@ out:
  	return ret;
  }
  
@@ -317,7 +315,7 @@ index 6034cd8992b0..3e3146add4ae 100644
  /**
   * qcom_mdt_load() - load the firmware which header is loaded as fw
   * @dev:	device handle to associate resources with
-@@ -332,5 +619,32 @@ int qcom_mdt_load_no_init(struct device *dev, const struct firmware *fw,
+@@ -338,5 +625,32 @@ int qcom_mdt_load_no_init(struct device
  }
  EXPORT_SYMBOL_GPL(qcom_mdt_load_no_init);
  
@@ -350,8 +348,6 @@ index 6034cd8992b0..3e3146add4ae 100644
 +
  MODULE_DESCRIPTION("Firmware parser for Qualcomm MDT format");
  MODULE_LICENSE("GPL v2");
-diff --git a/include/linux/soc/qcom/mdt_loader.h b/include/linux/soc/qcom/mdt_loader.h
-index e600baec6825..1c63b0922ee4 100644
 --- a/include/linux/soc/qcom/mdt_loader.h
 +++ b/include/linux/soc/qcom/mdt_loader.h
 @@ -7,6 +7,11 @@
@@ -366,7 +362,7 @@ index e600baec6825..1c63b0922ee4 100644
  
  struct device;
  struct firmware;
-@@ -21,6 +26,10 @@ int qcom_mdt_load_no_init(struct device *dev, const struct firmware *fw,
+@@ -23,6 +28,10 @@ int qcom_mdt_load_no_init(struct device
  			  const char *fw_name, int pas_id, void *mem_region,
  			  phys_addr_t mem_phys, size_t mem_size,
  			  phys_addr_t *reloc_base);
@@ -376,7 +372,4 @@ index e600baec6825..1c63b0922ee4 100644
 +			 phys_addr_t *reloc_base);
  void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len);
  
- #endif
--- 
-2.25.1
-
+ #else /* !IS_ENABLED(CONFIG_QCOM_MDT_LOADER) */

@@ -20,11 +20,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  4 files changed, 3844 insertions(+), 2 deletions(-)
  create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 32dbb4f09492..ce3de9009f79 100644
 --- a/drivers/clk/qcom/Kconfig
 +++ b/drivers/clk/qcom/Kconfig
-@@ -118,6 +118,14 @@ config IPQ_GCC_8074
+@@ -173,6 +173,14 @@ config IPQ_GCC_8074
  	  i2c, USB, SD/eMMC, etc. Select this for the root clock
  	  of ipq8074.
  
@@ -39,21 +37,16 @@ index 32dbb4f09492..ce3de9009f79 100644
  config MSM_GCC_8660
  	tristate "MSM8660 Global Clock Controller"
  	help
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 4a813b4055d0..61cedb49646c 100644
 --- a/drivers/clk/qcom/Makefile
 +++ b/drivers/clk/qcom/Makefile
-@@ -22,6 +22,7 @@ obj-$(CONFIG_APQ_MMCC_8084) += mmcc-apq8084.o
- obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+@@ -27,6 +27,7 @@ obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq401
+ obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
  obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
  obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
 +obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
  obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
+ obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
  obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
- obj-$(CONFIG_MDM_LCC_9615) += lcc-mdm9615.o
-diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
-new file mode 100644
-index 000000000000..9056386ae134
 --- /dev/null
 +++ b/drivers/clk/qcom/gcc-ipq5018.c
 @@ -0,0 +1,3833 @@
@@ -3890,8 +3883,6 @@ index 000000000000..9056386ae134
 +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. GCC IPQ5018 Driver");
 +MODULE_LICENSE("GPL v2");
 +MODULE_ALIAS("platform:gcc-ipq5018");
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 2fdfe8061363..f456fa4268b9 100644
 --- a/include/linux/clk-provider.h
 +++ b/include/linux/clk-provider.h
 @@ -20,8 +20,8 @@
@@ -3905,6 +3896,3 @@ index 2fdfe8061363..f456fa4268b9 100644
  #define CLK_GET_RATE_NOCACHE	BIT(6) /* do not use the cached clk rate */
  #define CLK_SET_RATE_NO_REPARENT BIT(7) /* don't re-parent on rate change */
  #define CLK_GET_ACCURACY_NOCACHE BIT(8) /* do not use the cached clk accuracy */
--- 
-2.25.1
-

@@ -8,8 +8,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/net/phy/mdio-ipq4019.c | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
-index 7227917755cc..59a37e4378ea 100644
 --- a/drivers/net/mdio/mdio-ipq4019.c
 +++ b/drivers/net/mdio/mdio-ipq4019.c
 @@ -12,6 +12,7 @@
@@ -28,7 +26,7 @@ index 7227917755cc..59a37e4378ea 100644
  };
  
  static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
-@@ -195,6 +197,13 @@ static int ipq_mdio_reset(struct mii_bus *bus)
+@@ -195,6 +197,13 @@ static int ipq_mdio_reset(struct mii_bus
  		fsleep(IPQ_PHY_SET_DELAY_US);
  	}
  
@@ -42,7 +40,7 @@ index 7227917755cc..59a37e4378ea 100644
  	/* Configure MDIO clock source frequency if clock is specified in the device tree */
  	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
  	if (ret)
-@@ -229,6 +238,13 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+@@ -234,6 +243,13 @@ static int ipq4019_mdio_probe(struct pla
  	if (res)
  		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
  
@@ -56,6 +54,3 @@ index 7227917755cc..59a37e4378ea 100644
  	bus->name = "ipq4019_mdio";
  	bus->read = ipq4019_mdio_read;
  	bus->write = ipq4019_mdio_write;
--- 
-2.25.1
-

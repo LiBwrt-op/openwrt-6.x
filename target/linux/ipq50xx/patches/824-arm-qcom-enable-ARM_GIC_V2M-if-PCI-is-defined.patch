@@ -15,8 +15,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm/mach-qcom/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-index ecbf3c4eb878..3b5efbf250af 100644
 --- a/arch/arm/mach-qcom/Kconfig
 +++ b/arch/arm/mach-qcom/Kconfig
 @@ -7,6 +7,7 @@ menuconfig ARCH_QCOM
@@ -27,6 +25,3 @@ index ecbf3c4eb878..3b5efbf250af 100644
  	help
  	  Support for Qualcomm's devicetree based systems.
  
--- 
-2.25.1
-

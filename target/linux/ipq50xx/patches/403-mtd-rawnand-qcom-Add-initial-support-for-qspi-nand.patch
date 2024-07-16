@@ -26,13 +26,11 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mtd/nand/raw/qcom_nandc.c | 168 ++++++++++++++++++++++++++++--
  2 files changed, 171 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/nand_ids.c b/drivers/mtd/nand/raw/nand_ids.c
-index ba27902fc54b..03e472055d9e 100644
 --- a/drivers/mtd/nand/raw/nand_ids.c
 +++ b/drivers/mtd/nand/raw/nand_ids.c
-@@ -53,6 +53,19 @@ struct nand_flash_dev nand_flash_ids[] = {
- 		  SZ_8K, SZ_8K, SZ_2M, NAND_NEED_SCRAMBLING, 6, 640,
- 		  NAND_ECC_INFO(40, SZ_1K), 4 },
+@@ -55,6 +55,19 @@ struct nand_flash_dev nand_flash_ids[] =
+ 		{ .id = {0x98, 0xdc, 0x91, 0x15, 0x76} },
+ 		  SZ_2K, SZ_512, SZ_128K, 0, 5, 128, NAND_ECC_INFO(8, SZ_512) },
  
 +	{"GD5F1GQ4RE9IG SPI NAND 1G 1.8V 4-bit",
 +		{ .id = {0xc8, 0xc1} },
@@ -50,11 +48,9 @@ index ba27902fc54b..03e472055d9e 100644
  	LEGACY_ID_NAND("NAND 4MiB 5V 8-bit",   0x6B, 4, SZ_8K, SP_OPTIONS),
  	LEGACY_ID_NAND("NAND 4MiB 3,3V 8-bit", 0xE3, 4, SZ_8K, SP_OPTIONS),
  	LEGACY_ID_NAND("NAND 4MiB 3,3V 8-bit", 0xE5, 4, SZ_8K, SP_OPTIONS),
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 375ae6a2d799..361ee116422f 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -35,22 +35,33 @@
+@@ -35,12 +35,21 @@
  #define	NAND_DEV_CMD1			0xa4
  #define	NAND_DEV_CMD2			0xa8
  #define	NAND_DEV_CMD_VLD		0xac
@@ -77,10 +73,7 @@ index 375ae6a2d799..361ee116422f 100644
  #define	NAND_CTRL			0xf00
  #define	NAND_VERSION			0xf08
  #define	NAND_READ_LOCATION_0		0xf20
- #define	NAND_READ_LOCATION_1		0xf24
- #define	NAND_READ_LOCATION_2		0xf28
- #define	NAND_READ_LOCATION_3		0xf2c
- #define	NAND_READ_LOCATION_LAST_CW_0	0xf40
+@@ -51,6 +60,8 @@
  #define	NAND_READ_LOCATION_LAST_CW_1	0xf44
  #define	NAND_READ_LOCATION_LAST_CW_2	0xf48
  #define	NAND_READ_LOCATION_LAST_CW_3	0xf4c
@@ -89,7 +82,7 @@ index 375ae6a2d799..361ee116422f 100644
  
  /* dummy register offsets, used by write_reg_dma */
  #define	NAND_DEV_CMD1_RESTORE		0xdead
-@@ -179,6 +194,28 @@
+@@ -184,6 +195,28 @@
  #define	ECC_BCH_4BIT	BIT(2)
  #define	ECC_BCH_8BIT	BIT(3)
  
@@ -118,7 +111,7 @@ index 375ae6a2d799..361ee116422f 100644
  #define nandc_set_read_loc_first(chip, reg, cw_offset, read_size, is_last_read_loc)	\
  nandc_set_reg(chip, reg,			\
  	      ((cw_offset) << READ_LOCATION_OFFSET) |		\
-@@ -314,6 +351,9 @@ struct nandc_regs {
+@@ -328,6 +361,9 @@ struct nandc_regs {
  	__le32 read_location_last1;
  	__le32 read_location_last2;
  	__le32 read_location_last3;
@@ -128,7 +121,7 @@ index 375ae6a2d799..361ee116422f 100644
  
  	__le32 erased_cw_detect_cfg_clr;
  	__le32 erased_cw_detect_cfg_set;
-@@ -367,6 +407,7 @@ struct qcom_nand_controller {
+@@ -381,6 +417,7 @@ struct qcom_nand_controller {
  
  	struct clk *core_clk;
  	struct clk *aon_clk;
@@ -136,7 +129,7 @@ index 375ae6a2d799..361ee116422f 100644
  
  	union {
  		/* will be used only by QPIC for BAM DMA */
-@@ -460,13 +501,15 @@ struct qcom_nand_host {
+@@ -475,6 +512,7 @@ struct qcom_nand_host {
   * @is_qpic - whether NAND CTRL is part of qpic IP
   * @qpic_v2 - flag to indicate QPIC IP version 2
   * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
@@ -144,7 +137,7 @@ index 375ae6a2d799..361ee116422f 100644
   */
  struct qcom_nandc_props {
  	u32 ecc_modes;
- 	bool is_bam;
+@@ -482,6 +520,7 @@ struct qcom_nandc_props {
  	bool is_qpic;
  	bool qpic_v2;
  	u32 dev_cmd_reg_start;
@@ -152,7 +145,7 @@ index 375ae6a2d799..361ee116422f 100644
  };
  
  /* Frees the BAM transaction memory */
-@@ -640,6 +683,12 @@ static __le32 *offset_to_nandc_reg(struct nandc_regs *regs, int offset)
+@@ -664,6 +703,12 @@ static __le32 *offset_to_nandc_reg(struc
  		return &regs->read_location_last2;
  	case NAND_READ_LOCATION_LAST_CW_3:
  		return &regs->read_location_last3;
@@ -165,7 +158,7 @@ index 375ae6a2d799..361ee116422f 100644
  	default:
  		return NULL;
  	}
-@@ -1244,11 +1293,23 @@ static int read_id(struct qcom_nand_host *host, int column)
+@@ -1328,11 +1373,23 @@ static int read_id(struct qcom_nand_host
  {
  	struct nand_chip *chip = &host->chip;
  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
@@ -190,7 +183,7 @@ index 375ae6a2d799..361ee116422f 100644
  	nandc_set_reg(chip, NAND_ADDR0, column);
  	nandc_set_reg(chip, NAND_ADDR1, 0);
  	nandc_set_reg(chip, NAND_FLASH_CHIP_SELECT,
-@@ -1268,8 +1329,13 @@ static int reset(struct qcom_nand_host *host)
+@@ -1352,8 +1409,13 @@ static int reset(struct qcom_nand_host *
  {
  	struct nand_chip *chip = &host->chip;
  	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
@@ -205,7 +198,7 @@ index 375ae6a2d799..361ee116422f 100644
  	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
  
  	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
-@@ -2471,6 +2537,8 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+@@ -2558,6 +2620,8 @@ static int qcom_nand_attach_chip(struct
  	int cwperpage, bad_block_byte, ret;
  	bool wide_bus;
  	int ecc_mode = 1;
@@ -214,7 +207,7 @@ index 375ae6a2d799..361ee116422f 100644
  
  	/* controller only supports 512 bytes data steps */
  	ecc->size = NANDC_STEP_SIZE;
-@@ -2579,33 +2647,43 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+@@ -2679,33 +2743,43 @@ static int qcom_nand_attach_chip(struct
  	host->cw_size = host->cw_data + ecc->bytes;
  	bad_block_byte = mtd->writesize - host->cw_size * (cwperpage - 1) + 1;
  
@@ -265,9 +258,9 @@ index 375ae6a2d799..361ee116422f 100644
  				| wide_bus << WIDE_FLASH
  				| 1 << DEV0_CFG1_ECC_DISABLE;
  
-@@ -2781,6 +2859,47 @@ static int qcom_nandc_setup(struct qcom_nand_controller *nandc)
- 	return 0;
- }
+@@ -2912,6 +2986,47 @@ static int qcom_nandc_setup(struct qcom_
+ 
+ static const char * const probes[] = { "cmdlinepart", "ofpart", "qcomsmem", NULL };
  
 +static void qspi_write_reg_bam(struct qcom_nand_controller *nandc,
 +		unsigned int val, unsigned int reg)
@@ -313,7 +306,7 @@ index 375ae6a2d799..361ee116422f 100644
  static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
  					    struct qcom_nand_host *host,
  					    struct device_node *dn)
-@@ -2830,6 +2949,9 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+@@ -2961,6 +3076,9 @@ static int qcom_nand_host_init_and_regis
  	/* set up initial status value */
  	host->status = NAND_STATUS_READY | NAND_STATUS_WP;
  
@@ -323,7 +316,7 @@ index 375ae6a2d799..361ee116422f 100644
  	ret = nand_scan(chip, 1);
  	if (ret)
  		return ret;
-@@ -2934,6 +3056,12 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+@@ -3055,6 +3173,12 @@ static int qcom_nandc_probe(struct platf
  	if (IS_ERR(nandc->aon_clk))
  		return PTR_ERR(nandc->aon_clk);
  
@@ -336,7 +329,7 @@ index 375ae6a2d799..361ee116422f 100644
  	ret = qcom_nandc_parse_dt(pdev);
  	if (ret)
  		return ret;
-@@ -2962,6 +3090,12 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+@@ -3083,6 +3207,12 @@ static int qcom_nandc_probe(struct platf
  	if (ret)
  		goto err_nandc_alloc;
  
@@ -349,7 +342,7 @@ index 375ae6a2d799..361ee116422f 100644
  	ret = qcom_nandc_setup(nandc);
  	if (ret)
  		goto err_setup;
-@@ -3009,6 +3143,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
+@@ -3135,6 +3265,7 @@ static const struct qcom_nandc_props ipq
  	.ecc_modes = (ECC_RS_4BIT | ECC_BCH_8BIT),
  	.is_bam = false,
  	.dev_cmd_reg_start = 0x0,
@@ -357,7 +350,7 @@ index 375ae6a2d799..361ee116422f 100644
  };
  
  static const struct qcom_nandc_props ipq4019_nandc_props = {
-@@ -3016,6 +3151,7 @@ static const struct qcom_nandc_props ipq4019_nandc_props = {
+@@ -3142,6 +3273,7 @@ static const struct qcom_nandc_props ipq
  	.is_bam = true,
  	.is_qpic = true,
  	.dev_cmd_reg_start = 0x0,
@@ -365,7 +358,7 @@ index 375ae6a2d799..361ee116422f 100644
  };
  
  static const struct qcom_nandc_props ipq8074_nandc_props = {
-@@ -3023,6 +3159,15 @@ static const struct qcom_nandc_props ipq8074_nandc_props = {
+@@ -3149,6 +3281,15 @@ static const struct qcom_nandc_props ipq
  	.is_bam = true,
  	.is_qpic = true,
  	.dev_cmd_reg_start = 0x7000,
@@ -380,8 +373,8 @@ index 375ae6a2d799..361ee116422f 100644
 +	.is_serial_nand = true,
  };
  
- /*
-@@ -3046,6 +3190,10 @@ static const struct of_device_id qcom_nandc_of_match[] = {
+ static const struct qcom_nandc_props sdx55_nandc_props = {
+@@ -3188,6 +3329,10 @@ static const struct of_device_id qcom_na
  		.compatible = "qcom,ebi2-nandc-bam-v1.5.0",
  		.data = &ipq8074_nandc_props,
  	},
@@ -392,6 +385,3 @@ index 375ae6a2d799..361ee116422f 100644
  	{}
  };
  MODULE_DEVICE_TABLE(of, qcom_nandc_of_match);
--- 
-2.25.1
-

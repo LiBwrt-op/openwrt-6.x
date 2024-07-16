@@ -8,11 +8,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 20 ++++++++++++++++++++
  1 file changed, 20 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index c214ac5580eb..71da4ba4f6bb 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -251,5 +251,25 @@
+@@ -305,5 +305,25 @@
  				nand-bus-width = <8>;
  			};
  		};
@@ -38,6 +36,3 @@ index c214ac5580eb..71da4ba4f6bb 100644
 +		};
  	};
  };
--- 
-2.25.1
-

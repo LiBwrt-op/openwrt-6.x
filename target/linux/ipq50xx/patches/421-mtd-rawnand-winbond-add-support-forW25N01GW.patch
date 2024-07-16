@@ -7,11 +7,9 @@ Subject: [PATCH 1/1] mtd: rawnand: winbond: add support forW25N01GW
  drivers/mtd/nand/raw/nand_ids.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/nand_ids.c b/drivers/mtd/nand/raw/nand_ids.c
-index fd64d9f..0f1ef87 100644
 --- a/drivers/mtd/nand/raw/nand_ids.c
 +++ b/drivers/mtd/nand/raw/nand_ids.c
-@@ -74,6 +74,9 @@ struct nand_flash_dev nand_flash_ids[] = {
+@@ -74,6 +74,9 @@ struct nand_flash_dev nand_flash_ids[] =
  	{"GD5F1GQ5REYIH SPI NAND 1G 1.8V",
  		{ .id = {0xc8, 0x21} },
  		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
@@ -21,6 +19,3 @@ index fd64d9f..0f1ef87 100644
  	{"W25N01JW SPI NAND 1.8V 1G-BIT",
  		{ .id = {0xef, 0xbc} },
  		SZ_2K, SZ_128, SZ_128K, 0, 2, 64, NAND_ECC_INFO(4, SZ_512) },
--- 
-2.40.1
-

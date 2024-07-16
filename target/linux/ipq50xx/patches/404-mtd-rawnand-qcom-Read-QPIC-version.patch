@@ -18,11 +18,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mtd/nand/raw/qcom_nandc.c | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 361ee116422f..e19074062348 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -442,6 +442,7 @@ struct qcom_nand_controller {
+@@ -452,6 +452,7 @@ struct qcom_nand_controller {
  
  	u32 cmd1, vld;
  	const struct qcom_nandc_props *props;
@@ -30,7 +28,7 @@ index 361ee116422f..e19074062348 100644
  };
  
  /*
-@@ -2539,6 +2540,7 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+@@ -2622,6 +2623,7 @@ static int qcom_nand_attach_chip(struct
  	int ecc_mode = 1;
  	int num_addr_cycle = 5, dsbl_sts_aftr_write = 0;
  	int wr_rd_bsy_gap = 2, recovery_cycle = 7;
@@ -38,8 +36,8 @@ index 361ee116422f..e19074062348 100644
  
  	/* controller only supports 512 bytes data steps */
  	ecc->size = NANDC_STEP_SIZE;
-@@ -2552,6 +2554,16 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
- 	if (chip->base.eccreq.strength >= 8)
+@@ -2635,6 +2637,16 @@ static int qcom_nand_attach_chip(struct
+ 	if (chip->base.ecc.requirements.strength >= 8)
  		ecc->strength = 8;
  
 +	/* Read QPIC version register */
@@ -55,6 +53,3 @@ index 361ee116422f..e19074062348 100644
  	/*
  	 * Each CW has 4 available OOB bytes which will be protected with ECC
  	 * so remaining bytes can be used for ECC.
--- 
-2.25.1
-

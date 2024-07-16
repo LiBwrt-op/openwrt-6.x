@@ -28,24 +28,19 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mtd/nand/raw/qcom_nandc.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 5af3bef6c230..673468d35d28 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2477,6 +2477,13 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
- 	wide_bus = chip->options & NAND_BUSWIDTH_16 ? true : false;
+@@ -2565,6 +2565,13 @@ static int qcom_nand_attach_chip(struct
  	cwperpage = mtd->writesize / NANDC_STEP_SIZE;
  
-+	/*
+ 	/*
 +	 * Read the required ecc strength from NAND device and overwrite the
 +	 * device tree ecc strength
 +	 */
 +	if (chip->base.ecc.requirements.strength >= 8)
 +		ecc->strength = 8;
 +
- 	/*
++	/*
  	 * Each CW has 4 available OOB bytes which will be protected with ECC
  	 * so remaining bytes can be used for ECC.
--- 
-2.25.1
-
+ 	 */

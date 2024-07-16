@@ -8,13 +8,11 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 238 ++++++++++++++++++++++++++
  1 file changed, 238 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 6d0746e0486c..1ef5d33d2234 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -506,5 +506,243 @@
- 			qcom,pvxlan-enabled;
- 			qcom,udp-st-enabled;
+@@ -435,5 +435,243 @@
+ 					      "gephy_misc_rst";
+ 			};
  		};
 +
 +		q6v5_wcss: remoteproc@cd00000 {
@@ -256,6 +254,3 @@ index 6d0746e0486c..1ef5d33d2234 100644
 +		};
  	};
  };
--- 
-2.25.1
-

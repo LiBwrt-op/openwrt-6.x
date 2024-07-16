@@ -17,8 +17,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/mtd/nand/raw/qcom_nandc.c | 17 +++++++++--------
  1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 0a6b67ddcda2..dc723a7ffa0e 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
 @@ -62,7 +62,6 @@
@@ -29,9 +27,9 @@ index 0a6b67ddcda2..dc723a7ffa0e 100644
  /* dummy register offsets, used by write_reg_dma */
  #define	NAND_DEV_CMD1_RESTORE		0xdead
  #define	NAND_DEV_CMD_VLD_RESTORE	0xbeef
-@@ -2781,21 +2859,6 @@ static int qcom_nandc_setup(struct qcom_nand_controller *nandc)
- 	return 0;
- }
+@@ -3007,33 +3006,19 @@ static int qcom_nandc_setup(struct qcom_
+ 
+ static const char * const probes[] = { "cmdlinepart", "ofpart", "qcomsmem", NULL };
  
 -static void qspi_write_reg_bam(struct qcom_nand_controller *nandc,
 -		unsigned int val, unsigned int reg)
@@ -51,8 +49,6 @@ index 0a6b67ddcda2..dc723a7ffa0e 100644
  static void qspi_nand_init(struct qcom_nand_controller *nandc)
  {
  	u32 spi_cfg_val = 0x0;
-@@ -2960,13 +2959,14 @@ static void qspi_nand_init(struct qcom_nand_controller *nandc)
- 	u32 spi_cfg_val = 0x0;
  	u32 reg = 0x0;
  
 -	spi_cfg_val |= (LOAD_CLK_CNTR_INIT_EN | CLK_CNTR_INIT_VAL_VEC
@@ -71,7 +67,7 @@ index 0a6b67ddcda2..dc723a7ffa0e 100644
  
  	reg = dev_cmd_reg_addr(nandc, NAND_DEV_CMD0);
  	nandc_write(nandc, reg, CMD0_VAL);
-@@ -2977,8 +2977,9 @@ static void qspi_nand_init(struct qcom_nand_controller *nandc)
+@@ -3044,8 +3029,9 @@ static void qspi_nand_init(struct qcom_n
  	reg = dev_cmd_reg_addr(nandc, NAND_DEV_CMD3);
  	nandc_write(nandc, reg, CMD3_VAL);
  
@@ -83,6 +79,3 @@ index 0a6b67ddcda2..dc723a7ffa0e 100644
  }
  
  static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
--- 
-2.25.1
-

@@ -17,11 +17,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  3 files changed, 914 insertions(+)
  create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq5018.c
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 32fc2458b8eb..480a562ba96e 100644
 --- a/drivers/pinctrl/qcom/Kconfig
 +++ b/drivers/pinctrl/qcom/Kconfig
-@@ -32,6 +32,16 @@ config PINCTRL_IPQ4019
+@@ -36,6 +36,16 @@ config PINCTRL_IPQ4019
  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
  	  Qualcomm TLMM block found in the Qualcomm IPQ4019 platform.
  
@@ -37,22 +35,17 @@ index 32fc2458b8eb..480a562ba96e 100644
 +
  config PINCTRL_IPQ8064
  	tristate "Qualcomm IPQ8064 pin controller driver"
- 	depends on GPIOLIB && OF
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index f8bb0c265381..3b14cb92d443 100644
+ 	depends on OF
 --- a/drivers/pinctrl/qcom/Makefile
 +++ b/drivers/pinctrl/qcom/Makefile
-@@ -4,6 +4,7 @@ obj-$(CONFIG_PINCTRL_MSM)	+= pinctrl-msm.o
+@@ -4,6 +4,7 @@ obj-$(CONFIG_PINCTRL_MSM)	+= pinctrl-msm
  obj-$(CONFIG_PINCTRL_APQ8064)	+= pinctrl-apq8064.o
  obj-$(CONFIG_PINCTRL_APQ8084)	+= pinctrl-apq8084.o
  obj-$(CONFIG_PINCTRL_IPQ4019)	+= pinctrl-ipq4019.o
 +obj-$(CONFIG_PINCTRL_IPQ5018)	+= pinctrl-ipq5018.o
  obj-$(CONFIG_PINCTRL_IPQ8064)	+= pinctrl-ipq8064.o
  obj-$(CONFIG_PINCTRL_IPQ8074)	+= pinctrl-ipq8074.o
- obj-$(CONFIG_PINCTRL_MSM8660)	+= pinctrl-msm8660.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-new file mode 100644
-index 000000000000..92b38c4297e0
+ obj-$(CONFIG_PINCTRL_IPQ6018)	+= pinctrl-ipq6018.o
 --- /dev/null
 +++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
 @@ -0,0 +1,903 @@
@@ -959,6 +952,3 @@ index 000000000000..92b38c4297e0
 +MODULE_DESCRIPTION("Qualcomm Technologies Inc ipq5018 pinctrl driver");
 +MODULE_LICENSE("GPL v2");
 +MODULE_DEVICE_TABLE(of, ipq5018_pinctrl_of_match);
--- 
-2.25.1
-

@@ -46,11 +46,9 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  drivers/clk/qcom/clk-rcg2.c | 86 ++++++++++++++++++++++++++++---------
  1 file changed, 66 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 89c1adeb84d4..3f2ef7e8d8c8 100644
 --- a/drivers/clk/qcom/clk-rcg2.c
 +++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -188,26 +188,82 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+@@ -184,26 +184,82 @@ clk_rcg2_recalc_rate(struct clk_hw *hw,
  	return calc_rate(parent_rate, m, n, mode, hid_div);
  }
  
@@ -81,8 +79,8 @@ index 89c1adeb84d4..3f2ef7e8d8c8 100644
  	default:
 -		return -EINVAL;
 +		return best_ftable;
- 	}
- 
++	}
++
 +	/*
 +	 * Check for duplicate frequencies in frequency table if
 +	 * CLK_SET_RATE_PARENT flag is not set
@@ -123,8 +121,8 @@ index 89c1adeb84d4..3f2ef7e8d8c8 100644
 +			if (req_rate == rate)
 +				break;
 +		}
-+	}
-+
+ 	}
+ 
 +	return best_ftable;
 +}
 +
@@ -141,7 +139,7 @@ index 89c1adeb84d4..3f2ef7e8d8c8 100644
  	if (!f)
  		return -EINVAL;
  
-@@ -324,17 +380,7 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -320,17 +376,7 @@ static int __clk_rcg2_set_rate(struct cl
  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
  	const struct freq_tbl *f;
  
@@ -160,7 +158,7 @@ index 89c1adeb84d4..3f2ef7e8d8c8 100644
  	if (!f)
  		return -EINVAL;
  
-@@ -874,7 +920,7 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -983,7 +1029,7 @@ static int clk_rcg2_shared_set_rate(stru
  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
  	const struct freq_tbl *f;
  
@@ -169,6 +167,3 @@ index 89c1adeb84d4..3f2ef7e8d8c8 100644
  	if (!f)
  		return -EINVAL;
  
--- 
-2.25.1
-

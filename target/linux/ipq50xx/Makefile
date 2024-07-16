@@ -7,7 +7,7 @@ SUBTARGETS:=arm aarch64
 CPU_TYPE:=cortex-a53
 FEATURES:=fpu ramdisk nand squashfs pcie
 
-KERNEL_PATCHVER:=6.6
+KERNEL_PATCHVER:=5.15
 
 include $(INCLUDE_DIR)/target.mk
 
