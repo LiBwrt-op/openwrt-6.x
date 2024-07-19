@@ -106,6 +106,59 @@
 			bias-pull-up;
 		};
 	};
+	
+	button_pins: button_pins {
+		joylink_button {
+			pins = "gpio72";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+
+		reset_button {
+			pins = "gpio56";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+
+		screen_button {
+			pins = "gpio71";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+	};
+	
+	tmp1628_pins: tmp1628_pins {
+		dio {
+			pins = "gpio74";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+
+		clk {
+			pins = "gpio73";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+
+		stb1 {
+			pins = "gpio69";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+
+		stb2 {
+			pins = "gpio70";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+	};
 };
 
 &blsp1_uart3 {
