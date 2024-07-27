@@ -60,7 +60,7 @@ Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
  				 enum wmi_sta_keepalive_method method,
 --- a/drivers/net/wireless/ath/ath11k/wmi.c
 +++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -1876,9 +1876,10 @@ int ath11k_wmi_bcn_tmpl(struct ath11k *a
+@@ -1874,9 +1874,10 @@ int ath11k_wmi_bcn_tmpl(struct ath11k *a
  	cmd->vdev_id = vdev_id;
  	cmd->tim_ie_offset = offs->tim_offset;
  
@@ -72,7 +72,7 @@ Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
  	}
  
  	cmd->buf_len = bcn->len;
-@@ -7569,7 +7570,6 @@ static void ath11k_bcn_tx_status_event(s
+@@ -7567,7 +7568,6 @@ static void ath11k_bcn_tx_status_event(s
  		rcu_read_unlock();
  		return;
  	}
@@ -80,7 +80,7 @@ Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
  	rcu_read_unlock();
  }
  
-@@ -8483,10 +8483,7 @@ ath11k_wmi_process_csa_switch_count_even
+@@ -8481,10 +8481,7 @@ ath11k_wmi_process_csa_switch_count_even
  {
  	int i;
  	struct ath11k_vif *arvif;
@@ -92,7 +92,7 @@ Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
  
  	rcu_read_lock();
  	for (i = 0; i < ev->num_vdevs; i++) {
-@@ -8498,8 +8495,18 @@ ath11k_wmi_process_csa_switch_count_even
+@@ -8496,8 +8493,18 @@ ath11k_wmi_process_csa_switch_count_even
  			continue;
  		}
  

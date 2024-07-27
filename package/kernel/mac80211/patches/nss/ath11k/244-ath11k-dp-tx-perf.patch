@@ -430,7 +430,7 @@ Signed-off-by: P Praneesh <ppranees@codeaurora.org>
  
 --- a/drivers/net/wireless/ath/ath11k/mac.c
 +++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6390,12 +6390,22 @@ static void ath11k_mac_op_tx(struct ieee
+@@ -6387,12 +6387,22 @@ static void ath11k_mac_op_tx(struct ieee
  	if (control->sta)
  		arsta = ath11k_sta_to_arsta(control->sta);
  
@@ -454,7 +454,7 @@ Signed-off-by: P Praneesh <ppranees@codeaurora.org>
  		ieee80211_free_txskb(ar->hw, skb);
  		return;
  	}
-@@ -7342,7 +7352,7 @@ err_vdev_del:
+@@ -7339,7 +7349,7 @@ err_vdev_del:
  	idr_for_each(&ar->txmgmt_idr,
  		     ath11k_mac_vif_txmgmt_idr_remove, vif);
  

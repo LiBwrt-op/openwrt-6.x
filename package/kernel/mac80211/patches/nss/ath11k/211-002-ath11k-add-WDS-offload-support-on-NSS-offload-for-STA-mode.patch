@@ -785,7 +785,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  };
  
  #define PRIMAP(_hw_mode_) \
-@@ -1128,6 +1130,51 @@ int ath11k_wmi_send_peer_delete_cmd(stru
+@@ -1126,6 +1128,51 @@ int ath11k_wmi_send_peer_delete_cmd(stru
  	return ret;
  }
  
@@ -837,7 +837,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  int ath11k_wmi_send_pdev_set_regdomain(struct ath11k *ar,
  				       struct pdev_set_regdomain_params *param)
  {
-@@ -6438,6 +6485,36 @@ static int ath11k_pull_peer_assoc_conf_e
+@@ -6436,6 +6483,36 @@ static int ath11k_pull_peer_assoc_conf_e
  	return 0;
  }
  
@@ -874,7 +874,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  static void ath11k_wmi_pull_pdev_stats_base(const struct wmi_pdev_stats_base *src,
  					    struct ath11k_fw_stats_pdev *dst)
  {
-@@ -7262,6 +7339,7 @@ static int ath11k_wmi_tlv_rdy_parse(stru
+@@ -7260,6 +7337,7 @@ static int ath11k_wmi_tlv_rdy_parse(stru
  
  		ether_addr_copy(ab->mac_addr,
  				fixed_param.ready_event_min.mac_addr.addr);
@@ -882,7 +882,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  		ab->pktlog_defs_checksum = fixed_param.pktlog_defs_checksum;
  		break;
  	case WMI_TAG_ARRAY_FIXED_STRUCT:
-@@ -8780,6 +8858,22 @@ exit:
+@@ -8778,6 +8856,22 @@ exit:
  	kfree(tb);
  }
  
@@ -905,7 +905,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
  {
  	struct wmi_cmd_hdr *cmd_hdr;
-@@ -8910,6 +9004,9 @@ static void ath11k_wmi_tlv_op_rx(struct
+@@ -8908,6 +9002,9 @@ static void ath11k_wmi_tlv_op_rx(struct
  	case WMI_GTK_OFFLOAD_STATUS_EVENTID:
  		ath11k_wmi_gtk_offload_status_event(ab, skb);
  		break;
