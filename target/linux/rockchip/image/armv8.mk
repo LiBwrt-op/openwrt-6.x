@@ -115,6 +115,14 @@ define Device/radxa_e25
 endef
 TARGET_DEVICES += radxa_e25
 
+define Device/radxa_rock-3a
+  DEVICE_VENDOR := Radxa
+  DEVICE_MODEL := ROCK 3A
+  SOC := rk3568
+  DEVICE_PACKAGES := kmod-usb-net-cdc-ncm kmod-usb-net-rndis
+endef
+TARGET_DEVICES += radxa_rock-3a
+
 define Device/radxa_rock-pi-4a
   DEVICE_VENDOR := Radxa
   DEVICE_MODEL := ROCK Pi 4A
@@ -130,6 +138,17 @@ define Device/radxa_rock-pi-e
   SOC := rk3328
 endef
 TARGET_DEVICES += radxa_rock-pi-e
+
+define Device/radxa_rock-pi-s
+  DEVICE_VENDOR := Radxa
+  DEVICE_MODEL := ROCK Pi S
+  SOC := rk3308
+  DEVICE_DTS := rockchip/rk3308-rock-pi-s
+  BOOT_SCRIPT := rock-pi-s
+  UBOOT_DEVICE_NAME := rock-pi-s-rk3308
+  DEVICE_PACKAGES := kmod-usb-net-cdc-ncm kmod-usb-net-rndis
+endef
+TARGET_DEVICES += radxa_rock-pi-s
 
 define Device/sinovoip_bpi-r2-pro
   DEVICE_VENDOR := Sinovoip
