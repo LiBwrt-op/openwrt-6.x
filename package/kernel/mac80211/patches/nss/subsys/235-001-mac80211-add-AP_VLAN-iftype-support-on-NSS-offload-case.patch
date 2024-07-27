@@ -163,7 +163,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  
 --- a/net/mac80211/util.c
 +++ b/net/mac80211/util.c
-@@ -1664,6 +1664,9 @@ static void ieee80211_assign_chanctx(str
+@@ -1665,6 +1665,9 @@ static void ieee80211_assign_chanctx(str
  
  	lockdep_assert_wiphy(local->hw.wiphy);
  
@@ -173,7 +173,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  	conf = rcu_dereference_protected(link->conf->chanctx_conf,
  					 lockdep_is_held(&local->hw.wiphy->mtx));
  	if (conf) {
-@@ -1869,7 +1872,8 @@ int ieee80211_reconfig(struct ieee80211_
+@@ -1870,7 +1873,8 @@ int ieee80211_reconfig(struct ieee80211_
  	}
  
  	list_for_each_entry(sdata, &local->interfaces, list) {
@@ -183,7 +183,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  		    sdata->vif.type != NL80211_IFTYPE_MONITOR &&
  		    ieee80211_sdata_running(sdata)) {
  			res = drv_add_interface(local, sdata);
-@@ -1884,7 +1888,8 @@ int ieee80211_reconfig(struct ieee80211_
+@@ -1885,7 +1889,8 @@ int ieee80211_reconfig(struct ieee80211_
  	if (res) {
  		list_for_each_entry_continue_reverse(sdata, &local->interfaces,
  						     list)
@@ -195,7 +195,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
  				drv_remove_interface(local, sdata);
 --- a/net/mac80211/mlme.c
 +++ b/net/mac80211/mlme.c
-@@ -5297,7 +5297,8 @@ static bool ieee80211_assoc_success(stru
+@@ -5298,7 +5298,8 @@ static bool ieee80211_assoc_success(stru
  	 * If we're using 4-addr mode, let the AP know that we're
  	 * doing so, so that it can create the STA VLAN on its side
  	 */

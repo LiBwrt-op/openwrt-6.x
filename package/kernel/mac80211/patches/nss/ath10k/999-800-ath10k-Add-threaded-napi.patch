@@ -20,7 +20,7 @@
  	/* Sleep 20 ms before HIF interrupts are disabled.
 --- a/drivers/net/wireless/ath/ath10k/core.c
 +++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -3722,6 +3722,9 @@ struct ath10k *ath10k_core_create(size_t
+@@ -3723,6 +3723,9 @@ struct ath10k *ath10k_core_create(size_t
  		  ath10k_core_set_coverage_class_work);
  
  	init_dummy_netdev(&ar->napi_dev);

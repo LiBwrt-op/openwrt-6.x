@@ -2848,7 +2848,7 @@ Signed-off-by: Sriram R <srirrama@codeaurora.org>
  			     enum hal_pn_type pn_type)
 --- a/drivers/net/wireless/ath/ath11k/wmi.c
 +++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -1164,6 +1164,44 @@ int ath11k_wmi_send_pdev_set_regdomain(s
+@@ -1166,6 +1166,44 @@ int ath11k_wmi_send_pdev_set_regdomain(s
  	return ret;
  }
  
@@ -2998,7 +2998,7 @@ Signed-off-by: Sriram R <srirrama@codeaurora.org>
  int ath11k_dp_pdev_reo_setup(struct ath11k_base *ab);
 --- a/drivers/net/wireless/ath/ath11k/mac.c
 +++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6153,6 +6153,16 @@ static int ath11k_mac_op_start(struct ie
+@@ -6156,6 +6156,16 @@ static int ath11k_mac_op_start(struct ie
  		goto err;
  	}
  
