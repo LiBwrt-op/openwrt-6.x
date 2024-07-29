@@ -123,7 +123,7 @@
  		qpic_bam: dma-controller@7984000 {
  			compatible = "qcom,bam-v1.7.0";
  			reg = <0x0 0x07984000 0x0 0x1a000>;
-@@ -936,8 +1003,26 @@
+@@ -937,8 +1004,26 @@
  				      "wcss_reset",
  				      "wcss_q6_reset";
  
