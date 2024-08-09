@@ -94,7 +94,7 @@
  
 --- a/include/net/ip6_route.h
 +++ b/include/net/ip6_route.h
-@@ -207,6 +207,11 @@ void rt6_multipath_rebalance(struct fib6
+@@ -215,6 +215,11 @@ void rt6_multipath_rebalance(struct fib6
  void rt6_uncached_list_add(struct rt6_info *rt);
  void rt6_uncached_list_del(struct rt6_info *rt);
  
@@ -610,7 +610,7 @@
  	return 0;
  
  out_remove_new_fa:
-@@ -1775,6 +1781,9 @@ int fib_table_delete(struct net *net, st
+@@ -1776,6 +1782,9 @@ int fib_table_delete(struct net *net, st
  	if (fa_to_delete->fa_state & FA_S_ACCESSED)
  		rt_cache_flush(cfg->fc_nlinfo.nl_net);
  
@@ -620,7 +620,7 @@
  	fib_release_info(fa_to_delete->fa_info);
  	alias_free_mem_rcu(fa_to_delete);
  	return 0;
-@@ -2407,6 +2416,20 @@ void __init fib_trie_init(void)
+@@ -2408,6 +2417,20 @@ void __init fib_trie_init(void)
  					   0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
  }
  
@@ -643,7 +643,7 @@
  	struct fib_table *tb;
 --- a/net/ipv6/ndisc.c
 +++ b/net/ipv6/ndisc.c
-@@ -666,6 +666,7 @@ void ndisc_send_ns(struct net_device *de
+@@ -668,6 +668,7 @@ void ndisc_send_ns(struct net_device *de
  	if (skb)
  		ndisc_send_skb(skb, daddr, saddr);
  }
