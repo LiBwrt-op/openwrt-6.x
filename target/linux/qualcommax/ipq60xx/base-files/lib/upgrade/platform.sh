@@ -43,6 +43,10 @@ platform_do_upgrade() {
 	netgear,wax214)
 		nand_do_upgrade "$1"
 		;;
+	cambiumnetworks,xe3-4)
+		fw_setenv bootcount 0
+		nand_do_upgrade "$1"
+		;;
 	redmi,ax5-jdcloud|\
 	jdcloud,ax1800-pro|\
     jdcloud,ax6600)

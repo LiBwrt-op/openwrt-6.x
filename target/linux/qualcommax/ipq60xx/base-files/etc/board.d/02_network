@@ -31,6 +31,9 @@ ipq60xx_setup_interfaces()
 	xiaomi,ax1800)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
+	cambiumnetworks,xe3-4)
+		ucidef_set_interface_lan "lan1 lan2" "dhcp"
+		;;
 	netgear,wax214)
 		ucidef_set_interfaces_lan_wan "lan"
 		;;

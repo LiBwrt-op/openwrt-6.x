@@ -20,8 +20,12 @@ case "$FIRMWARE" in
 	xiaomi,ax1800|\
 	linksys,mr7350|\
 	glinet,gl-ax1800|\
-	glinet,gl-axt1800)
+	glinet,gl-axt1800|\
+	netgear,wax214)
 		caldata_extract "0:art" 0x1000 0x10000
+		;;
+	cambiumnetworks,xe3-4)
+		caldata_extract "0:ART" 0x1000 0x10000
 		;;
 	redmi,ax5-jdcloud|\
 	jdcloud,ax1800-pro)
@@ -36,6 +40,9 @@ case "$FIRMWARE" in
 	case "$board" in
 	jdcloud,ax6600)
 		caldata_extract_mmc "0:ART" 0x26800 0x20000
+		;;
+	cambiumnetworks,xe3-4)
+		caldata_extract "0:ART" 0x26800 0x20000
 		;;
 	esac
 	;;
