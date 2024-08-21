@@ -1,0 +1,38 @@
+From 80a438775aa398751229bcaed15459f3acdb645f Mon Sep 17 00:00:00 2001
+From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+Date: Mon, 4 Sep 2023 12:06:35 +0530
+Subject: arm64: dts: qcom: ipq5018: Enable USB
+
+Enable USB2 in host mode.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Co-developed-by: Amandeep Singh <quic_amansing@quicinc.com>
+Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
+Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+Link: https://lore.kernel.org/r/20230904063635.24975-5-quic_nsekar@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+--- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
++++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+@@ -67,6 +67,18 @@
+ 	};
+ };
+ 
++&usb {
++	status = "okay";
++};
++
++&usb_dwc {
++	dr_mode = "host";
++};
++
++&usbphy0 {
++	status = "okay";
++};
++
+ &xo_board_clk {
+ 	clock-frequency = <24000000>;
+ };
