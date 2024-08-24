@@ -3,6 +3,9 @@
 /dts-v1/;
 
 #include "ipq5018.dtsi"
+#include "ipq5018-nss.dtsi"
+#include "ipq5018-ess.dtsi"
+
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
 

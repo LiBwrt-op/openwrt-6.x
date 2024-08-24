@@ -1,0 +1,71 @@
+From 72de3ee900c0d807962e4d49e92bc99c759664fb Mon Sep 17 00:00:00 2001
+From: JiaY-shi <shi05275@163.com>
+Date: Thu, 23 May 2024 15:57:33 +0800
+Subject: [PATCH] sw_error_t: add SW_FALSE & SW_TRUE
+
+---
+ include/common/sw_error.h      |  2 ++
+ src/adpt/mp/adpt_mp_portctrl.c | 12 ++++++------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+--- a/include/common/sw_error.h
++++ b/include/common/sw_error.h
+@@ -22,6 +22,8 @@ extern "C" {
+ #endif /* __cplusplus */
+ 
+     typedef enum {
++        SW_TRUE            = 1,
++        SW_FALSE           = 0,
+         SW_OK              = 0,       /* Operation succeeded                 */
+         SW_FAIL            = -1,      /* Operation failed                    */
+         SW_BAD_VALUE       = -2,      /* Illegal value                       */
+--- a/src/adpt/mp/adpt_mp_portctrl.c
++++ b/src/adpt/mp/adpt_mp_portctrl.c
+@@ -42,7 +42,7 @@ _adpt_mp_gcc_mac_clock_set(a_uint32_t de
+ 	return rv;
+ }
+ 
+-static a_bool_t
++static sw_error_t
+ _adpt_mp_port_phy_connected (a_uint32_t dev_id, fal_port_t port_id)
+ {
+ 	ADPT_DEV_ID_CHECK(dev_id);
+@@ -50,9 +50,9 @@ _adpt_mp_port_phy_connected (a_uint32_t
+ 	/* force port which connect s17c or other device chip*/
+ 	if (hsl_port_feature_get(dev_id, port_id, PHY_F_FORCE | PHY_F_SFP)) {
+ 		SSDK_DEBUG("port_id %d did not connect PHY!\n", port_id);
+-		return A_FALSE;
++		return SW_FALSE;
+ 	} else {
+-		return A_TRUE;
++		return SW_TRUE;
+ 	}
+ }
+ 
+@@ -317,7 +317,7 @@ adpt_mp_port_txfc_status_set(a_uint32_t
+ 	a_bool_t force_mode = A_FALSE;
+ 	a_uint32_t phy_addr = 0;
+ 
+-	if(A_FALSE == _adpt_mp_port_phy_connected (dev_id, port_id))
++	if(SW_FALSE == _adpt_mp_port_phy_connected (dev_id, port_id))
+ 	{
+ 		rv = _adpt_mp_port_txfc_status_set(dev_id, port_id, enable);
+ 		SW_RTN_ON_ERROR(rv);
+@@ -423,7 +423,7 @@ adpt_mp_port_rxfc_status_set(a_uint32_t
+ 	a_bool_t force_mode = A_FALSE;
+ 	a_uint32_t phy_addr = 0;
+ 
+-	if(A_FALSE == _adpt_mp_port_phy_connected (dev_id, port_id))
++	if(SW_FALSE == _adpt_mp_port_phy_connected (dev_id, port_id))
+ 	{
+ 		rv = _adpt_mp_port_rxfc_status_set(dev_id, port_id, enable);
+ 		SW_RTN_ON_ERROR(rv);
+@@ -1253,7 +1253,7 @@ adpt_mp_port_phy_status_get(a_uint32_t d
+ 		return SW_BAD_PARAM;
+ 	}
+ 
+-	if(_adpt_mp_port_phy_connected(dev_id, port_id) == A_FALSE)
++	if(_adpt_mp_port_phy_connected(dev_id, port_id) == SW_FALSE)
+ 	{
+ 		if(hsl_port_feature_get(dev_id, port_id, PHY_F_FORCE))
+ 		{

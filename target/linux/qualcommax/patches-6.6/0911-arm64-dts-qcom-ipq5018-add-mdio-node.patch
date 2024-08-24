@@ -8,11 +8,13 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 20 ++++++++++++++++++++
  1 file changed, 20 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index bd0198aa..ff537e32 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -107,6 +107,26 @@
- 			status = "disabled";
- 		};
+@@ -94,6 +94,26 @@ soc: soc@0 {
+ 		#size-cells = <1>;
+ 		ranges = <0 0 0 0xffffffff>;
  
 +		mdio0: mdio@88000 {
 +			#address-cells = <1>;
@@ -37,3 +39,6 @@ Signed-off-by: hzy <hzyitc@outlook.com>
  		tlmm: pinctrl@1000000 {
  			compatible = "qcom,ipq5018-tlmm";
  			reg = <0x01000000 0x300000>;
+-- 
+2.40.1
+
