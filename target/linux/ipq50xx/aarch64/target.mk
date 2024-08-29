@@ -1,5 +1,0 @@
-SUBTARGET:=aarch64
-BOARDNAME:=AArch64 64Bit
-
-ARCH:=aarch64
-CPU_TYPE:=cortex-a53

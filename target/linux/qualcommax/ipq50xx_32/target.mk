@@ -1,5 +1,5 @@
-SUBTARGET:=ipq50xx_32Bit
-BOARDNAME:=Qualcomm Atheros IPQ50xx_32Bit
+SUBTARGET:=ipq50xx_32
+BOARDNAME:=Qualcomm Atheros IPQ50xx_32
 ARCH:=arm
 CPU_TYPE:=cortex-a7
 CPU_SUBTYPE:=neon-vfpv4
