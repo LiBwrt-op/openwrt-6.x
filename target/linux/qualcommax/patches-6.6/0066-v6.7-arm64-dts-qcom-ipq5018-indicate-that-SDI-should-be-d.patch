@@ -14,11 +14,9 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 288758c9..38ffdc3c 100644
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -57,6 +57,7 @@ L2_0: l2-cache {
+@@ -57,6 +57,7 @@
  	firmware {
  		scm {
  			compatible = "qcom,scm-ipq5018", "qcom,scm";
@@ -26,6 +24,3 @@ index 288758c9..38ffdc3c 100644
  		};
  	};
  
--- 
-2.40.1
-

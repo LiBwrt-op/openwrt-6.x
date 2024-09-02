@@ -22,11 +22,9 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 8 ++++++++
  1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index 0c073335..cb706145 100644
 --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
 +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -90,6 +90,14 @@ properties:
+@@ -89,6 +89,14 @@ properties:
        protocol to handle sleeping SCM calls.
      maxItems: 1
  
@@ -41,6 +39,3 @@ index 0c073335..cb706145 100644
    qcom,dload-mode:
      $ref: /schemas/types.yaml#/definitions/phandle-array
      items:
--- 
-2.40.1
-

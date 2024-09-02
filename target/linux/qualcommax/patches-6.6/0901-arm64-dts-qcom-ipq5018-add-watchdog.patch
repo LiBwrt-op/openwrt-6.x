@@ -15,7 +15,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -181,6 +181,13 @@
+@@ -182,6 +182,13 @@
  			};
  		};
  

@@ -14,8 +14,6 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index cb706145..0613a37a 100644
 --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
 +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
 @@ -24,6 +24,7 @@ properties:
@@ -26,6 +24,3 @@ index cb706145..0613a37a 100644
            - qcom,scm-ipq5332
            - qcom,scm-ipq6018
            - qcom,scm-ipq806x
--- 
-2.40.1
-
