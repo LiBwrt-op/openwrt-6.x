@@ -17,4 +17,3 @@ define Device/redmi_ax3000
 endef
 TARGET_DEVICES += redmi_ax3000
 
-$(eval $(call BuildImage))
