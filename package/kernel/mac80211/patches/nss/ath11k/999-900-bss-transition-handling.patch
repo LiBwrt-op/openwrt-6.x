@@ -599,7 +599,7 @@
  			    user_stats->ast_index);
  		return;
  	}
-@@ -4212,7 +4227,7 @@ int ath11k_peer_rx_frag_setup(struct ath
+@@ -4215,7 +4230,7 @@ int ath11k_peer_rx_frag_setup(struct ath
  
  	spin_lock_bh(&ab->base_lock);
  
@@ -608,7 +608,7 @@
  	if (!peer) {
  		ath11k_warn(ab, "failed to find the peer to set up fragment info\n");
  		spin_unlock_bh(&ab->base_lock);
-@@ -4668,7 +4683,7 @@ static int ath11k_dp_rx_frag_h_mpdu(stru
+@@ -4671,7 +4686,7 @@ static int ath11k_dp_rx_frag_h_mpdu(stru
  		return -EINVAL;
  
  	spin_lock_bh(&ab->base_lock);
@@ -617,7 +617,7 @@
  	if (!peer) {
  		ath11k_warn(ab, "failed to find the peer to de-fragment received fragment peer_id %d\n",
  			    peer_id);
-@@ -4730,7 +4745,7 @@ static int ath11k_dp_rx_frag_h_mpdu(stru
+@@ -4733,7 +4748,7 @@ static int ath11k_dp_rx_frag_h_mpdu(stru
  	del_timer_sync(&rx_tid->frag_timer);
  	spin_lock_bh(&ab->base_lock);
  
@@ -626,7 +626,7 @@
  	if (!peer)
  		goto err_frags_cleanup;
  
-@@ -6394,7 +6409,7 @@ int ath11k_dp_rx_process_mon_status(stru
+@@ -6397,7 +6412,7 @@ int ath11k_dp_rx_process_mon_status(stru
  			trace_ath11k_htt_rxdesc(ar, skb->data, log_type, rx_buf_sz);
  
  		ppdu_info->peer_id = HAL_INVALID_PEERID;
@@ -635,7 +635,7 @@
  
  		if (test_bit(ATH11K_FLAG_MONITOR_STARTED, &ar->monitor_flags) &&
  		    pmon->mon_ppdu_status == DP_PPDU_STATUS_START &&
-@@ -6425,7 +6440,7 @@ int ath11k_dp_rx_process_mon_status(stru
+@@ -6428,7 +6443,7 @@ int ath11k_dp_rx_process_mon_status(stru
  		}
  		rcu_read_lock();
  		spin_lock_bh(&ab->base_lock);
