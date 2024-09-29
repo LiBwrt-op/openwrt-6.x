@@ -166,7 +166,7 @@ Signed-off-by: Muna Sinada <msinada@codeaurora.org>
  	[NL80211_ATTR_BSS_DUMP_INCLUDE_USE_DATA] = { .type = NLA_FLAG },
  	[NL80211_ATTR_MLO_TTLM_DLINK] = NLA_POLICY_EXACT_LEN(sizeof(u16) * 8),
  	[NL80211_ATTR_MLO_TTLM_ULINK] = NLA_POLICY_EXACT_LEN(sizeof(u16) * 8),
-@@ -20324,6 +20325,42 @@ void cfg80211_schedule_channels_check(st
+@@ -20314,6 +20315,42 @@ void cfg80211_schedule_channels_check(st
  }
  EXPORT_SYMBOL(cfg80211_schedule_channels_check);
  
