@@ -152,7 +152,7 @@
  	if (!peer) {
  		ath11k_warn(ab, "failed to lookup peer %pM on vdev %d\n",
  			    addr, vdev_id);
-@@ -90,7 +90,7 @@ int ath11k_dp_peer_setup(struct ath11k *
+@@ -89,7 +89,7 @@ int ath11k_dp_peer_setup(struct ath11k *
  peer_clean:
  	spin_lock_bh(&ab->base_lock);
  
@@ -2362,7 +2362,7 @@
  }
 --- a/drivers/net/wireless/ath/ath11k/peer.h
 +++ b/drivers/net/wireless/ath/ath11k/peer.h
-@@ -99,34 +99,32 @@ struct ath11k_peer {
+@@ -98,34 +98,32 @@ struct ath11k_peer {
  	bool delete_in_progress;
  };
  
@@ -2409,7 +2409,7 @@
  						      u8* addr);
  struct ath11k_ast_entry *ath11k_peer_ast_find_by_pdev_idx(struct ath11k *ar,
  							  u8* addr);
-@@ -140,11 +138,11 @@ void ath11k_peer_del_ast(struct ath11k *
+@@ -139,11 +137,11 @@ void ath11k_peer_del_ast(struct ath11k *
  void ath11k_peer_ast_cleanup(struct ath11k *ar, struct ath11k_peer *peer,
  			     bool is_wds, u32 free_wds_count);
  void ath11k_peer_ast_wds_wmi_wk(struct work_struct *wk);
@@ -2423,7 +2423,7 @@
  								    u8* addr)
  {
  	return NULL;
-@@ -192,7 +190,7 @@ static inline void ath11k_peer_ast_wds_w
+@@ -191,7 +189,7 @@ static inline void ath11k_peer_ast_wds_w
  	return;
  }
  

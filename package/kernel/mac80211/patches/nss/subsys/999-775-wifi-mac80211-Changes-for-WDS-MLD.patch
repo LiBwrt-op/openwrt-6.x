@@ -127,7 +127,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -18877,7 +18877,8 @@ void cfg80211_conn_failed(struct net_dev
+@@ -18867,7 +18867,8 @@ void cfg80211_conn_failed(struct net_dev
  EXPORT_SYMBOL(cfg80211_conn_failed);
  
  static bool __nl80211_unexpected_frame(struct net_device *dev, u8 cmd,
@@ -137,7 +137,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  {
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
-@@ -18903,6 +18904,9 @@ static bool __nl80211_unexpected_frame(s
+@@ -18893,6 +18894,9 @@ static bool __nl80211_unexpected_frame(s
  	    nla_put(msg, NL80211_ATTR_MAC, ETH_ALEN, addr))
  		goto nla_put_failure;
  
@@ -147,7 +147,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  	genlmsg_end(msg, hdr);
  	genlmsg_unicast(wiphy_net(&rdev->wiphy), msg, nlportid);
  	return true;
-@@ -18926,14 +18930,15 @@ bool cfg80211_rx_spurious_frame(struct n
+@@ -18916,14 +18920,15 @@ bool cfg80211_rx_spurious_frame(struct n
  		return false;
  	}
  	ret = __nl80211_unexpected_frame(dev, NL80211_CMD_UNEXPECTED_FRAME,
@@ -165,7 +165,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  {
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	bool ret;
-@@ -18948,7 +18953,7 @@ bool cfg80211_rx_unexpected_4addr_frame(
+@@ -18938,7 +18943,7 @@ bool cfg80211_rx_unexpected_4addr_frame(
  	}
  	ret = __nl80211_unexpected_frame(dev,
  					 NL80211_CMD_UNEXPECTED_4ADDR_FRAME,
