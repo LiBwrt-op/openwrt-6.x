@@ -126,7 +126,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  		goto out;
  	}
 +	debugfs_create_file("stats_disable", 0600, ab->debugfs_soc, ab,
-+                            &fops_soc_stats_disable);
++					    &fops_soc_stats_disable);
  
  	ret = 0;
  

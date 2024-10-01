@@ -189,14 +189,14 @@ Signed-off-by: Sriram R <srirrama@codeaurora.org>
  }
  
 +void ieee80211_nss_bss_info_change_notify(struct ieee80211_sub_if_data *sdata,
-+                                         u64 changed)
++					  u64 changed)
 +{
-+       struct ieee80211_local *local = sdata->local;
++	struct ieee80211_local *local = sdata->local;
 +
-+       if (!changed || sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
-+               return;
++	if (!changed || sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
++		return;
 +
-+       drv_nss_bss_info_changed(local, sdata, &sdata->vif.bss_conf, changed);
++	drv_nss_bss_info_changed(local, sdata, &sdata->vif.bss_conf, changed);
 +}
 +
  u64 ieee80211_reset_erp_info(struct ieee80211_sub_if_data *sdata)

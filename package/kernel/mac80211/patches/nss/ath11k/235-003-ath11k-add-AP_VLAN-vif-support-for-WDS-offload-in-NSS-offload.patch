@@ -416,7 +416,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
 --- a/drivers/net/wireless/ath/ath11k/dp_rx.h
 +++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
 @@ -88,9 +88,9 @@ static inline u32 ath11k_he_gi_to_nl8021
-         return ret;
+ 		return ret;
  }
  
 -int ath11k_dp_rx_ampdu_start(struct ath11k *ar,

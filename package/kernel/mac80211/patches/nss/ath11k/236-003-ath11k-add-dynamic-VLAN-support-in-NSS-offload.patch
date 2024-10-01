@@ -346,7 +346,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
 +	} else if (!peer) {
  		/* impossible unless FW goes crazy */
  		ath11k_warn(ab, "peer %pM disappeared!\n", peer_addr);
-+  }
++	}
  
 -	if (sta) {
 -		arsta = ath11k_sta_to_arsta(sta);

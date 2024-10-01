@@ -378,7 +378,7 @@ Signed-off-by: Sathishkumar Muruganandam <murugana@codeaurora.org>
 +}
 +
 +void ath11k_peer_ast_cleanup(struct ath11k *ar, struct ath11k_peer *peer,
-+                             bool is_wds, u32 free_wds_count)
++			     bool is_wds, u32 free_wds_count)
 +{
 +	struct ath11k_ast_entry *ast_entry, *tmp;
 +	u32 ast_deleted_count = 0;

@@ -358,7 +358,7 @@ Signed-off-by: Rameshkumar Sundaram <ramess@codeaurora.org>
  		return 0;
  
 +	if (peer && peer->delete_in_progress)
-+                return -EINVAL;
++		return -EINVAL;
 +
  	ast_entry->vdev_id = peer->vdev_id;
  	ast_entry->pdev_idx = peer->pdev_idx;

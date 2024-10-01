@@ -3272,7 +3272,7 @@ Signed-off-by: Vasanthakumar Thiagarajan <vthiagar@codeaurora.org>
 +				enum ieee80211_mesh_path_offld_cmd cmd,
 +				struct ieee80211_mesh_path_offld *path)
 +{
-+  return 0;
++	return 0;
 +}
 +#endif
 +int ath11k_nss_mesh_config_update(struct ieee80211_vif *vif, int changed);
