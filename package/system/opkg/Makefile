@@ -7,7 +7,7 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=opkg
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 PKG_FLAGS:=essential
 
 PKG_SOURCE_PROTO:=git
@@ -24,7 +24,8 @@ PKG_MAINTAINER:=Jo-Philipp Wich <jo@mein.io>
 # Extend depends from version.mk
 PKG_CONFIG_DEPENDS += \
 	CONFIG_SIGNATURE_CHECK \
-	CONFIG_TARGET_INIT_PATH
+	CONFIG_TARGET_INIT_PATH \
+	CONFIG_OPKG_USE_CURL
 
 HOST_BUILD_DEPENDS:=libubox/host
 
@@ -38,9 +39,18 @@ define Package/opkg
   SECTION:=base
   CATEGORY:=Base system
   TITLE:=opkg package manager
-  DEPENDS:=+uclient-fetch +libpthread +libubox
+  DEPENDS:=+libpthread +libubox +!BUSYBOX_CONFIG_ZCAT:gzip +!OPKG_USE_CURL:uclient-fetch
   URL:=$(PKG_SOURCE_URL)
   MENU:=1
+endef
+
+define Package/opkg/config
+  menu "Downloader"
+    config OPKG_USE_CURL
+    bool
+      default n
+    prompt "Use curl for downloading packages (default: wget)"
+  endmenu
 endef
 
 define Package/opkg/description

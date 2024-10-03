@@ -22,7 +22,7 @@ define KernelPackage/qca-nss-dp
   DEPENDS:=@TARGET_qualcommax +kmod-qca-ssdk
   TITLE:=Qualcom NSS dataplane ethernet driver
   FILES:=$(PKG_BUILD_DIR)/qca-nss-dp.ko
-  AUTOLOAD:=$(call AutoLoad,31,qca-nss-dp,1)
+  AUTOLOAD:=$(call AutoLoad,31,qca-nss-dp)
 endef
 
 define KernelPackage/qca-nss-dp/Description

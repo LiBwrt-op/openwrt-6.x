@@ -158,7 +158,7 @@ my %update_method = (
 		'init'          => "git clone --depth 1 '%s' '%s'",
 		'init_branch'   => "git clone --depth 1 --branch '%s' '%s' '%s'",
 		'init_commit'   => "git clone '%s' '%s' && cd '%s' && git checkout -b '%s' '%s' && cd -",
-		'update'	=> "git pull --ff-only",
+		'update'	=> "git pull",
 		'update_rebase'	=> "git pull --rebase=merges",
 		'update_stash'	=> "git pull --rebase=merges --autostash",
 		'update_force'	=> "git pull --ff-only || (git reset --hard HEAD; git pull --ff-only; exit 1)",

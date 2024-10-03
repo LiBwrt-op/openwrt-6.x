@@ -187,6 +187,9 @@ define Package/base-files/install
 		$(1)/etc/openwrt_version \
 		$(1)/usr/lib/os-release
 
+	sed -i -e "s,.*,\o033[31m&\o033[0m," \
+	    -e "s,Open.*,\o033[93m&\o033[0m," \
+	    -e "s,W .*,\o033[34m&\o033[0m," $(1)/etc/banner
 
 	$(SED) "s#%PATH%#$(TARGET_INIT_PATH)#g" \
 		$(1)/sbin/hotplug-call \

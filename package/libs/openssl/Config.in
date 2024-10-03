@@ -307,4 +307,11 @@ config OPENSSL_WITH_ASYNC
 		initiate crypto operations asynchronously. In order to work
 		this will require the presence of an async capable engine.
 
+config OPENSSL_KTLS
+	bool
+	prompt "Enable Kernel Transport Layer Security (kTLS) Offloads"
+	help
+		This enables the use of the kTLS offload feature in OpenSSL.
+		Requires kernel version 4.13 or later.
+
 endif

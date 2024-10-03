@@ -15,6 +15,7 @@ Commands:
 	delete <name>     Delete an environment
 	rename <newname>  Rename the current environment
 	diff              Show differences between current state and environment
+	status            Show list of changes
 	save [message]    Save your changes to the environment, optionally using
 	                  the given commit message
 	revert            Revert your changes since last save
@@ -105,6 +106,13 @@ env_diff() {
 	env_init
 	env_sync_data
 	git diff --cached --color=auto
+	env_link_config
+}
+
+env_status() {
+	env_init
+	env_sync_data
+	git status --find-renames=50%
 	env_link_config
 }
 
@@ -220,6 +228,7 @@ case "$COMMAND" in
 	delete) env_delete "$@";;
 	rename) env_rename "$@";;
 	diff) env_diff "$@";;
+	status) env_status "$@";;
 	save) env_save "$@";;
 	revert) env_revert "$@";;
 	*) usage;;
