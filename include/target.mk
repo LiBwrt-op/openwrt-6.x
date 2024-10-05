@@ -37,14 +37,15 @@ DEFAULT_PACKAGES.nas:=\
 	mdadm
 # For router targets
 DEFAULT_PACKAGES.router:=\
-	dnsmasq \
-	firewall4 \
+	dnsmasq-full \
+	firewall \
 	nftables \
 	kmod-nft-offload \
 	odhcp6c \
 	odhcpd-ipv6only \
 	ppp \
-	ppp-mod-pppoe
+	ppp-mod-pppoe \
+  default-settings-chn \
 
 ifneq ($(DUMP),)
   all: dumpinfo

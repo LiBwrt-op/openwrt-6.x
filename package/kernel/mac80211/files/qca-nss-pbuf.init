@@ -19,9 +19,8 @@ NAME=qca-nss-pbuf
 
 reload_wifi() {
   if [ -r /sys/module/ath11k/parameters/nss_offload ]; then
-    if grep -q 1 /sys/module/ath11k/parameters/nss_offload; then
-      wifi up
-    fi
+    nss_offload=$(cat /sys/module/ath11k/parameters/nss_offload 2> /dev/null)
+    [ "$nss_offload" -eq 1 ] && wifi up
   fi
 }
 

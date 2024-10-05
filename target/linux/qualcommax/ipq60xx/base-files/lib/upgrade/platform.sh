@@ -33,12 +33,26 @@ EOF
 
 platform_do_upgrade() {
 	case "$(board_name)" in
+	cmiot,ax18|\
+	zn,m2|\
+	qihoo,v6|\
+	redmi,ax5|\
+	xiaomi,ax1800|\
+	glinet,gl-axt1800|\
+	glinet,gl-ax1800|\
+	netgear,wax214)
+		nand_do_upgrade "$1"
+		;;
 	cambiumnetworks,xe3-4)
 		fw_setenv bootcount 0
 		nand_do_upgrade "$1"
 		;;
-	netgear,wax214)
-		nand_do_upgrade "$1"
+	redmi,ax5-jdcloud|\
+	jdcloud,ax1800-pro|\
+    jdcloud,ax6600)
+		kernelname="0:HLOS"
+		rootfsname="rootfs"
+		mmc_do_upgrade "$1"
 		;;
 	yuncore,fap650)
 		[ "$(fw_printenv -n owrt_env_ver 2>/dev/null)" != "7" ] && yuncore_fap650_env_setup
@@ -50,6 +64,20 @@ platform_do_upgrade() {
 		fi
 		fw_setenv owrt_bootcount 0
 		fw_setenv owrt_slotactive $((1 - active))
+		nand_do_upgrade "$1"
+		;;
+	linksys,mr7350)
+		boot_part="$(fw_printenv -n boot_part)"
+		if [ "$boot_part" -eq "1" ]; then
+			fw_setenv boot_part 2
+			CI_KERNPART="alt_kernel"
+			CI_UBIPART="alt_rootfs"
+		else
+			fw_setenv boot_part 1
+			CI_UBIPART="rootfs"
+		fi
+		fw_setenv boot_part_ready 3
+		fw_setenv auto_recovery yes
 		nand_do_upgrade "$1"
 		;;
 	*)

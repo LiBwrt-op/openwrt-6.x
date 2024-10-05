@@ -328,9 +328,20 @@ define Device/redmi_ax6
 	$(call Device/xiaomi_ax3600)
 	DEVICE_VENDOR := Redmi
 	DEVICE_MODEL := AX6
-	DEVICE_PACKAGES := ipq-wifi-redmi_ax6
+	DEVICE_PACKAGES := ipq-wifi-redmi_ax6 
 endef
 TARGET_DEVICES += redmi_ax6
+
+define Device/redmi_ax6-stock
+	$(call Device/redmi_ax6)
+	DEVICE_VARIANT := (stock layout)
+	DEVICE_ALT0_VENDOR := Redmi
+	DEVICE_ALT0_MODEL := AX6
+	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
+	KERNEL_SIZE :=
+	ARTIFACTS :=
+endef
+TARGET_DEVICES += redmi_ax6-stock
 
 define Device/spectrum_sax1v1k
 	$(call Device/FitImage)
@@ -375,6 +386,17 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 endif
 endef
 TARGET_DEVICES += xiaomi_ax3600
+
+define Device/xiaomi_ax3600-stock
+	$(call Device/xiaomi_ax3600)
+	DEVICE_VARIANT := (stock layout)
+	DEVICE_ALT0_VENDOR := Xiaomi
+	DEVICE_ALT0_MODEL := AX3600
+	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
+	KERNEL_SIZE :=
+	ARTIFACTS :=
+endef
+TARGET_DEVICES += xiaomi_ax3600-stock
 
 define Device/xiaomi_ax9000
 	$(call Device/FitImage)

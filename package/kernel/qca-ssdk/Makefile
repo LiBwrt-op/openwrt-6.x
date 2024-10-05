@@ -21,7 +21,7 @@ define KernelPackage/qca-ssdk
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   TITLE:=Qualcom SSDK switch driver
-  DEPENDS:=@(TARGET_qualcommax)
+  DEPENDS:=@(TARGET_ipq50xx||TARGET_qualcommax)
   FILES:=$(PKG_BUILD_DIR)/qca-ssdk.ko
   AUTOLOAD:=$(call AutoLoad,30,qca-ssdk)
 endef
@@ -43,7 +43,7 @@ MAKE_FLAGS+= \
 	ARCH=$(LINUX_KARCH) \
 	TARGET_SUFFIX=$(CONFIG_TARGET_SUFFIX) \
 	GCC_VERSION=$(GCC_VERSION) \
-	EXTRA_CFLAGS="-fno-stack-protector -I$(STAGING_DIR)/usr/include" \
+	EXTRA_CFLAGS='-fno-PIC -fno-stack-protector -I$(STAGING_DIR)/usr/include' \
 	SoC=$(CONFIG_TARGET_SUBTARGET) \
 	SHELL="$(BASH)" \
 	PTP_FEATURE=disable SWCONFIG_FEATURE=disable \
@@ -60,6 +60,13 @@ ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq60xx")
     MAKE_FLAGS+= CHIP_TYPE=CPPE
 endif
 
+ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq50xx")
+    MAKE_FLAGS+= CHIP_TYPE=MP IN_QCA808X_PHY=TRUE IN_MISC=TRUE IN_STP=TRUE IN_VSI=TRUE IN_FDB=TRUE
+endif
+
+ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq50xx_32")
+    MAKE_FLAGS+= CHIP_TYPE=MP IN_QCA808X_PHY=TRUE IN_MISC=TRUE IN_STP=TRUE IN_VSI=TRUE IN_FDB=TRUE
+endif
 
 define Build/Compile
 	+$(MAKE) $(PKG_JOBS) $(MAKE_FLAGS) -C $(PKG_BUILD_DIR) $(LNX_CONFIG_OPTS)

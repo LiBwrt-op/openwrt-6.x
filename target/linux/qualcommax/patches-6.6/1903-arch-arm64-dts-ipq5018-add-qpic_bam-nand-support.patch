@@ -1,0 +1,58 @@
+From 662aaa584de6c65e97e5db30b4a825dd0e9719ce Mon Sep 17 00:00:00 2001
+From: JiaY-shi <shi05275@163.com>
+Date: Mon, 24 Jun 2024 17:08:58 +0800
+Subject: [PATCH 2/2] arch: arm64: dts: ipq5018 add qpic_bam & nand support
+
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 40 +++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -263,6 +263,46 @@
+ 			status = "disabled";
+ 		};
+ 
++		qpic_bam: dma@7984000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x7984000 0x1c000>;
++			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_QPIC_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++			status = "disabled";
++		};
++
++		nand: qpic-nand@79b0000 {
++			compatible = "qcom,ipq5018-nand";
++			reg = <0x79b0000 0x10000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_QPIC_CLK>,
++				<&gcc GCC_QPIC_AHB_CLK>,
++				<&gcc GCC_QPIC_IO_MACRO_CLK>;
++			clock-names = "core", "aon", "io_macro";
++
++			dmas = <&qpic_bam 0>,
++				<&qpic_bam 1>,
++				<&qpic_bam 2>,
++				<&qpic_bam 3>;
++			dma-names = "tx", "rx", "cmd", "sts";
++			status = "disabled";
++
++			nandcs@0 {
++				compatible = "qcom,nandcs";
++				reg = <0>;
++				#address-cells = <1>;
++				#size-cells = <1>;
++
++				nand-ecc-strength = <4>;
++				nand-ecc-step-size = <512>;
++				nand-bus-width = <8>;
++			};
++		};
++
+ 		usb: usb@8af8800 {
+ 			compatible = "qcom,ipq5018-dwc3", "qcom,dwc3";
+ 			reg = <0x08af8800 0x400>;
