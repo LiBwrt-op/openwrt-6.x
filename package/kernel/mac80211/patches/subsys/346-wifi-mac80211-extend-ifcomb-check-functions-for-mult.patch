@@ -29,7 +29,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (ret < 0)
  		return ret;
  
-@@ -3992,7 +3992,7 @@ __ieee80211_channel_switch(struct wiphy
+@@ -3993,7 +3993,7 @@ __ieee80211_channel_switch(struct wiphy
  		goto out;
  
  	/* if reservation is invalid then this will fail */
@@ -38,7 +38,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (err) {
  		ieee80211_link_unreserve_chanctx(link_data);
  		goto out;
-@@ -5161,4 +5161,5 @@ const struct cfg80211_ops mac80211_confi
+@@ -5162,4 +5162,5 @@ const struct cfg80211_ops mac80211_confi
  	.del_link_station = ieee80211_del_link_station,
  	.set_hw_timestamp = ieee80211_set_hw_timestamp,
  	.set_ttlm = ieee80211_set_ttlm,
