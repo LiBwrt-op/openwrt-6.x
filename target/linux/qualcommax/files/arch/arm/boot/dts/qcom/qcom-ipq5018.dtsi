@@ -1,2 +1,0 @@
-#include <../../../arm64/boot/dts/qcom/ipq5018.dtsi>
-#include <qcom-ipq5018.dtsi>
