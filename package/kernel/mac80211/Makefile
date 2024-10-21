@@ -10,13 +10,13 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=mac80211
 
-PKG_VERSION:=6.9.9
+PKG_VERSION:=6.11.2
 PKG_RELEASE:=1
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=COPYING
 
 PKG_SOURCE_URL:=http://mirror2.openwrt.org/sources/
-PKG_HASH:=3417da091a57c7b1c145d44c1fae9f1e0bac6d0c8ad61b37e57b0a802eeb2837
+PKG_HASH:=700ea5abef8dde9e3c6df2acd32ff443da735d773d56db9a80269e2237549b34
 
 PKG_SOURCE:=backports-$(PKG_VERSION).tar.xz
 PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/$(if $(BUILD_VARIANT),$(PKG_NAME)-$(BUILD_VARIANT)/)backports-$(PKG_VERSION)
@@ -47,6 +47,9 @@ include $(INCLUDE_DIR)/package.mk
 WMENU:=Wireless Drivers
 
 NSS_PATCH:= subsys ath10k ath11k
+IPQ_BRANCH:=$(shell git -C $(TOPDIR) rev-parse --abbrev-ref HEAD)
+IPQ_DATE:=$(shell git -C $(TOPDIR) log -1 --format=%cd --date=format:%Y-%m-%d)
+IPQ_COMMIT:=$(shell git -C $(TOPDIR) log -1 --format=%h)
 
 define KernelPackage/mac80211/Default
   SUBMENU:=$(WMENU)
@@ -438,9 +441,14 @@ endef
 
 ifdef CONFIG_ATH11K_NSS_SUPPORT
 define KernelPackage/ath11k/install
-	$(INSTALL_DIR) $(1)/etc/init.d $(1)/etc/config
+	$(INSTALL_DIR) $(1)/etc/init.d $(1)/etc/config $(1)/usr/bin $(1)/etc/hotplug.d/net
 	$(INSTALL_BIN) ./files/qca-nss-pbuf.init $(1)/etc/init.d/qca-nss-pbuf
-	$(INSTALL_BIN) ./files/pbuf.uci $(1)/etc/config/pbuf
+	$(INSTALL_DATA) ./files/pbuf.uci $(1)/etc/config/pbuf
+	$(INSTALL_BIN) ./files/nss_diag.sh $(1)/usr/bin/nss_diag
+	$(INSTALL_DATA) ./files/disable_mesh_chksum_ath11k.hotplug $(1)/etc/hotplug.d/net/99-disable_mesh_chksum_ath11k
+	echo "IPQ_BRANCH=$(IPQ_BRANCH)" > $(1)/etc/ipq_release
+	echo "IPQ_DATE=$(IPQ_DATE)" >> $(1)/etc/ipq_release
+	echo "IPQ_COMMIT=$(IPQ_COMMIT)" >> $(1)/etc/ipq_release
 endef
 endif
 

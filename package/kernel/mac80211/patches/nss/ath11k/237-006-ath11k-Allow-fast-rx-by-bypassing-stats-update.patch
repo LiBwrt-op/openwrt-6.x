@@ -10,14 +10,12 @@ bypassing mac80211 stats update
 
 Signed-off-by: Sriram R <srirrama@codeaurora.org>
 Signed-off-by: P Praneesh <ppranees@codeaurora.org>
-
-Co-authored-by: Sean Khan <datapronix@protonmail.com>
 ---
- drivers/net/wireless/ath/ath11k/core.h    |    2 
+ drivers/net/wireless/ath/ath11k/core.h    |    2
  drivers/net/wireless/ath/ath11k/debugfs.c |   75 ++++++++++++++++++
  drivers/net/wireless/ath/ath11k/dp_rx.c   |  119 +++++++++++++++++++++++++++---
  drivers/net/wireless/ath/ath11k/hw.c      |   22 +++++
- drivers/net/wireless/ath/ath11k/hw.h      |    1 
+ drivers/net/wireless/ath/ath11k/hw.h      |    1
  drivers/net/wireless/ath/ath11k/mac.c     |    8 ++
  6 files changed, 218 insertions(+), 9 deletions(-)
 
@@ -31,7 +29,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  };
  
  enum ath11k_hw_rev {
-@@ -1126,6 +1127,7 @@ struct ath11k_base {
+@@ -1130,6 +1131,7 @@ struct ath11k_base {
  	u32 max_ast_index;
  	u32 num_ast_entries;
  
@@ -55,7 +53,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
 +	if (enable)
 +		tlv_filter = ath11k_mac_mon_status_filter_default;
 +
-+	for (i = 0; i < ab->hw_params.num_rxmda_per_pdev; i++) {
++	for (i = 0; i < ab->hw_params.num_rxdma_per_pdev; i++) {
 +		ring_id = ar->dp.rx_mon_status_refill_ring[i].refill_buf_ring.ring_id;
 +		ath11k_dp_tx_htt_rx_filter_setup(ar->ab, ring_id,
 +						 ar->dp.mac_id + i,
@@ -126,7 +124,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  		goto out;
  	}
 +	debugfs_create_file("stats_disable", 0600, ab->debugfs_soc, ab,
-+					    &fops_soc_stats_disable);
++				    &fops_soc_stats_disable);
  
  	ret = 0;
  
@@ -154,7 +152,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  				   tlv_tag, ptr - begin, len, tlv_len);
  			return -EINVAL;
  		}
-@@ -2455,10 +2461,60 @@ ath11k_dp_rx_h_find_peer(struct ath11k_b
+@@ -2454,10 +2460,60 @@ ath11k_dp_rx_h_find_peer(struct ath11k_b
  	return peer;
  }
  
@@ -216,7 +214,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  {
  	bool  fill_crypto_hdr;
  	enum hal_encrypt_type enctype;
-@@ -2469,9 +2525,13 @@ static void ath11k_dp_rx_h_mpdu(struct a
+@@ -2468,9 +2524,13 @@ static void ath11k_dp_rx_h_mpdu(struct a
  	struct rx_attention *rx_attention;
  	u32 err_bitmap;
  
@@ -231,7 +229,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  	rxcb->is_mcbc = fill_crypto_hdr;
  
  	if (rxcb->is_mcbc) {
-@@ -2482,6 +2542,26 @@ static void ath11k_dp_rx_h_mpdu(struct a
+@@ -2481,6 +2541,26 @@ static void ath11k_dp_rx_h_mpdu(struct a
  	spin_lock_bh(&ar->ab->base_lock);
  	peer = ath11k_dp_rx_h_find_peer(ar->ab, msdu);
  	if (peer) {
@@ -258,7 +256,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  		if (rxcb->is_mcbc)
  			enctype = peer->sec_type_grp;
  		else
-@@ -2491,6 +2571,8 @@ static void ath11k_dp_rx_h_mpdu(struct a
+@@ -2490,6 +2570,8 @@ static void ath11k_dp_rx_h_mpdu(struct a
  	}
  	spin_unlock_bh(&ar->ab->base_lock);
  
@@ -267,7 +265,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  	rx_attention = ath11k_dp_rx_get_attention(ar->ab, rx_desc);
  	err_bitmap = ath11k_dp_rx_h_attn_mpdu_err(rx_attention);
  	if (enctype != HAL_ENCRYPT_TYPE_OPEN && !err_bitmap)
-@@ -2732,7 +2814,8 @@ static void ath11k_dp_rx_deliver_msdu(st
+@@ -2731,7 +2813,8 @@ static void ath11k_dp_rx_deliver_msdu(st
  static int ath11k_dp_rx_process_msdu(struct ath11k *ar,
  				     struct sk_buff *msdu,
  				     struct sk_buff_head *msdu_list,
@@ -277,7 +275,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  {
  	struct ath11k_base *ab = ar->ab;
  	struct hal_rx_desc *rx_desc, *lrx_desc;
-@@ -2799,8 +2882,13 @@ static int ath11k_dp_rx_process_msdu(str
+@@ -2798,8 +2881,13 @@ static int ath11k_dp_rx_process_msdu(str
  		}
  	}
  
@@ -292,7 +290,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  
  	rx_status->flag |= RX_FLAG_SKIP_MONITOR | RX_FLAG_DUP_VALIDATED;
  
-@@ -2815,10 +2903,12 @@ static void ath11k_dp_rx_process_receive
+@@ -2814,10 +2902,12 @@ static void ath11k_dp_rx_process_receive
  						  struct sk_buff_head *msdu_list,
  						  int mac_id)
  {
@@ -305,7 +303,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  
  	if (skb_queue_empty(msdu_list))
  		return;
-@@ -2835,7 +2925,12 @@ static void ath11k_dp_rx_process_receive
+@@ -2834,7 +2924,12 @@ static void ath11k_dp_rx_process_receive
  	}
  
  	while ((msdu = __skb_dequeue(msdu_list))) {
@@ -319,7 +317,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  		if (unlikely(ret)) {
  			ath11k_dbg(ab, ATH11K_DBG_DATA,
  				   "Unable to process msdu %d", ret);
-@@ -2843,7 +2938,10 @@ static void ath11k_dp_rx_process_receive
+@@ -2842,7 +2937,10 @@ static void ath11k_dp_rx_process_receive
  			continue;
  		}
  
@@ -331,7 +329,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  	}
  }
  
-@@ -2852,11 +2950,12 @@ void ath11k_dp_rx_from_nss(struct ath11k
+@@ -2851,11 +2949,12 @@ void ath11k_dp_rx_from_nss(struct ath11k
  {
  	struct ieee80211_rx_status rx_status = {0};
  	struct ath11k_skb_rxcb *rxcb;
@@ -345,7 +343,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  
  	rx_status.flag |= RX_FLAG_SKIP_MONITOR | RX_FLAG_DUP_VALIDATED;
  
-@@ -4324,6 +4423,7 @@ static int ath11k_dp_rx_h_null_q_desc(st
+@@ -4387,6 +4486,7 @@ static int ath11k_dp_rx_h_null_q_desc(st
  				      struct ieee80211_rx_status *status,
  				      struct sk_buff_head *msdu_list)
  {
@@ -353,7 +351,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  	u16 msdu_len;
  	struct hal_rx_desc *desc = (struct hal_rx_desc *)msdu->data;
  	struct rx_attention *rx_attention;
-@@ -4373,7 +4473,8 @@ static int ath11k_dp_rx_h_null_q_desc(st
+@@ -4436,7 +4536,8 @@ static int ath11k_dp_rx_h_null_q_desc(st
  	}
  	ath11k_dp_rx_h_ppdu(ar, desc, status);
  
@@ -427,7 +425,7 @@ Co-authored-by: Sean Khan <datapronix@protonmail.com>
  	bool (*rx_desc_get_mpdu_fc_valid)(struct hal_rx_desc *desc);
 --- a/drivers/net/wireless/ath/ath11k/mac.c
 +++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -10197,6 +10197,14 @@ static int ath11k_mac_op_sta_state(struc
+@@ -10246,6 +10246,14 @@ static int ath11k_mac_op_sta_state(struc
  		}
  	} else if (old_state == IEEE80211_STA_AUTHORIZED &&
  		   new_state == IEEE80211_STA_ASSOC) {
