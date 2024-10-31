@@ -353,6 +353,7 @@ ifdef CONFIG_i386
   endif
 endif
 
+CONFIG_OPENSSL_SSL3 := y
 ifndef CONFIG_OPENSSL_SSL3
   OPENSSL_OPTIONS += no-ssl3 no-ssl3-method no-unit-test no-external-tests
   OPENSSL_OPTIONS += no-afalgeng no-aria no-asan no-async
