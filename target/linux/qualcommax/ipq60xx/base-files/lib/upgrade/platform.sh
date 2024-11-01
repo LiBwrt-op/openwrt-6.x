@@ -47,6 +47,7 @@ platform_do_upgrade() {
 		fw_setenv bootcount 0
 		nand_do_upgrade "$1"
 		;;
+	jdcloud,re-cs-07|\
 	redmi,ax5-jdcloud|\
 	jdcloud,ax1800-pro|\
     jdcloud,ax6600)
