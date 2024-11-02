@@ -1,4 +1,3 @@
-
 define Device/redmi_ax3000
   $(call Device/FitImage)
   $(call Device/UbiFit)
