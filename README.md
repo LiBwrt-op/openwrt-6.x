@@ -1,12 +1,37 @@
 # 适用于 IPQ系列设备的 OpenWrt 源码仓库
 
-## 注意
+## 说明
+>对于以前IPQ系列想要使用OpenWrt系统只能放弃部分NSS功能，亦或者使用相对老旧的内核，在开源社区的努力下完善了这部分的支持  
+>其中本库中融合了[JiaY-shi](https://github.com/JiaY-shi/openwrt)、[qosmio](https://github.com/qosmio/openwrt-ipq)两位大佬NSS支持的代码实现了这一功能，以及使用了[immortalwrt](https://github.com/immortalwrt)的luci、packages作为插件的支持,在此感谢大佬们的付出
 
-1. **不要用 root 用户进行编译**
-2. 国内用户编译前最好准备好梯子
-3. 默认登陆IP 192.168.1.1 密码 password
+目前已实现功能
+| Target  | NSS NAT | 2.4G WiFi <br />`NSS Offload` | 5G WiFi <br />`NSS Offload` |
+| :-:     | :-:     | :-:       | :-:     |
+| IPQ807X | ✅      | ✅       | ✅      |
+| IPQ60XX | ✅      | ✅       | ✅      |
+| IPQ50XX | ❌      |❌        |❌       |
 
-## 编译命令
+## Wiki
+- [什么是NSS?](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#whats-nss)
+- [OpenWrt如何“分载”流量？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#how-does-openwrt-offload-traffic)
+- [NSS与OpenWrt的“分载”选项有何不同？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#how-is-nss-different-from-openwrts-offloading-options)
+- [我需要NSS吗?](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#do-i-need-nss)
+- [我的设备支持NSS吗？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#ok-i-want-nss-does-my-device-support-it)
+- [重要提示](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#important-note)
+
+---
+
+## 使用方法
+- 推荐使用[24.10](https://github.com/LiBwrt-op/openwrt-6.x/tree/openwrt-24.10)分支
+
+### [云编译](https://github.com/breeze303/openwrt-ci)
+
+### 本地编译
+
+- **不要用 `root` 用户进行编译⚠**
+- 国内用户编译前最好准备好梯子
+- 默认登陆IP 192.168.1.1 密码 password
+
 
 1. 首先装好 Linux 系统， Ubuntu 20.04 LTS
 
@@ -59,3 +84,11 @@
    ```
 
 7. 编译完成后输出路径：bin/targets
+
+### 如果你喜欢这个项目的话别忘了点个Star⭐
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/LiBwrt-op/openwrt-6.x.svg?variant=adaptive)](https://starchart.cc/LiBwrt-op/openwrt-6.x)
+
+<a href="#readme">
+<img src="https://img.shields.io/badge/-返回顶部-FFFFFF.svg" title="返回顶部" align="left"/>
+</a>
