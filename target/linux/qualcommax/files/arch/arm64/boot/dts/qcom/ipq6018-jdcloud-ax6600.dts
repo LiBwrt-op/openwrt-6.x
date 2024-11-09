@@ -21,11 +21,11 @@
 		led-running = &led_status_blue;
 		led-upgrade = &led_status_red;
 
-		ethernet0 = dp1;
-		ethernet1 = dp2;
-		ethernet2 = dp3;
-		ethernet3 = dp4;
-		ethernet4 = dp5;
+		ethernet0 = &dp1;
+		ethernet1 = &dp2;
+		ethernet2 = &dp3;
+		ethernet3 = &dp4;
+		ethernet4 = &dp5;
 	};
 
 	chosen {
