@@ -21,11 +21,11 @@
 		led-running = &led_status_blue;
 		led-upgrade = &led_status_red;
 
-		ethernet0 = "/soc/dp1";
-		ethernet1 = "/soc/dp2";
-		ethernet2 = "/soc/dp3";
-		ethernet3 = "/soc/dp4";
-		ethernet4 = "/soc/dp5";
+		ethernet0 = dp1;
+		ethernet1 = dp2;
+		ethernet2 = dp3;
+		ethernet3 = dp4;
+		ethernet4 = dp5;
 	};
 
 	chosen {
@@ -48,6 +48,13 @@
 			linux,code = <KEY_RESTART>;
 			gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
 		};
+
+		screen {
+			label = "screen";
+			linux,code = <BTN_1>;
+			gpios = <&tlmm 71 GPIO_ACTIVE_LOW>;
+		};
+
 	};
 
 	leds {
@@ -104,6 +111,15 @@
 			function = "mdio";
 			drive-strength = <8>;
 			bias-pull-up;
+		};
+	};
+
+	usb_pwr_pins: usb-pwr-pins {
+		mux {
+			pins = "gpio22";
+			function = "gpio";
+			bias-pull-down;
+			output-high;
 		};
 	};
 	
@@ -217,6 +233,8 @@
 };
 
 &usb3 {
+	pinctrl-0 = <&usb_pwr_pins>;
+	pinctrl-names = "default";
 	status = "okay";
 };
 

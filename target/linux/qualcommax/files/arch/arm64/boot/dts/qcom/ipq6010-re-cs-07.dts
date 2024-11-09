@@ -40,6 +40,12 @@
 			linux,code = <KEY_RESTART>;
 			gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
 		};
+
+		screen {
+			label = "screen";
+			linux,code = <BTN_1>;
+			gpios = <&tlmm 71 GPIO_ACTIVE_LOW>;
+		};
 	};
 
 	leds {
@@ -99,6 +105,15 @@
 		};
 	};
 	
+	usb_pwr_pins: usb-pwr-pins {
+		mux {
+			pins = "gpio22";
+			function = "gpio";
+			bias-pull-down;
+			output-high;
+		};
+	};
+
 	button_pins: button_pins {
 		joylink_button {
 			pins = "gpio72";
