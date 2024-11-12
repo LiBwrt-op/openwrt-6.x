@@ -80,7 +80,7 @@ define Device/jdcloud_re-cs-07
 	$(call Device/EmmcImage)
 	DEVICE_VENDOR := JDCloud
 	DEVICE_MODEL := ER1
-	DEVICE_DTS_CONFIG := config@cp03-c3
+	DEVICE_DTS_CONFIG := config@cp03-c4
 	DEVICE_DTS := ipq6010-re-cs-07
 	SOC := ipq6018
 	DEVICE_PACKAGES := kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
