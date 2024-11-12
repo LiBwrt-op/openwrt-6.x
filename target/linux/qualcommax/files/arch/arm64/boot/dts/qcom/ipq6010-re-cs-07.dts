@@ -175,6 +175,8 @@
 };
 
 &usb3 {
+        pinctrl-0 = <&usb_pwr_pins>;
+        pinctrl-names = "default";
 	status = "okay";
 };
 
