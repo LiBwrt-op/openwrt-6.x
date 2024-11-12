@@ -40,12 +40,6 @@
 			linux,code = <KEY_RESTART>;
 			gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
 		};
-
-		screen {
-			label = "screen";
-			linux,code = <BTN_1>;
-			gpios = <&tlmm 71 GPIO_ACTIVE_LOW>;
-		};
 	};
 
 	leds {
@@ -124,13 +118,6 @@
 
 		reset_button {
 			pins = "gpio56";
-			function = "gpio";
-			drive-strength = <8>;
-			bias-pull-down;
-		};
-
-		screen_button {
-			pins = "gpio71";
 			function = "gpio";
 			drive-strength = <8>;
 			bias-pull-down;
