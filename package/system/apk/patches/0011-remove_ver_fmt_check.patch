@@ -1,0 +1,11 @@
+--- ./src/apk_adb.c	2024-11-13 05:53:38.040000000 +0000
++++ ./src/apk_adb.c	2024-11-13 05:54:08.484000000 +0000
+@@ -176,7 +176,7 @@
+ 
+ static adb_val_t version_fromstring(struct adb *db, apk_blob_t val)
+ {
+-	if (!apk_version_validate(val)) return ADB_ERROR(APKE_PKGVERSION_FORMAT);
++	// if (!apk_version_validate(val)) return ADB_ERROR(APKE_PKGVERSION_FORMAT);
+ 	return adb_w_blob(db, val);
+ }
+ 
