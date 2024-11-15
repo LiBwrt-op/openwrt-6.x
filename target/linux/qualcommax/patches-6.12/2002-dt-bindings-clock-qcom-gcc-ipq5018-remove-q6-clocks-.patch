@@ -1,0 +1,59 @@
+From e3cfd427b543c637c4db849c5f0dfcfbb2f15d77 Mon Sep 17 00:00:00 2001
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Date: Mon, 22 May 2023 03:58:43 +0530
+Subject: dt-bindings: clock: qcom: gcc-ipq5018: remove q6 clocks macros
+
+Since Q6 firmware takes care of bring up clocks in multipd
+model, remove bring up clock macros.
+
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+ include/dt-bindings/clock/qcom,gcc-ipq5018.h | 21 --------------------
+ 1 file changed, 21 deletions(-)
+
+--- a/include/dt-bindings/clock/qcom,gcc-ipq5018.h
++++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
+@@ -74,15 +74,8 @@
+ #define GCC_PCIE1_AXI_S_CLK				65
+ #define GCC_PCIE1_PIPE_CLK				66
+ #define GCC_PRNG_AHB_CLK				67
+-#define GCC_Q6_AXIM_CLK					68
+-#define GCC_Q6_AXIM2_CLK				69
+-#define GCC_Q6_AXIS_CLK					70
+-#define GCC_Q6_AHB_CLK					71
+-#define GCC_Q6_AHB_S_CLK				72
+ #define GCC_Q6_TSCTR_1TO2_CLK				73
+ #define GCC_Q6SS_ATBM_CLK				74
+-#define GCC_Q6SS_PCLKDBG_CLK				75
+-#define GCC_Q6SS_TRIG_CLK				76
+ #define GCC_QDSS_AT_CLK					77
+ #define GCC_QDSS_CFG_AHB_CLK				78
+ #define GCC_QDSS_DAP_AHB_CLK				79
+@@ -109,7 +102,6 @@
+ #define GCC_SYS_NOC_PCIE1_AXI_CLK			100
+ #define GCC_SYS_NOC_QDSS_STM_AXI_CLK			101
+ #define GCC_SYS_NOC_USB0_AXI_CLK			102
+-#define GCC_SYS_NOC_WCSS_AHB_CLK			103
+ #define GCC_UBI0_AXI_CLK				104
+ #define GCC_UBI0_CFG_CLK				105
+ #define GCC_UBI0_CORE_CLK				106
+@@ -127,19 +119,6 @@
+ #define GCC_USB0_MOCK_UTMI_CLK				118
+ #define GCC_USB0_PHY_CFG_AHB_CLK			119
+ #define GCC_USB0_SLEEP_CLK				120
+-#define GCC_WCSS_ACMT_CLK				121
+-#define GCC_WCSS_AHB_S_CLK				122
+-#define GCC_WCSS_AXI_M_CLK				123
+-#define GCC_WCSS_AXI_S_CLK				124
+-#define GCC_WCSS_DBG_IFC_APB_BDG_CLK			125
+-#define GCC_WCSS_DBG_IFC_APB_CLK			126
+-#define GCC_WCSS_DBG_IFC_ATB_BDG_CLK			127
+-#define GCC_WCSS_DBG_IFC_ATB_CLK			128
+-#define GCC_WCSS_DBG_IFC_DAPBUS_BDG_CLK			129
+-#define GCC_WCSS_DBG_IFC_DAPBUS_CLK			130
+-#define GCC_WCSS_DBG_IFC_NTS_BDG_CLK			131
+-#define GCC_WCSS_DBG_IFC_NTS_CLK			132
+-#define GCC_WCSS_ECAHB_CLK				133
+ #define GCC_XO_CLK					134
+ #define GCC_XO_CLK_SRC					135
+ #define GMAC0_RX_CLK_SRC				136

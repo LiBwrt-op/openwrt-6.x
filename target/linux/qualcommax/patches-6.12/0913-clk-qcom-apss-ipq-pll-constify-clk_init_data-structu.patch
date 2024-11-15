@@ -1,0 +1,39 @@
+From 4a941e436432104ce5ed75bf8c5ba2c8463b089c Mon Sep 17 00:00:00 2001
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 28 Mar 2024 10:23:13 +0100
+Subject: clk: qcom: apss-ipq-pll: constify clk_init_data structures
+
+The clk_init_data structures are never modified, so add const
+qualifier to the ones where it is missing.
+
+No functional changes.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20240328-apss-ipq-pll-cleanup-v4-4-eddbf617f0c8@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+---
+ drivers/clk/qcom/apss-ipq-pll.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -15,7 +15,7 @@ static struct clk_alpha_pll ipq_pll_huay
+ 	.clkr = {
+ 		.enable_reg = 0x0,
+ 		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
++		.hw.init = &(const struct clk_init_data) {
+ 			.name = "a53pll",
+ 			.parent_data = &(const struct clk_parent_data) {
+ 				.fw_name = "xo",
+@@ -55,7 +55,7 @@ static struct clk_alpha_pll ipq_pll_stro
+ 	.clkr = {
+ 		.enable_reg = 0x0,
+ 		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
++		.hw.init = &(const struct clk_init_data) {
+ 			.name = "a53pll",
+ 			.parent_data = &(const struct clk_parent_data) {
+ 				.fw_name = "xo",

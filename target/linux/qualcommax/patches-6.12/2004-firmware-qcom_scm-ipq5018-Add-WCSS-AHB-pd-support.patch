@@ -1,0 +1,164 @@
+From 55195802c5aa10652b5f4010bfae49562c1efaf0 Mon Sep 17 00:00:00 2001
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Date: Mon, 22 May 2023 03:58:47 +0530
+Subject: firmware: qcom_scm: ipq5018: Add WCSS AHB pd support
+
+Add support to power up, down & load userpd firmware.
+
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+ drivers/firmware/qcom_scm.c            | 114 +++++++++++++++++++++++++
+ drivers/firmware/qcom_scm.h            |   6 ++
+ include/linux/firmware/qcom/qcom_scm.h |   3 +
+ 3 files changed, 123 insertions(+)
+
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -676,6 +676,120 @@ disable_clk:
+ EXPORT_SYMBOL_GPL(qcom_scm_pas_shutdown);
+ 
+ /**
++ * qti_scm_int_radio_powerup - Bring up WCSS AHB userpd
++ *
++ * @peripheral:	peripheral id
++ *
++ * Return 0 on success.
++ */
++int qti_scm_int_radio_powerup(u32 peripheral)
++{
++	int ret;
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_PD_LOAD_SVC_ID,
++		.cmd = QCOM_SCM_INT_RAD_PWR_UP_CMD_ID,
++		.arginfo = QCOM_SCM_ARGS(1),
++		.args[0] = peripheral,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++
++	ret = qcom_scm_clk_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_bw_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++	qcom_scm_bw_disable();
++	qcom_scm_clk_disable();
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qti_scm_int_radio_powerup);
++
++/**
++ * qti_scm_int_radio_powerdown() - Shut down WCSS AHB userpd
++ *
++ * @peripheral: peripheral id
++ *
++ * Returns 0 on success.
++ */
++int qti_scm_int_radio_powerdown(u32 peripheral)
++{
++	int ret;
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_PD_LOAD_SVC_ID,
++		.cmd = QCOM_SCM_INT_RAD_PWR_DN_CMD_ID,
++		.arginfo = QCOM_SCM_ARGS(1),
++		.args[0] = peripheral,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++
++	ret = qcom_scm_clk_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_bw_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++	qcom_scm_bw_disable();
++	qcom_scm_clk_disable();
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qti_scm_int_radio_powerdown);
++
++/**
++ * qti_scm_pdseg_memcpy_v2() - copy userpd PIL segments data to dma blocks
++ *
++ * @peripheral:		peripheral id
++ * @phno:		program header no
++ * @dma:		handle of dma region
++ * @seg_cnt:		no of dma blocks
++ *
++ * Returns 0 if trustzone successfully loads userpd PIL segments from dma
++ * blocks to DDR
++ */
++int qti_scm_pdseg_memcpy_v2(u32 peripheral, int phno, dma_addr_t dma,
++			    int seg_cnt)
++{
++	int ret;
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_PD_LOAD_SVC_ID,
++		.cmd = QCOM_SCM_PD_LOAD_V2_CMD_ID,
++		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL,
++						QCOM_SCM_RW, QCOM_SCM_VAL),
++		.args[0] = peripheral,
++		.args[1] = phno,
++		.args[2] = dma,
++		.args[3] = seg_cnt,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++
++	ret = qcom_scm_clk_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_bw_enable();
++	if (ret)
++		return ret;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++	qcom_scm_bw_disable();
++	qcom_scm_clk_disable();
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qti_scm_pdseg_memcpy_v2);
++
++/**
+  * qcom_scm_pas_supported() - Check if the peripheral authentication service is
+  *			      available for the given peripherial
+  * @peripheral:	peripheral id
+--- a/drivers/firmware/qcom_scm.h
++++ b/drivers/firmware/qcom_scm.h
+@@ -133,6 +133,12 @@ extern int scm_legacy_call(struct device
+ #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
+ #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
+ 
++#define QCOM_SCM_PD_LOAD_SVC_ID			0x2
++#define QCOM_SCM_PD_LOAD_CMD_ID			0x16
++#define QCOM_SCM_PD_LOAD_V2_CMD_ID		0x19
++#define QCOM_SCM_INT_RAD_PWR_UP_CMD_ID		0x17
++#define QCOM_SCM_INT_RAD_PWR_DN_CMD_ID		0x18
++
+ #define QCOM_SCM_SVC_WAITQ			0x24
+ #define QCOM_SCM_WAITQ_RESUME			0x02
+ #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -81,6 +81,9 @@ extern int qcom_scm_pas_mem_setup(u32 pe
+ extern int qcom_scm_pas_auth_and_reset(u32 peripheral);
+ extern int qcom_scm_pas_shutdown(u32 peripheral);
+ extern bool qcom_scm_pas_supported(u32 peripheral);
++int qti_scm_int_radio_powerup(u32 peripheral);
++int qti_scm_int_radio_powerdown(u32 peripheral);
++int qti_scm_pdseg_memcpy_v2(u32 peripheral, int phno, dma_addr_t dma, int seg_cnt);
+ 
+ extern int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+ extern int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);

@@ -1,0 +1,82 @@
+From 35a99c6ffa1e9bd8d31ddd3098e6fad7ba884928 Mon Sep 17 00:00:00 2001
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 28 Mar 2024 10:23:11 +0100
+Subject: clk: qcom: apss-ipq-pll: move Huayra register map to
+ 'clk_alpha_pll_regs'
+
+Move the locally defined Huayra register map to 'clk_alpha_pll_regs'
+in order to allow using that by other drivers, like the clk-cbf-8996.
+
+No functional changes.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20240328-apss-ipq-pll-cleanup-v4-2-eddbf617f0c8@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+---
+ drivers/clk/qcom/apss-ipq-pll.c  | 20 +-------------------
+ drivers/clk/qcom/clk-alpha-pll.c | 10 ++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  1 +
+ 3 files changed, 12 insertions(+), 19 deletions(-)
+
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -8,27 +8,9 @@
+ 
+ #include "clk-alpha-pll.h"
+ 
+-/*
+- * Even though APSS PLL type is of existing one (like Huayra), its offsets
+- * are different from the one mentioned in the clk-alpha-pll.c, since the
+- * PLL is specific to APSS, so lets the define the same.
+- */
+-static const u8 ipq_pll_offsets[][PLL_OFF_MAX_REGS] = {
+-	[CLK_ALPHA_PLL_TYPE_HUAYRA] =  {
+-		[PLL_OFF_L_VAL] = 0x08,
+-		[PLL_OFF_ALPHA_VAL] = 0x10,
+-		[PLL_OFF_USER_CTL] = 0x18,
+-		[PLL_OFF_CONFIG_CTL] = 0x20,
+-		[PLL_OFF_CONFIG_CTL_U] = 0x24,
+-		[PLL_OFF_STATUS] = 0x28,
+-		[PLL_OFF_TEST_CTL] = 0x30,
+-		[PLL_OFF_TEST_CTL_U] = 0x34,
+-	},
+-};
+-
+ static struct clk_alpha_pll ipq_pll_huayra = {
+ 	.offset = 0x0,
+-	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA_APSS],
+ 	.flags = SUPPORTS_DYNAMIC_UPDATE,
+ 	.clkr = {
+ 		.enable_reg = 0x0,
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -82,6 +82,16 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MA
+ 		[PLL_OFF_TEST_CTL_U] = 0x20,
+ 		[PLL_OFF_STATUS] = 0x24,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_HUAYRA_APSS] =  {
++		[PLL_OFF_L_VAL] = 0x08,
++		[PLL_OFF_ALPHA_VAL] = 0x10,
++		[PLL_OFF_USER_CTL] = 0x18,
++		[PLL_OFF_CONFIG_CTL] = 0x20,
++		[PLL_OFF_CONFIG_CTL_U] = 0x24,
++		[PLL_OFF_STATUS] = 0x28,
++		[PLL_OFF_TEST_CTL] = 0x30,
++		[PLL_OFF_TEST_CTL_U] = 0x34,
++	},
+ 	[CLK_ALPHA_PLL_TYPE_BRAMMO] =  {
+ 		[PLL_OFF_L_VAL] = 0x04,
+ 		[PLL_OFF_ALPHA_VAL] = 0x08,
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -15,6 +15,7 @@
+ enum {
+ 	CLK_ALPHA_PLL_TYPE_DEFAULT,
+ 	CLK_ALPHA_PLL_TYPE_HUAYRA,
++	CLK_ALPHA_PLL_TYPE_HUAYRA_APSS,
+ 	CLK_ALPHA_PLL_TYPE_BRAMMO,
+ 	CLK_ALPHA_PLL_TYPE_FABIA,
+ 	CLK_ALPHA_PLL_TYPE_TRION,
