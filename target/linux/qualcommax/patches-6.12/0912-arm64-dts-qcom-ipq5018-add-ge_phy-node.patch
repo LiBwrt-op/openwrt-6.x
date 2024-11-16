@@ -10,7 +10,7 @@ Signed-off-by: hzy <hzyitc@outlook.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -115,6 +115,10 @@
+@@ -168,6 +168,10 @@
  			clocks = <&gcc GCC_MDIO0_AHB_CLK>;
  			clock-names = "gcc_mdio_ahb_clk";
  			status = "disabled";

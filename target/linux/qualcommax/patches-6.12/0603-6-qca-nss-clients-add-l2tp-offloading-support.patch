@@ -105,7 +105,7 @@
  #endif
 --- a/net/l2tp/l2tp_ppp.c
 +++ b/net/l2tp/l2tp_ppp.c
-@@ -123,9 +123,17 @@ struct pppol2tp_session {
+@@ -122,9 +122,17 @@ struct pppol2tp_session {
  };
  
  static int pppol2tp_xmit(struct ppp_channel *chan, struct sk_buff *skb);
@@ -126,7 +126,7 @@
  };
  
  static const struct proto_ops pppol2tp_ops;
-@@ -373,6 +381,13 @@ static int pppol2tp_xmit(struct ppp_chan
+@@ -368,6 +376,13 @@ static int pppol2tp_xmit(struct ppp_chan
  	skb->data[0] = PPP_ALLSTATIONS;
  	skb->data[1] = PPP_UI;
  
@@ -140,7 +140,7 @@
  	local_bh_disable();
  	l2tp_xmit_skb(session, skb);
  	local_bh_enable();
-@@ -818,7 +833,7 @@ static int pppol2tp_connect(struct socke
+@@ -804,7 +819,7 @@ static int pppol2tp_connect(struct socke
  	po->chan.hdrlen = PPPOL2TP_L2TP_HDR_SIZE_NOSEQ;
  
  	po->chan.private = sk;
@@ -149,7 +149,7 @@
  	po->chan.mtu	 = pppol2tp_tunnel_mtu(tunnel);
  
  	error = ppp_register_net_channel(sock_net(sk), &po->chan);
-@@ -1732,6 +1747,109 @@ static void __exit pppol2tp_exit(void)
+@@ -1720,6 +1735,109 @@ static void __exit pppol2tp_exit(void)
  	unregister_pernet_device(&pppol2tp_net_ops);
  }
  
@@ -356,7 +356,7 @@
   */
 --- a/net/l2tp/l2tp_core.h
 +++ b/net/l2tp/l2tp_core.h
-@@ -235,6 +235,9 @@ struct l2tp_session *l2tp_session_get_by
+@@ -231,6 +231,9 @@ struct l2tp_session *l2tp_session_get_by
  void l2tp_stats_update(struct l2tp_tunnel *tunnel, struct l2tp_session *session,
                         struct l2tp_stats *stats);
  

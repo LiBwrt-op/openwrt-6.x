@@ -16,9 +16,9 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -94,6 +94,19 @@
- 		#size-cells = <1>;
- 		ranges = <0 0 0 0xffffffff>;
+@@ -147,6 +147,19 @@
+ 			status = "disabled";
+ 		};
  
 +		usbphy0: phy@5b000 {
 +			compatible = "qcom,ipq5018-usb-hsphy";
@@ -36,11 +36,10 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  		tlmm: pinctrl@1000000 {
  			compatible = "qcom,ipq5018-tlmm";
  			reg = <0x01000000 0x300000>;
-@@ -156,6 +169,47 @@
- 			status = "disabled";
+@@ -239,6 +252,47 @@
  		};
  
-+		usb: usb@8af8800 {
+ 		usb: usb@8af8800 {
 +			compatible = "qcom,ipq5018-dwc3", "qcom,dwc3";
 +			reg = <0x08af8800 0x400>;
 +
@@ -81,6 +80,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 +			};
 +		};
 +
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			reg = <0x0b000000 0x1000>,  /* GICD */
++		usb: usb@8af8800 {
+ 			compatible = "qcom,ipq5018-dwc3", "qcom,dwc3";
+ 			reg = <0x08af8800 0x400>;
+ 

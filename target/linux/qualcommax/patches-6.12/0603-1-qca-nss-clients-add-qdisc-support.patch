@@ -1,13 +1,3 @@
---- a/include/linux/timer.h
-+++ b/include/linux/timer.h
-@@ -17,6 +17,7 @@ struct timer_list {
- 	unsigned long		expires;
- 	void			(*function)(struct timer_list *);
- 	u32			flags;
-+	unsigned long		cust_data;
- 
- #ifdef CONFIG_LOCKDEP
- 	struct lockdep_map	lockdep_map;
 --- a/drivers/net/ifb.c
 +++ b/drivers/net/ifb.c
 @@ -151,6 +151,31 @@ resched:
@@ -52,7 +42,7 @@
  	dev->needs_free_netdev = true;
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -4708,6 +4708,15 @@ void dev_uc_flush(struct net_device *dev
+@@ -4626,6 +4626,15 @@ void dev_uc_flush(struct net_device *dev
  void dev_uc_init(struct net_device *dev);
  
  /**
@@ -65,10 +55,10 @@
 +void ifb_update_offload_stats(struct net_device *dev, struct pcpu_sw_netstats *offload_stats);
 +
 +/**
-  *  __dev_uc_sync - Synchonize device's unicast list
+  *  __dev_uc_sync - Synchronize device's unicast list
   *  @dev:  device to sync
   *  @sync: function to call if address should be added
-@@ -5252,6 +5261,11 @@ static inline bool netif_is_failover_sla
+@@ -5182,6 +5191,11 @@ static inline bool netif_is_failover_sla
  	return dev->priv_flags & IFF_FAILOVER_SLAVE;
  }
  
@@ -82,7 +72,7 @@
  {
 --- a/include/uapi/linux/pkt_sched.h
 +++ b/include/uapi/linux/pkt_sched.h
-@@ -1306,4 +1306,248 @@ enum {
+@@ -1208,4 +1208,248 @@ enum {
  
  #define TCA_ETS_MAX (__TCA_ETS_MAX - 1)
  
@@ -341,7 +331,7 @@
  
  struct Qdisc *qdisc_lookup_rcu(struct net_device *dev, u32 handle)
  {
-@@ -2395,4 +2396,26 @@ static int __init pktsched_init(void)
+@@ -2452,4 +2453,26 @@ static int __init pktsched_init(void)
  	return 0;
  }
  
@@ -370,7 +360,7 @@
  subsys_initcall(pktsched_init);
 --- a/net/sched/sch_generic.c
 +++ b/net/sched/sch_generic.c
-@@ -1083,6 +1083,7 @@ static void __qdisc_destroy(struct Qdisc
+@@ -1090,6 +1090,7 @@ static void __qdisc_destroy(struct Qdisc
  
  	call_rcu(&qdisc->rcu, qdisc_free_cb);
  }
@@ -380,7 +370,7 @@
  {
 --- a/include/net/sch_generic.h
 +++ b/include/net/sch_generic.h
-@@ -94,6 +94,7 @@ struct Qdisc {
+@@ -95,6 +95,7 @@ struct Qdisc {
  #define TCQ_F_INVISIBLE		0x80 /* invisible by default in dump */
  #define TCQ_F_NOLOCK		0x100 /* qdisc does not require locking */
  #define TCQ_F_OFFLOADED		0x200 /* qdisc is offloaded to HW */
@@ -388,7 +378,7 @@
  	u32			limit;
  	const struct Qdisc_ops	*ops;
  	struct qdisc_size_table	__rcu *stab;
-@@ -752,6 +753,42 @@ static inline bool skb_skip_tc_classify(
+@@ -755,6 +756,42 @@ static inline bool skb_skip_tc_classify(
  	return false;
  }
  
@@ -431,7 +421,7 @@
  /* Reset all TX qdiscs greater than index of a device.  */
  static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
  {
-@@ -1323,4 +1360,9 @@ static inline void qdisc_synchronize(con
+@@ -1357,4 +1394,9 @@ static inline void qdisc_synchronize(con
  		msleep(1);
  }
  
@@ -443,7 +433,7 @@
  #endif
 --- a/include/linux/skbuff.h
 +++ b/include/linux/skbuff.h
-@@ -762,6 +762,7 @@ typedef unsigned char *sk_buff_data_t;
+@@ -789,6 +789,7 @@ enum skb_tstamp_type {
   *	@offload_fwd_mark: Packet was L2-forwarded in hardware
   *	@offload_l3_fwd_mark: Packet was L3-forwarded in hardware
   *	@tc_skip_classify: do not classify packet. set by IFB device
@@ -451,7 +441,7 @@
   *	@tc_at_ingress: used within tc_classify to distinguish in/egress
   *	@redirected: packet was redirected by packet classifier
   *	@from_ingress: packet was redirected from the ingress path
-@@ -940,6 +941,9 @@ struct sk_buff {
+@@ -966,6 +967,9 @@ struct sk_buff {
  	__u8			tc_at_ingress:1;	/* See TC_AT_INGRESS_MASK */
  	__u8			tc_skip_classify:1;
  #endif

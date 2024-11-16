@@ -36,7 +36,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
 --- a/drivers/remoteproc/Kconfig
 +++ b/drivers/remoteproc/Kconfig
-@@ -234,6 +234,26 @@ config QCOM_Q6V5_PAS
+@@ -235,6 +235,26 @@ config QCOM_Q6V5_PAS
  	  CDSP (Compute DSP), MPSS (Modem Peripheral SubSystem), and
  	  SLPI (Sensor Low Power Island).
  
@@ -75,7 +75,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  obj-$(CONFIG_QCOM_Q6V5_WCSS)		+= qcom_q6v5_wcss.o
 --- a/drivers/remoteproc/qcom_common.h
 +++ b/drivers/remoteproc/qcom_common.h
-@@ -76,4 +76,13 @@ static inline bool qcom_sysmon_shutdown_
+@@ -86,4 +86,13 @@ static inline bool qcom_sysmon_shutdown_
  }
  #endif
  
@@ -771,7 +771,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 +MODULE_LICENSE("GPL v2");
 --- a/drivers/soc/qcom/mdt_loader.c
 +++ b/drivers/soc/qcom/mdt_loader.c
-@@ -16,6 +16,56 @@
+@@ -17,6 +17,56 @@
  #include <linux/sizes.h>
  #include <linux/slab.h>
  #include <linux/soc/qcom/mdt_loader.h>
@@ -828,7 +828,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  
  static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
  {
-@@ -393,6 +443,261 @@ static int __qcom_mdt_load(struct device
+@@ -391,6 +441,261 @@ static int __qcom_mdt_load(struct device
  	return ret;
  }
  
@@ -1090,7 +1090,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  /**
   * qcom_mdt_load() - load the firmware which header is loaded as fw
   * @dev:	device handle to associate resources with
-@@ -445,5 +750,32 @@ int qcom_mdt_load_no_init(struct device
+@@ -443,5 +748,32 @@ int qcom_mdt_load_no_init(struct device
  }
  EXPORT_SYMBOL_GPL(qcom_mdt_load_no_init);
  

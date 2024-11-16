@@ -20,7 +20,7 @@
  #endif
 --- a/net/bridge/br_fdb.c
 +++ b/net/bridge/br_fdb.c
-@@ -239,6 +239,8 @@ static void fdb_notify(struct net_bridge
+@@ -236,6 +239,8 @@ static void fdb_notify(struct net_bridge
  		kfree_skb(skb);
  		goto errout;
  	}

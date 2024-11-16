@@ -17,8 +17,8 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
 +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-@@ -67,6 +67,18 @@
- 	};
+@@ -79,6 +79,18 @@
+ 	status = "okay";
  };
  
 +&usb {

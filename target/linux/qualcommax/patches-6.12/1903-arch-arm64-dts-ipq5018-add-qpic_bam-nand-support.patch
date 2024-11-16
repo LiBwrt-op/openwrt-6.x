@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] arch: arm64: dts: ipq5018 add qpic_bam & nand support
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -263,6 +263,46 @@
+@@ -323,6 +323,46 @@
  			status = "disabled";
  		};
  

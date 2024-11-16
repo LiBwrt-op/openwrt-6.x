@@ -81,7 +81,7 @@
  		     __be16 vlan_proto, u16 vlan_id)
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2933,6 +2933,10 @@ enum netdev_cmd {
+@@ -2891,6 +2891,10 @@ enum netdev_cmd {
  	NETDEV_OFFLOAD_XSTATS_REPORT_USED,
  	NETDEV_OFFLOAD_XSTATS_REPORT_DELTA,
  	NETDEV_XDP_FEAT_CHANGE,
@@ -142,7 +142,7 @@
  #endif
 --- a/include/net/route.h
 +++ b/include/net/route.h
-@@ -237,6 +237,11 @@ struct rtable *rt_dst_alloc(struct net_d
+@@ -245,6 +245,11 @@ struct rtable *rt_dst_alloc(struct net_d
  			    unsigned int flags, u16 type, bool noxfrm);
  struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt);
  
@@ -156,7 +156,7 @@
  void fib_del_ifaddr(struct in_ifaddr *, struct in_ifaddr *);
 --- a/net/bridge/br_private.h
 +++ b/net/bridge/br_private.h
-@@ -2268,4 +2268,6 @@ void br_do_suppress_nd(struct sk_buff *s
+@@ -2292,4 +2292,6 @@ void br_do_suppress_nd(struct sk_buff *s
  		       u16 vid, struct net_bridge_port *p, struct nd_msg *msg);
  struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *m);
  bool br_is_neigh_suppress_enabled(const struct net_bridge_port *p, u16 vid);
@@ -232,8 +232,8 @@
 +
  int __init br_fdb_init(void)
  {
- 	br_fdb_cache = kmem_cache_create("bridge_fdb_cache",
-@@ -195,6 +209,25 @@ static void fdb_notify(struct net_bridge
+ 	br_fdb_cache = KMEM_CACHE(net_bridge_fdb_entry, SLAB_HWCACHE_ALIGN);
+@@ -192,6 +206,25 @@ static void fdb_notify(struct net_bridge
  	if (swdev_notify)
  		br_switchdev_fdb_notify(br, fdb, type);
  
@@ -259,7 +259,7 @@
  	skb = nlmsg_new(fdb_nlmsg_size(), GFP_ATOMIC);
  	if (skb == NULL)
  		goto errout;
-@@ -519,6 +552,22 @@ out:
+@@ -537,6 +570,22 @@ out:
  	spin_unlock_bh(&br->hash_lock);
  }
  
@@ -282,7 +282,7 @@
  void br_fdb_cleanup(struct work_struct *work)
  {
  	struct net_bridge *br = container_of(work, struct net_bridge,
-@@ -527,6 +576,7 @@ void br_fdb_cleanup(struct work_struct *
+@@ -545,6 +594,7 @@ void br_fdb_cleanup(struct work_struct *
  	unsigned long delay = hold_time(br);
  	unsigned long work_delay = delay;
  	unsigned long now = jiffies;
@@ -290,7 +290,7 @@
  
  	/* this part is tricky, in order to avoid blocking learning and
  	 * consequently forwarding, we rely on rcu to delete objects with
-@@ -553,8 +603,15 @@ void br_fdb_cleanup(struct work_struct *
+@@ -571,8 +621,15 @@ void br_fdb_cleanup(struct work_struct *
  			work_delay = min(work_delay, this_timer - now);
  		} else {
  			spin_lock_bh(&br->hash_lock);
@@ -307,7 +307,7 @@
  			spin_unlock_bh(&br->hash_lock);
  		}
  	}
-@@ -891,6 +948,12 @@ void br_fdb_update(struct net_bridge *br
+@@ -928,6 +985,12 @@ void br_fdb_update(struct net_bridge *br
  				 */
  				if (unlikely(test_bit(BR_FDB_LOCKED, &fdb->flags)))
  					clear_bit(BR_FDB_LOCKED, &fdb->flags);
@@ -319,8 +319,8 @@
 +				/* QCA NSS ECM support - End */
  			}
  
- 			if (unlikely(test_bit(BR_FDB_ADDED_BY_USER, &flags)))
-@@ -914,6 +977,64 @@ void br_fdb_update(struct net_bridge *br
+ 			if (unlikely(test_bit(BR_FDB_ADDED_BY_USER, &flags))) {
+@@ -955,6 +1018,64 @@ void br_fdb_update(struct net_bridge *br
  	}
  }
  
@@ -518,7 +518,7 @@
 +/* QCA NSS ECM support - End */
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -1275,6 +1275,22 @@ static void neigh_update_hhs(struct neig
+@@ -1277,6 +1277,22 @@ static void neigh_update_hhs(struct neig
  	}
  }
  
@@ -541,7 +541,7 @@
  /* Generic update routine.
     -- lladdr is new lladdr or NULL, if it is not supplied.
     -- new    is new state.
-@@ -1303,6 +1319,7 @@ static int __neigh_update(struct neighbo
+@@ -1305,6 +1321,7 @@ static int __neigh_update(struct neighbo
  	struct net_device *dev;
  	int err, notify = 0;
  	u8 old;
@@ -549,7 +549,7 @@
  
  	trace_neigh_update(neigh, lladdr, new, flags, nlmsg_pid);
  
-@@ -1317,7 +1334,10 @@ static int __neigh_update(struct neighbo
+@@ -1319,7 +1336,10 @@ static int __neigh_update(struct neighbo
  		new = old;
  		goto out;
  	}
@@ -561,7 +561,7 @@
  	    (old & (NUD_NOARP | NUD_PERMANENT)))
  		goto out;
  
-@@ -1354,7 +1374,12 @@ static int __neigh_update(struct neighbo
+@@ -1356,7 +1376,12 @@ static int __neigh_update(struct neighbo
  		   - compare new & old
  		   - if they are different, check override flag
  		 */
@@ -575,7 +575,7 @@
  		    !memcmp(lladdr, neigh->ha, dev->addr_len))
  			lladdr = neigh->ha;
  	} else {
-@@ -1476,8 +1501,11 @@ out:
+@@ -1478,8 +1503,11 @@ out:
  		neigh_update_gc_list(neigh);
  	if (managed_update)
  		neigh_update_managed_list(neigh);
@@ -590,7 +590,7 @@
  }
 --- a/net/ipv4/fib_trie.c
 +++ b/net/ipv4/fib_trie.c
-@@ -1211,6 +1211,9 @@ static bool fib_valid_key_len(u32 key, u
+@@ -1212,6 +1212,9 @@ static bool fib_valid_key_len(u32 key, u
  static void fib_remove_alias(struct trie *t, struct key_vector *tp,
  			     struct key_vector *l, struct fib_alias *old);
  
@@ -600,7 +600,7 @@
  /* Caller must hold RTNL. */
  int fib_table_insert(struct net *net, struct fib_table *tb,
  		     struct fib_config *cfg, struct netlink_ext_ack *extack)
-@@ -1404,6 +1407,9 @@ int fib_table_insert(struct net *net, st
+@@ -1405,6 +1408,9 @@ int fib_table_insert(struct net *net, st
  	rtmsg_fib(RTM_NEWROUTE, htonl(key), new_fa, plen, new_fa->tb_id,
  		  &cfg->fc_nlinfo, nlflags);
  succeeded:
@@ -653,7 +653,7 @@
  		   const struct in6_addr *daddr)
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -198,6 +198,9 @@ static void rt6_uncached_list_flush_dev(
+@@ -196,6 +196,9 @@ static void rt6_uncached_list_flush_dev(
  	}
  }
  
@@ -663,7 +663,7 @@
  static inline const void *choose_neigh_daddr(const struct in6_addr *p,
  					     struct sk_buff *skb,
  					     const void *daddr)
-@@ -3868,6 +3871,10 @@ int ip6_route_add(struct fib6_config *cf
+@@ -3874,6 +3877,10 @@ int ip6_route_add(struct fib6_config *cf
  		return PTR_ERR(rt);
  
  	err = __ip6_ins_rt(rt, &cfg->fc_nlinfo, extack);
@@ -674,7 +674,7 @@
  	fib6_info_release(rt);
  
  	return err;
-@@ -3889,6 +3896,9 @@ static int __ip6_del_rt(struct fib6_info
+@@ -3895,6 +3902,9 @@ static int __ip6_del_rt(struct fib6_info
  	err = fib6_del(rt, info);
  	spin_unlock_bh(&table->tb6_lock);
  
@@ -684,7 +684,7 @@
  out:
  	fib6_info_release(rt);
  	return err;
-@@ -6336,6 +6346,20 @@ static int ip6_route_dev_notify(struct n
+@@ -6343,6 +6353,20 @@ static int ip6_route_dev_notify(struct n
  	return NOTIFY_OK;
  }
  
@@ -707,7 +707,7 @@
   */
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -1699,6 +1699,7 @@ const char *netdev_cmd_to_name(enum netd
+@@ -1674,6 +1674,7 @@ const char *netdev_cmd_to_name(enum netd
  	N(PRE_CHANGEADDR) N(OFFLOAD_XSTATS_ENABLE) N(OFFLOAD_XSTATS_DISABLE)
  	N(OFFLOAD_XSTATS_REPORT_USED) N(OFFLOAD_XSTATS_REPORT_DELTA)
  	N(XDP_FEAT_CHANGE)
@@ -717,7 +717,7 @@
  	return "UNKNOWN_NETDEV_EVENT";
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -1002,6 +1002,7 @@ void inet6_ifa_finish_destroy(struct ine
+@@ -993,6 +993,7 @@ void inet6_ifa_finish_destroy(struct ine
  
  	kfree_rcu(ifp, rcu);
  }
@@ -727,7 +727,7 @@
  ipv6_link_dev_addr(struct inet6_dev *idev, struct inet6_ifaddr *ifp)
 --- a/include/net/vxlan.h
 +++ b/include/net/vxlan.h
-@@ -440,6 +440,15 @@ static inline __be32 vxlan_compute_rco(u
+@@ -441,6 +441,15 @@ static inline __be32 vxlan_compute_rco(u
  	return vni_field;
  }
  
@@ -754,7 +754,7 @@
    IPPROTO_ENCAP = 98,		/* Encapsulation Header			*/
  #define IPPROTO_ENCAP		IPPROTO_ENCAP
    IPPROTO_PIM = 103,		/* Protocol Independent Multicast	*/
-@@ -327,7 +329,7 @@ struct sockaddr_in {
+@@ -329,7 +331,7 @@ struct sockaddr_in {
  #endif
  
  /* <asm/byteorder.h> contains the htonl type stuff.. */
@@ -774,7 +774,7 @@
    IPPROTO_ENCAP = 98,		/* Encapsulation Header			*/
  #define IPPROTO_ENCAP		IPPROTO_ENCAP
    IPPROTO_PIM = 103,		/* Protocol Independent Multicast	*/
-@@ -327,7 +329,7 @@ struct sockaddr_in {
+@@ -329,7 +331,7 @@ struct sockaddr_in {
  #endif
  
  /* <asm/byteorder.h> contains the htonl type stuff.. */
@@ -821,7 +821,7 @@
  	/*
  	 * Get the required data from the packet.
  	 */
-@@ -1285,7 +1289,7 @@ int nf_conntrack_tcp_packet(struct nf_co
+@@ -1286,7 +1290,7 @@ int nf_conntrack_tcp_packet(struct nf_co
  		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
  		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
  		timeout = timeouts[TCP_CONNTRACK_UNACK];
@@ -830,7 +830,7 @@
  		 timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
  		timeout = timeouts[TCP_CONNTRACK_RETRANS];
  	else
-@@ -1601,6 +1605,9 @@ void nf_conntrack_tcp_init_net(struct ne
+@@ -1602,6 +1606,9 @@ void nf_conntrack_tcp_init_net(struct ne
  	 */
  	tn->tcp_be_liberal = 0;
  
@@ -850,7 +850,7 @@
  	NF_SYSCTL_CT_PROTO_TCP_IGNORE_INVALID_RST,
  	NF_SYSCTL_CT_PROTO_TCP_MAX_RETRANS,
  	NF_SYSCTL_CT_PROTO_TIMEOUT_UDP,
-@@ -834,6 +835,14 @@ static struct ctl_table nf_ct_sysctl_tab
+@@ -832,6 +833,14 @@ static struct ctl_table nf_ct_sysctl_tab
  		.extra1 	= SYSCTL_ZERO,
  		.extra2 	= SYSCTL_ONE,
  	},
@@ -865,7 +865,7 @@
  	[NF_SYSCTL_CT_PROTO_TCP_IGNORE_INVALID_RST] = {
  		.procname	= "nf_conntrack_tcp_ignore_invalid_rst",
  		.maxlen		= sizeof(u8),
-@@ -1035,6 +1044,7 @@ static void nf_conntrack_standalone_init
+@@ -1031,6 +1040,7 @@ static void nf_conntrack_standalone_init
  
  	XASSIGN(LOOSE, &tn->tcp_loose);
  	XASSIGN(LIBERAL, &tn->tcp_be_liberal);

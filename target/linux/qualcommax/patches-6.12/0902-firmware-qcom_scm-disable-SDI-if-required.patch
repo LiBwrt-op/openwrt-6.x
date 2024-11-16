@@ -25,11 +25,11 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  drivers/firmware/qcom_scm.h |  1 +
  2 files changed, 31 insertions(+)
 
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -410,6 +410,29 @@ int qcom_scm_set_remote_state(u32 state,
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -506,6 +506,29 @@ static int qcom_scm_disable_sdi(void)
+ 	return ret ? : res.result[0];
  }
- EXPORT_SYMBOL_GPL(qcom_scm_set_remote_state);
  
 +static int qcom_scm_disable_sdi(void)
 +{
@@ -57,9 +57,9 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
  {
  	struct qcom_scm_desc desc = {
-@@ -1473,6 +1496,13 @@ static int qcom_scm_probe(struct platfor
- 
- 	__get_convention();
+@@ -1565,6 +1588,13 @@ static int qcom_scm_qseecom_call(const s
+ {
+ 	int status;
  
 +
 +	/*
@@ -69,15 +69,5 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 +		qcom_scm_disable_sdi();
 +
  	/*
- 	 * If requested enable "download mode", from this point on warmboot
- 	 * will cause the boot stages to enter download mode, unless
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -80,6 +80,7 @@ extern int scm_legacy_call(struct device
- #define QCOM_SCM_SVC_BOOT		0x01
- #define QCOM_SCM_BOOT_SET_ADDR		0x01
- #define QCOM_SCM_BOOT_TERMINATE_PC	0x02
-+#define QCOM_SCM_BOOT_SDI_CONFIG	0x09
- #define QCOM_SCM_BOOT_SET_DLOAD_MODE	0x10
- #define QCOM_SCM_BOOT_SET_ADDR_MC	0x11
- #define QCOM_SCM_BOOT_SET_REMOTE_STATE	0x0a
+ 	 * Note: Multiple QSEECOM SCM calls should not be executed same time,
+ 	 * so lock things here. This needs to be extended to callback/listener

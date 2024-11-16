@@ -10,7 +10,7 @@ Signed-off-by: hzy <hzyitc@outlook.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -107,6 +107,26 @@
+@@ -160,6 +160,26 @@
  			status = "disabled";
  		};
  

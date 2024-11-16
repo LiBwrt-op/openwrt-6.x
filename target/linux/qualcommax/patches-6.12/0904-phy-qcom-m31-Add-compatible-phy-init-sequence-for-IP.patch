@@ -15,8 +15,8 @@ Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
 --- a/drivers/phy/qualcomm/phy-qcom-m31.c
 +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-@@ -82,6 +82,50 @@ struct m31_priv_data {
- 	unsigned int			nregs;
+@@ -126,6 +126,50 @@ static const struct m31_phy_regs m31_ipq
+ 	},
  };
  
 +static const struct m31_phy_regs m31_ipq5018_regs[] = {
@@ -66,24 +66,16 @@ Signed-off-by: Vinod Koul <vkoul@kernel.org>
  static struct m31_phy_regs m31_ipq5332_regs[] = {
  	{
  		USB_PHY_CFG0,
-@@ -267,6 +311,12 @@ static int m31usb_phy_probe(struct platf
- 	return PTR_ERR_OR_ZERO(phy_provider);
- }
+@@ -313,6 +357,12 @@ static int m31usb_phy_probe(struct platf
  
-+static const struct m31_priv_data m31_ipq5018_data = {
-+	.ulpi_mode = false,
+ static const struct m31_priv_data m31_ipq5018_data = {
+ 	.ulpi_mode = false,
 +	.regs = m31_ipq5018_regs,
 +	.nregs = ARRAY_SIZE(m31_ipq5018_regs),
 +};
 +
- static const struct m31_priv_data m31_ipq5332_data = {
- 	.ulpi_mode = false,
- 	.regs = m31_ipq5332_regs,
-@@ -274,6 +324,7 @@ static const struct m31_priv_data m31_ip
- };
- 
- static const struct of_device_id m31usb_phy_id_table[] = {
-+	{ .compatible = "qcom,ipq5018-usb-hsphy", .data = &m31_ipq5018_data },
- 	{ .compatible = "qcom,ipq5332-usb-hsphy", .data = &m31_ipq5332_data },
- 	{ },
++static const struct m31_priv_data m31_ipq5018_data = {
++	.ulpi_mode = false,
+ 	.regs = m31_ipq5018_regs,
+ 	.nregs = ARRAY_SIZE(m31_ipq5018_regs),
  };

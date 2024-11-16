@@ -20,7 +20,7 @@
  #endif
 --- a/net/bridge/br_fdb.c
 +++ b/net/bridge/br_fdb.c
-@@ -239,6 +239,8 @@ static void fdb_notify(struct net_bridge
+@@ -236,6 +236,8 @@ static void fdb_notify(struct net_bridge
  		kfree_skb(skb);
  		goto errout;
  	}
@@ -29,7 +29,7 @@
  	rtnl_notify(skb, net, 0, RTNLGRP_NEIGH, NULL, GFP_ATOMIC);
  	return;
  errout:
-@@ -305,6 +307,7 @@ struct net_bridge_fdb_entry *br_fdb_find
+@@ -302,6 +304,7 @@ struct net_bridge_fdb_entry *br_fdb_find
  {
  	return fdb_find_rcu(&br->fdb_hash_tbl, addr, vid);
  }
@@ -39,7 +39,7 @@
   * added to the bridge private HW address list and all required ports
 --- a/net/bridge/br_private.h
 +++ b/net/bridge/br_private.h
-@@ -907,6 +907,7 @@ void br_manage_promisc(struct net_bridge
+@@ -912,6 +912,7 @@ void br_manage_promisc(struct net_bridge
  int nbp_backup_change(struct net_bridge_port *p, struct net_device *backup_dev);
  
  /* br_input.c */
@@ -47,7 +47,7 @@
  int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
  rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
  
-@@ -2270,4 +2271,14 @@ struct nd_msg *br_is_nd_neigh_msg(struct
+@@ -2294,4 +2295,14 @@ struct nd_msg *br_is_nd_neigh_msg(struct
  bool br_is_neigh_suppress_enabled(const struct net_bridge_port *p, u16 vid);
  #define __br_get(__hook, __default, __args ...) \
  		(__hook ? (__hook(__args)) : (__default)) /* QCA NSS ECM support */
@@ -74,7 +74,7 @@
  errout:
 --- a/net/bridge/br.c
 +++ b/net/bridge/br.c
-@@ -472,6 +472,12 @@ static void __exit br_deinit(void)
+@@ -467,6 +467,12 @@ static void __exit br_deinit(void)
  	br_fdb_fini();
  }
  
@@ -154,7 +154,7 @@
 +			goto out;
 +		/* QCA qca-mcs support - End */
 +
- 		mdst = br_mdb_get(brmctx, skb, vid);
+ 		mdst = br_mdb_entry_skb_get(brmctx, skb, vid);
  		if ((mdst || BR_INPUT_SKB_CB_MROUTERS_ONLY(skb)) &&
  		    br_multicast_querier_exists(brmctx, eth_hdr(skb), mdst)) {
 @@ -195,8 +217,15 @@ int br_handle_frame_finish(struct net *n
@@ -288,7 +288,7 @@
  #endif
 --- a/net/ipv4/ipmr.c
 +++ b/net/ipv4/ipmr.c
-@@ -89,6 +89,9 @@ static struct net_device *vif_dev_read(c
+@@ -90,6 +90,9 @@ static struct net_device *vif_dev_read(c
  /* Special spinlock for queue of unresolved entries */
  static DEFINE_SPINLOCK(mfc_unres_lock);
  
@@ -298,7 +298,7 @@
  /* We return to original Alan's scheme. Hash table of resolved
   * entries is changed only in process context and protected
   * with weak lock mrt_lock. Queue of unresolved entries is protected
-@@ -112,6 +115,9 @@ static void mroute_netlink_event(struct
+@@ -113,6 +116,9 @@ static void mroute_netlink_event(struct
  static void igmpmsg_netlink_event(const struct mr_table *mrt, struct sk_buff *pkt);
  static void mroute_clean_tables(struct mr_table *mrt, int flags);
  static void ipmr_expire_process(struct timer_list *t);
@@ -308,7 +308,7 @@
  
  #ifdef CONFIG_IP_MROUTE_MULTIPLE_TABLES
  #define ipmr_for_each_table(mrt, net)					\
-@@ -223,6 +229,80 @@ static int ipmr_rule_fill(struct fib_rul
+@@ -224,6 +230,80 @@ static int ipmr_rule_fill(struct fib_rul
  	return 0;
  }
  
@@ -389,7 +389,7 @@
  static const struct fib_rules_ops __net_initconst ipmr_rules_ops_template = {
  	.family		= RTNL_FAMILY_IPMR,
  	.rule_size	= sizeof(struct ipmr_rule),
-@@ -236,6 +316,156 @@ static const struct fib_rules_ops __net_
+@@ -237,6 +317,156 @@ static const struct fib_rules_ops __net_
  	.owner		= THIS_MODULE,
  };
  
@@ -546,7 +546,7 @@
  static int __net_init ipmr_rules_init(struct net *net)
  {
  	struct fib_rules_ops *ops;
-@@ -1191,6 +1421,10 @@ static int ipmr_mfc_delete(struct mr_tab
+@@ -1192,6 +1422,10 @@ static int ipmr_mfc_delete(struct mr_tab
  	call_ipmr_mfc_entry_notifiers(net, FIB_EVENT_ENTRY_DEL, c, mrt->id);
  	mroute_netlink_event(mrt, c, RTM_DELROUTE);
  	mr_cache_put(&c->_c);
@@ -557,7 +557,7 @@
  
  	return 0;
  }
-@@ -1221,6 +1455,10 @@ static int ipmr_mfc_add(struct net *net,
+@@ -1222,6 +1456,10 @@ static int ipmr_mfc_add(struct net *net,
  		call_ipmr_mfc_entry_notifiers(net, FIB_EVENT_ENTRY_REPLACE, c,
  					      mrt->id);
  		mroute_netlink_event(mrt, c, RTM_NEWROUTE);
@@ -863,7 +863,7 @@
  	return 0;
  }
  
-@@ -1457,6 +1701,10 @@ static int ip6mr_mfc_add(struct net *net
+@@ -1454,6 +1698,10 @@ static int ip6mr_mfc_add(struct net *net
  		call_ip6mr_mfc_entry_notifiers(net, FIB_EVENT_ENTRY_REPLACE,
  					       c, mrt->id);
  		mr6_netlink_event(mrt, c, RTM_NEWROUTE);

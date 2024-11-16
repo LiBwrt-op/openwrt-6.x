@@ -1,6 +1,6 @@
 --- a/net/l2tp/l2tp_core.c
 +++ b/net/l2tp/l2tp_core.c
-@@ -403,6 +403,31 @@ err_tlock:
+@@ -622,6 +622,31 @@ out:
  }
  EXPORT_SYMBOL_GPL(l2tp_session_register);
  
@@ -34,7 +34,7 @@
   *****************************************************************************/
 --- a/net/l2tp/l2tp_core.h
 +++ b/net/l2tp/l2tp_core.h
-@@ -232,6 +232,9 @@ struct l2tp_session *l2tp_session_get_nt
+@@ -228,6 +228,9 @@ struct l2tp_session *l2tp_session_get_ne
  struct l2tp_session *l2tp_session_get_by_ifname(const struct net *net,
  						const char *ifname);
  

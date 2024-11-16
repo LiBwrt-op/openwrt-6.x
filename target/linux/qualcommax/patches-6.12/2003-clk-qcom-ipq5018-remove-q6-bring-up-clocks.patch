@@ -13,7 +13,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
 --- a/drivers/clk/qcom/gcc-ipq5018.c
 +++ b/drivers/clk/qcom/gcc-ipq5018.c
-@@ -2218,159 +2218,6 @@ static struct clk_branch gcc_prng_ahb_cl
+@@ -2219,159 +2219,6 @@ static struct clk_branch gcc_prng_ahb_cl
  	},
  };
  
@@ -173,7 +173,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  static struct clk_branch gcc_qdss_at_clk = {
  	.halt_reg = 0x29024,
  	.clkr = {
-@@ -2796,23 +2643,6 @@ static struct clk_branch gcc_sys_noc_usb
+@@ -2797,23 +2644,6 @@ static struct clk_branch gcc_sys_noc_usb
  	},
  };
  
@@ -197,7 +197,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  static struct clk_branch gcc_ubi0_axi_clk = {
  	.halt_reg = 0x68200,
  	.halt_check = BRANCH_HALT_DELAY,
-@@ -3127,227 +2957,6 @@ static struct clk_branch gcc_usb0_pipe_c
+@@ -3128,227 +2958,6 @@ static struct clk_branch gcc_usb0_pipe_c
  	},
  };
  
@@ -425,7 +425,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  static struct clk_hw *gcc_ipq5018_hws[] = {
  	&gpll0_out_main_div2.hw,
  	&pcnoc_clk_src.hw,
-@@ -3437,15 +3046,6 @@ static struct clk_regmap *gcc_ipq5018_cl
+@@ -3438,15 +3047,6 @@ static struct clk_regmap *gcc_ipq5018_cl
  	[GCC_PCIE1_AXI_S_BRIDGE_CLK] = &gcc_pcie1_axi_s_bridge_clk.clkr,
  	[GCC_PCIE1_AXI_S_CLK] = &gcc_pcie1_axi_s_clk.clkr,
  	[GCC_PRNG_AHB_CLK] = &gcc_prng_ahb_clk.clkr,
@@ -441,7 +441,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  	[GCC_QDSS_AT_CLK] = &gcc_qdss_at_clk.clkr,
  	[GCC_QDSS_CFG_AHB_CLK] = &gcc_qdss_cfg_ahb_clk.clkr,
  	[GCC_QDSS_DAP_AHB_CLK] = &gcc_qdss_dap_ahb_clk.clkr,
-@@ -3472,7 +3072,6 @@ static struct clk_regmap *gcc_ipq5018_cl
+@@ -3473,7 +3073,6 @@ static struct clk_regmap *gcc_ipq5018_cl
  	[GCC_SYS_NOC_PCIE1_AXI_CLK] = &gcc_sys_noc_pcie1_axi_clk.clkr,
  	[GCC_SYS_NOC_QDSS_STM_AXI_CLK] = &gcc_sys_noc_qdss_stm_axi_clk.clkr,
  	[GCC_SYS_NOC_USB0_AXI_CLK] = &gcc_sys_noc_usb0_axi_clk.clkr,
@@ -449,7 +449,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
  	[GCC_UBI0_AXI_CLK] = &gcc_ubi0_axi_clk.clkr,
  	[GCC_UBI0_CFG_CLK] = &gcc_ubi0_cfg_clk.clkr,
  	[GCC_UBI0_CORE_CLK] = &gcc_ubi0_core_clk.clkr,
-@@ -3490,19 +3089,6 @@ static struct clk_regmap *gcc_ipq5018_cl
+@@ -3491,19 +3090,6 @@ static struct clk_regmap *gcc_ipq5018_cl
  	[GCC_USB0_MOCK_UTMI_CLK] = &gcc_usb0_mock_utmi_clk.clkr,
  	[GCC_USB0_PHY_CFG_AHB_CLK] = &gcc_usb0_phy_cfg_ahb_clk.clkr,
  	[GCC_USB0_SLEEP_CLK] = &gcc_usb0_sleep_clk.clkr,

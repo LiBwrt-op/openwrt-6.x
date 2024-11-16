@@ -8,7 +8,7 @@
  	/* other actions go here */
  	__TCA_ID_MAX = 255
  };
-@@ -817,4 +818,14 @@ enum {
+@@ -797,4 +798,14 @@ enum {
  	TCF_EM_OPND_LT
  };
  
