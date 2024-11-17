@@ -354,7 +354,7 @@
  	bond_set_carrier(bond);
  }
  
-@@ -4162,8 +4241,219 @@ static inline u32 bond_eth_hash(struct s
+@@ -4162,8 +4241,224 @@ static inline u32 bond_eth_hash(struct s
  		return 0;
  
  	ep = (struct ethhdr *)(data + mhoff);
@@ -517,6 +517,11 @@
 + *
 + * Returns: Either valid slave device, or NULL for un-supported LAG modes
 + */
++struct net_device *bond_get_tx_dev(struct sk_buff *skb, uint8_t *src_mac,
++				   u8 *dst_mac, void *src,
++				   void *dst, u16 protocol,
++				   struct net_device *bond_dev,
++				   __be16 *layer4hdr);
 +struct net_device *bond_get_tx_dev(struct sk_buff *skb, uint8_t *src_mac,
 +				   u8 *dst_mac, void *src,
 +				   void *dst, u16 protocol,
