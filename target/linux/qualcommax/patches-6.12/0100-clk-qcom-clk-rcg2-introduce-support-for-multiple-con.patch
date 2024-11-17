@@ -34,26 +34,30 @@ Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 
 --- a/drivers/clk/qcom/clk-rcg.h
 +++ b/drivers/clk/qcom/clk-rcg.h
-@@ -7,7 +7,17 @@
+@@ -7,27 +7,29 @@
  #include <linux/clk-provider.h>
  #include "clk-regmap.h"
  
 -#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
 +#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n), 0, NULL }
-+
-+#define FM(_f, _confs) { .freq = (_f), .confs_num = ARRAY_SIZE(_confs), .confs = (_confs) }
-+#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
-+
-+struct freq_conf {
-+	u8 src;
-+	u8 pre_div;
-+	u16 m;
-+	u16 n;
-+};
  
- struct freq_tbl {
- 	unsigned long freq;
-@@ -15,6 +25,8 @@ struct freq_tbl {
+-struct freq_tbl {
+-	unsigned long freq;
++struct freq_conf {
+ 	u8 src;
+ 	u8 pre_div;
+ 	u16 m;
+ 	u16 n;
+ };
+ 
+-#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
+-#define FM(f, confs) { (f), ARRAY_SIZE(confs), (confs) }
+-#define FMS(f, s, h, m, n) { (f), 1, (const struct freq_conf []){ C(s, h, m, n) } }
+-
+-struct freq_conf {
++struct freq_tbl {
++	unsigned long freq;
+ 	u8 src;
  	u8 pre_div;
  	u16 m;
  	u16 n;
@@ -61,7 +65,13 @@ Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 +	const struct freq_conf *confs;
  };
  
- #define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
++#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
++#define FM(f, confs) { (f), ARRAY_SIZE(confs), (confs) }
++#define FMS(f, s, h, m, n) { (f), 1, (const struct freq_conf []){ C(s, h, m, n) } }
++
+ struct freq_multi_tbl {
+ 	unsigned long freq;
+ 	size_t num_confs;
 --- a/drivers/clk/qcom/clk-rcg2.c
 +++ b/drivers/clk/qcom/clk-rcg2.c
 @@ -203,11 +203,60 @@ clk_rcg2_recalc_rate(struct clk_hw *hw,
