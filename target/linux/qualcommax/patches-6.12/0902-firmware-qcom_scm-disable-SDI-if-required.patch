@@ -21,43 +21,12 @@ Reviewed-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
 Link: https://lore.kernel.org/r/20230816164641.3371878-2-robimarko@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 ---
- drivers/firmware/qcom_scm.c | 30 ++++++++++++++++++++++++++++++
- drivers/firmware/qcom_scm.h |  1 +
- 2 files changed, 31 insertions(+)
+ drivers/firmware/qcom_scm.c | 7 +++++++
+ 1 files changed, 7 insertions(+)
 
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -506,6 +506,29 @@ static int qcom_scm_disable_sdi(void)
- 	return ret ? : res.result[0];
- }
- 
-+static int qcom_scm_disable_sdi(void)
-+{
-+	int ret;
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_BOOT,
-+		.cmd = QCOM_SCM_BOOT_SDI_CONFIG,
-+		.args[0] = 1, /* Disable watchdog debug */
-+		.args[1] = 0, /* Disable SDI */
-+		.arginfo = QCOM_SCM_ARGS(2),
-+		.owner = ARM_SMCCC_OWNER_SIP,
-+	};
-+	struct qcom_scm_res res;
-+
-+	ret = qcom_scm_clk_enable();
-+	if (ret)
-+		return ret;
-+	ret = qcom_scm_call(__scm->dev, &desc, &res);
-+
-+	qcom_scm_clk_disable();
-+
-+	return ret ? : res.result[0];
-+}
-+
- static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
- {
- 	struct qcom_scm_desc desc = {
-@@ -1565,6 +1588,13 @@ static int qcom_scm_qseecom_call(const s
+@@ -1565,6 +1565,13 @@ static int qcom_scm_qseecom_call(const s
  {
  	int status;
  

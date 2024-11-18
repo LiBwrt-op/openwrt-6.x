@@ -42,7 +42,7 @@
  	dev->needs_free_netdev = true;
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -4626,6 +4626,15 @@ void dev_uc_flush(struct net_device *dev
+@@ -4657,6 +4657,15 @@ void dev_uc_flush(struct net_device *dev
  void dev_uc_init(struct net_device *dev);
  
  /**
@@ -58,7 +58,7 @@
   *  __dev_uc_sync - Synchronize device's unicast list
   *  @dev:  device to sync
   *  @sync: function to call if address should be added
-@@ -5182,6 +5191,11 @@ static inline bool netif_is_failover_sla
+@@ -5213,6 +5222,11 @@ static inline bool netif_is_failover_sla
  	return dev->priv_flags & IFF_FAILOVER_SLAVE;
  }
  
@@ -336,7 +336,7 @@
  }
  
 +/* QCA NSS Qdisc Support - Start */
-+bool tcf_destroy(struct tcf_proto *tp, bool force)
++static bool tcf_destroy(struct tcf_proto *tp, bool force)
 +{
 +	tp->ops->destroy(tp, force, NULL);
 +	module_put(tp->ops->owner);

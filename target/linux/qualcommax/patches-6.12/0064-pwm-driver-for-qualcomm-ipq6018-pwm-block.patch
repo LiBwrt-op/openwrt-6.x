@@ -316,7 +316,7 @@ Other changes:
  obj-$(CONFIG_PWM_KEEMBAY)	+= pwm-keembay.o
 --- a/include/linux/pwm.h
 +++ b/include/linux/pwm.h
-@@ -253,6 +253,9 @@
+@@ -253,6 +253,9 @@ struct pwm_capture {
   * @capture: capture and report PWM signal
   * @apply: atomically apply a new PWM config
   * @get_state: get the current PWM state.
@@ -326,7 +326,7 @@ Other changes:
   */
  struct pwm_ops {
  	int (*request)(struct pwm_chip *chip, struct pwm_device *pwm);
-@@ -263,6 +266,7 @@
+@@ -263,6 +266,7 @@ struct pwm_ops {
  		     const struct pwm_state *state);
  	int (*get_state)(struct pwm_chip *chip, struct pwm_device *pwm,
  			 struct pwm_state *state);

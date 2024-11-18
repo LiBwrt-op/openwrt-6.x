@@ -30,6 +30,15 @@
  void consume_skb(struct sk_buff *skb);
  #else
  static inline void consume_skb(struct sk_buff *skb)
+@@ -1297,6 +1301,8 @@ static inline void consume_skb(struct sk
+ 
+ void __consume_stateless_skb(struct sk_buff *skb);
+ void  __kfree_skb(struct sk_buff *skb);
++extern void kfree_skbmem(struct sk_buff *skb);
++extern void skb_release_data(struct sk_buff *skb, enum skb_drop_reason reason);
+ 
+ void kfree_skb_partial(struct sk_buff *skb, bool head_stolen);
+ bool skb_try_coalesce(struct sk_buff *to, struct sk_buff *from,
 --- a/net/Kconfig
 +++ b/net/Kconfig
 @@ -377,6 +377,52 @@ config NET_FLOW_LIMIT
@@ -296,6 +305,24 @@
  
  		data = page_frag_alloc(&nc->page, len, gfp_mask);
  		pfmemalloc = nc->page.pfmemalloc;
+@@ -1099,7 +1169,7 @@ static void skb_free_head(struct sk_buff
+ 	}
+ }
+ 
+-static void skb_release_data(struct sk_buff *skb, enum skb_drop_reason reason)
++void skb_release_data(struct sk_buff *skb, enum skb_drop_reason reason)
+ {
+ 	struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 	int i;
+@@ -1139,7 +1209,7 @@ exit:
+ /*
+  *	Free an skbuff by memory without cleaning the state.
+  */
+-static void kfree_skbmem(struct sk_buff *skb)
++void kfree_skbmem(struct sk_buff *skb)
+ {
+ 	struct sk_buff_fclones *fclones;
+ 
 @@ -1418,7 +1488,6 @@ void skb_tx_error(struct sk_buff *skb)
  }
  EXPORT_SYMBOL(skb_tx_error);
@@ -349,7 +376,7 @@
 +	 * that we already did).
 +	 */
 +	if (likely(skb->head))
-+	  skb_release_data(skb, SKB_CONSUMED, false);
++	  skb_release_data(skb, SKB_CONSUMED);
 +	kfree_skbmem(skb);
  }
  EXPORT_SYMBOL(consume_skb);

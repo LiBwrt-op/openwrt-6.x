@@ -14,7 +14,7 @@ Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -790,6 +790,120 @@ disable_clk:
+@@ -767,6 +767,120 @@ disable_clk:
  EXPORT_SYMBOL_GPL(qcom_scm_pas_shutdown);
  
  /**

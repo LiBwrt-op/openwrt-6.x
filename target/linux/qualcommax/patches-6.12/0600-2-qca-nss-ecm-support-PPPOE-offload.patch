@@ -466,7 +466,7 @@
  #endif /* !(__LINUX_IF_PPPOX_H) */
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -1689,6 +1689,36 @@
+@@ -1689,6 +1689,36 @@ enum netdev_priv_flags {
  	IFF_TX_SKB_NO_LINEAR		= BIT_ULL(31),
  };
  
@@ -503,7 +503,7 @@
  /* Specifies the type of the struct net_device::ml_priv pointer */
  enum netdev_ml_priv_type {
  	ML_PRIV_NONE,
-@@ -2025,6 +2055,7 @@
+@@ -2025,6 +2055,7 @@ struct net_device {
  		unsigned long		priv_flags:32;
  		unsigned long		lltx:1;
  	);
