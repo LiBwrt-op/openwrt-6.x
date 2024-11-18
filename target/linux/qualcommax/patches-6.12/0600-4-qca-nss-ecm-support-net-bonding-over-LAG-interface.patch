@@ -575,7 +575,7 @@
  
  static bool bond_flow_ip(struct sk_buff *skb, struct flow_keys *fk, const void *data,
  			 int hlen, __be16 l2_proto, int *nhoff, int *ip_proto, bool l34)
-@@ -5292,15 +5587,18 @@ static netdev_tx_t bond_3ad_xor_xmit(str
+@@ -5292,15 +5582,18 @@ static netdev_tx_t bond_3ad_xor_xmit(str
  				     struct net_device *dev)
  {
  	struct bonding *bond = netdev_priv(dev);
@@ -601,7 +601,7 @@
  }
  
  /* in broadcast mode, we send everything to all usable interfaces. */
-@@ -5550,8 +5848,9 @@ static netdev_tx_t __bond_start_xmit(str
+@@ -5550,8 +5843,9 @@ static netdev_tx_t __bond_start_xmit(str
  		return bond_xmit_roundrobin(skb, dev);
  	case BOND_MODE_ACTIVEBACKUP:
  		return bond_xmit_activebackup(skb, dev);
