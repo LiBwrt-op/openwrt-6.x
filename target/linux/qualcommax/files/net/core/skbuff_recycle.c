@@ -304,7 +304,9 @@ static void skb_recycler_free_skb(struct sk_buff_head *list)
 		skbuff_debugobj_activate(skb);
 		next = skb->next;
 		__skb_unlink(skb, list);
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,2,0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,12,0)		
+		skb_release_data(skb, SKB_CONSUMED);
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(6,2,0)
 		skb_release_data(skb, SKB_CONSUMED, false);
 #else
 		skb_release_data(skb);
