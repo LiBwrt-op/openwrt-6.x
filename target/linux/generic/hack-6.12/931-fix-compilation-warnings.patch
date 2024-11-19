@@ -21,3 +21,14 @@
  	if (cpu_has_dsp) {						\
  		__save_dsp(prev);					\
  		__restore_dsp(next);					\
+--- a/include/linux/cpumask.h
++++ b/include/linux/cpumask.h
+@@ -836,7 +836,7 @@ void cpumask_shift_left(struct cpumask *
+ static __always_inline
+ void cpumask_copy(struct cpumask *dstp, const struct cpumask *srcp)
+ {
+-	bitmap_copy(cpumask_bits(dstp), cpumask_bits(srcp), large_cpumask_bits);
++	bitmap_copy(cpumask_bits(dstp), cpumask_bits(srcp), MIN(large_cpumask_bits, sizeof(cpumask_var_t) * BITS_PER_BYTE));
+ }
+ 
+ /**
