@@ -104,6 +104,7 @@ APK:=$(call apk,$(TARGET_DIR)) \
 
 
 include $(INCLUDE_DIR)/target.mk
+include $(INCLUDE_DIR)/default-packages.mk
 -include .profiles.mk
 
 USER_PROFILE ?= $(firstword $(PROFILE_NAMES))
@@ -244,7 +245,7 @@ ifeq ($(CONFIG_USE_APK),)
 else
 	$(if $(CONFIG_SIGNATURE_CHECK), \
 		$(if $(ADD_LOCAL_KEY), \
-			mkdir -p $(TARGET_DIR)/etc/opkg/keys/; \
+			mkdir -p $(TARGET_DIR)/etc/apk/keys/; \
 			cp $(BUILD_KEY_APK_PUB) $(TARGET_DIR)/etc/apk/keys/; \
 		) \
 	)
