@@ -61,7 +61,7 @@
 （-j 后面是线程数，为便于排除错误推荐用单线程）
 
    ```bash
-   make download -j8
+   make download -j$(nproc)
    make -j1 V=s
    ```
 
