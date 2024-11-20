@@ -31,7 +31,7 @@ endef
 
 define Package/default-settings/install
  	$(INSTALL_DIR) $(1)/etc
-	$(INSTALL_DATA) ./files/99-distfeeds.conf $(1)/etc/opkg/distfeeds.conf
+	$(INSTALL_DATA) ./files/99-distfeeds.conf $(1)/etc/99-distfeeds.conf
 	
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./files/99-default-settings $(1)/etc/uci-defaults/
