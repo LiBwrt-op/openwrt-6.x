@@ -1,0 +1,113 @@
+--- a/config
++++ b/config
+@@ -30,6 +30,9 @@ endif
+ ifeq ($(KVER),$(filter 6.6%,$(KVER)))
+ 	OS_VER=6_6
+ endif
++ifeq ($(KVER),$(filter 6.12%,$(KVER)))
++	OS_VER=6_12
++endif
+ 
+ ifeq ($(KVER), 3.4.0)
+ 	OS_VER=3_4
+--- a/src/hsl/phy/sfp_phy.c
++++ b/src/hsl/phy/sfp_phy.c
+@@ -345,7 +345,7 @@ int sfp_phy_device_setup(a_uint32_t dev_
+ #if defined(IN_PHY_I2C_MODE)
+ 	if (hsl_port_phy_access_type_get(dev_id, port) == PHY_I2C_ACCESS) {
+ 		if(phydev->drv)
+-			phy_driver_unregister(phydev->drv);
++			phy_driver_unregister((struct phy_driver *)(phydev->drv));
+ 	}
+ #endif
+ #endif
+--- a/make/linux_opt.mk
++++ b/make/linux_opt.mk
+@@ -454,7 +454,7 @@ ifeq (KSLIB, $(MODULE_TYPE))
+       KASAN_SHADOW_SCALE_SHIFT := 3
+   endif
+ 
+-  ifeq ($(OS_VER),$(filter 5_4 6_1 6_6, $(OS_VER)))
++  ifeq ($(OS_VER),$(filter 5_4 6_1 6_6 6_12, $(OS_VER)))
+       ifeq ($(ARCH), arm64)
+           KASAN_OPTION += -DKASAN_SHADOW_SCALE_SHIFT=$(KASAN_SHADOW_SCALE_SHIFT)
+        endif
+@@ -485,7 +485,7 @@ ifeq (KSLIB, $(MODULE_TYPE))
+ 
+   endif
+ 
+-  ifeq ($(OS_VER),$(filter 4_4 5_4 6_1 6_6, $(OS_VER)))
++  ifeq ($(OS_VER),$(filter 4_4 5_4 6_1 6_6 6_12, $(OS_VER)))
+                 MODULE_CFLAG += -DKVER34
+                 MODULE_CFLAG += -DKVER32
+             MODULE_CFLAG += -DLNX26_22
+--- a/src/init/ssdk_dts.c
++++ b/src/init/ssdk_dts.c
+@@ -38,6 +38,7 @@
+ #include <linux/of.h>
+ #include <linux/of_mdio.h>
+ #include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ 
+ static ssdk_dt_global_t ssdk_dt_global = {0};
+ #ifdef HPPE
+--- a/src/shell_lib/shell_io.c
++++ b/src/shell_lib/shell_io.c
+@@ -951,16 +951,16 @@ cmd_sscanf(const char *buf, const char *
+ 	if(buf[0] == '0' && (buf[1] == 'x' || buf[1] == 'X'))
+ 	{
+ 		if(!fmt)
+-			strlcpy(fmt_tmp, "%x", sizeof(fmt_tmp));
++			strncpy(fmt_tmp, "%x", strlen("%x"));
+ 		else
+ 		{
+ 			if(strspn(fmt, "%lLxXhH") != strlen(fmt))
+ 				return SW_BAD_VALUE;
+ 			if(fmt[0] == '%' && ((fmt[1] == 'l' || fmt[1] == 'L') &&
+ 				(fmt[2] == 'l' || fmt[2] == 'L')))
+-				strlcpy(fmt_tmp, "%llx", sizeof(fmt_tmp));
++				strncpy(fmt_tmp, "%llx", strlen("%llx"));
+ 			else
+-				strlcpy(fmt_tmp, fmt, sizeof(fmt_tmp));
++				strncpy(fmt_tmp, fmt, strlen(fmt));
+ 		}
+ 	}
+ 	else
+@@ -968,16 +968,16 @@ cmd_sscanf(const char *buf, const char *
+ 		if(strspn(buf, "1234567890") != strlen(buf))
+ 			return SW_BAD_VALUE;
+ 		if(!fmt)
+-			strlcpy(fmt_tmp, "%d", sizeof(fmt_tmp));
++			strncpy(fmt_tmp, "%d", strlen("%d"));
+ 		else
+ 		{
+ 			if(strspn(fmt, "%lLdD") != strlen(fmt))
+ 				return SW_BAD_VALUE;
+ 			if(fmt[0] == '%' && ((fmt[1] == 'l' || fmt[1] == 'L') &&
+ 				(fmt[2] == 'l' || fmt[2] == 'L')))
+-				strlcpy(fmt_tmp, "%lld", sizeof(fmt_tmp));
++				strncpy(fmt_tmp, "%lld", strlen("%lld"));
+ 			else
+-				strlcpy(fmt_tmp, fmt, sizeof(fmt_tmp));
++				strncpy(fmt_tmp, fmt, strlen(fmt));
+ 		}
+ 	}
+ 	if(sscanf(buf, fmt_tmp, arg_val) != 1)
+@@ -2736,7 +2736,7 @@ cmd_data_check_portmap(char *cmdstr, fal
+         return SW_OK;
+     }
+ 
+-    strlcpy(tmp_str, cmdstr, sizeof(tmp_str));
++    strncpy(tmp_str, cmdstr, strlen(cmdstr));
+     tmp = (void *) strsep(&cmdstr, ",");
+     while (tmp)
+     {
+@@ -12818,7 +12818,7 @@ cmd_data_check_tunnel_encap_entry(char *
+ 						break;
+ 					}
+ 					/* copy 2 chars from cmd */
+-					strlcpy(cmd_byte, cmd, sizeof(cmd_byte));
++					strncpy(cmd_byte, cmd, strlen(cmd));
+ 					sscanf(cmd_byte, "%hhx",
+ 						&(entry.pkt_header.pkt_header_data[bytes]));
+ 					cmd += 2;
