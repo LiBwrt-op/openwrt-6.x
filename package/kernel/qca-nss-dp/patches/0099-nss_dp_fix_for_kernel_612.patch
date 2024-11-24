@@ -1,0 +1,102 @@
+--- a/nss_dp_ethtools.c
++++ b/nss_dp_ethtools.c
+@@ -248,7 +248,7 @@ static inline void nss_dp_fal_to_ethtool
+  * nss_dp_get_eee()
+  *	Get EEE settings.
+  */
+-static int32_t nss_dp_get_eee(struct net_device *netdev, struct ethtool_eee *eee)
++static int32_t nss_dp_get_eee(struct net_device *netdev, struct ethtool_keee *eee)
+ {
+ 	struct nss_dp_dev *dp_priv = (struct nss_dp_dev *)netdev_priv(netdev);
+ 	fal_port_eee_cfg_t port_eee_cfg;
+@@ -266,9 +266,9 @@ static int32_t nss_dp_get_eee(struct net
+ 	/*
+ 	 * Translate the FAL linkmode types to ethtool linkmode types.
+ 	 */
+-	nss_dp_fal_to_ethtool_linkmode_xlate(&eee->supported, &port_eee_cfg.capability);
+-	nss_dp_fal_to_ethtool_linkmode_xlate(&eee->advertised, &port_eee_cfg.advertisement);
+-	nss_dp_fal_to_ethtool_linkmode_xlate(&eee->lp_advertised, &port_eee_cfg.link_partner_advertisement);
++	nss_dp_fal_to_ethtool_linkmode_xlate((uint32_t *)&eee->supported, &port_eee_cfg.capability);
++	nss_dp_fal_to_ethtool_linkmode_xlate((uint32_t *)&eee->advertised, &port_eee_cfg.advertisement);
++	nss_dp_fal_to_ethtool_linkmode_xlate((uint32_t *)&eee->lp_advertised, &port_eee_cfg.link_partner_advertisement);
+ 	eee->eee_enabled = port_eee_cfg.enable;
+ 	eee->eee_active = port_eee_cfg.eee_status;
+ 	eee->tx_lpi_enabled = port_eee_cfg.lpi_tx_enable;
+@@ -281,7 +281,7 @@ static int32_t nss_dp_get_eee(struct net
+  * nss_dp_set_eee()
+  *	Set EEE settings.
+  */
+-static int32_t nss_dp_set_eee(struct net_device *netdev, struct ethtool_eee *eee)
++static int32_t nss_dp_set_eee(struct net_device *netdev, struct ethtool_keee *eee)
+ {
+ 	struct nss_dp_dev *dp_priv = (struct nss_dp_dev *)netdev_priv(netdev);
+ 	fal_port_eee_cfg_t port_eee_cfg, port_eee_cur_cfg;
+@@ -306,8 +306,8 @@ static int32_t nss_dp_set_eee(struct net
+ 	/*
+ 	 * Translate the ethtool speed types to FAL speed types.
+ 	 */
+-	while (eee->advertised) {
+-		pos = ffs(eee->advertised);
++	while (eee->advertised[0]) {
++		pos = ffs(eee->advertised[0]);
+ 		switch (1 << (pos - 1)) {
+ 		case ADVERTISED_10baseT_Full:
+ 			if (port_eee_cur_cfg.capability & FAL_PHY_EEE_10BASE_T) {
+@@ -359,7 +359,7 @@ static int32_t nss_dp_set_eee(struct net
+ 			return -EIO;
+ 		}
+ 
+-		eee->advertised &= (~(1 << (pos - 1)));
++		eee->advertised[0] &= (~(1 << (pos - 1)));
+ 	}
+ 
+ 	port_eee_cfg.lpi_tx_enable = eee->tx_lpi_enabled;
+--- a/Makefile
++++ b/Makefile
+@@ -89,5 +89,5 @@ ccflags-y += -DNSS_DP_IPQ95XX
+ endif
+ 
+ ccflags-y += $(NSS_DP_INCLUDE)
+-ccflags-y += -Wall -Werror
++ccflags-y += -Wall -Werror -Wno-missing-declarations -Wno-missing-prototypes
+ ccflags-y += -DEDMA_DEBUG_LEVEL=2
+--- a/nss_dp_main.c
++++ b/nss_dp_main.c
+@@ -453,7 +453,8 @@ static int nss_dp_open(struct net_device
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_RFS_ACCEL
++#if 0
++\\#ifdef CONFIG_RFS_ACCEL
+ /*
+  * nss_dp_rx_flow_steer()
+  *	Steer the flow rule to NSS
+@@ -602,7 +603,8 @@ struct net_device_ops nss_dp_netdev_ops
+ 	.ndo_select_queue = nss_dp_select_queue,
+ #endif
+ 
+-#ifdef CONFIG_RFS_ACCEL
++#if 0
++\\#ifdef CONFIG_RFS_ACCEL
+ 	.ndo_rx_flow_steer = nss_dp_rx_flow_steer,
+ #endif
+ };
+@@ -967,7 +969,7 @@ fail:
+  * Note: We only remove the physical ports here. Virtual
+  * port devices are removed explicitly by the VP module.
+  */
+-static int nss_dp_remove(struct platform_device *pdev)
++static void nss_dp_remove(struct platform_device *pdev)
+ {
+ 	uint32_t i;
+ 	struct nss_dp_dev *dp_priv;
+@@ -1004,7 +1006,7 @@ static int nss_dp_remove(struct platform
+ 		dp_global_ctx.nss_dp[i] = NULL;
+ 	}
+ 
+-	return 0;
++	//return 0;
+ }
+ 
+ static struct of_device_id nss_dp_dt_ids[] = {
