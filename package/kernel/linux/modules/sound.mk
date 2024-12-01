@@ -314,6 +314,17 @@ endef
 $(eval $(call KernelPackage,sound-soc-spdif))
 
 
+define KernelPackage/sound-soc-dmic
+  TITLE:=Generic Digital Microphone CODEC
+  KCONFIG:=CONFIG_SND_SOC_DMIC
+  FILES:=$(LINUX_DIR)/sound/soc/codecs/snd-soc-dmic.ko
+  AUTOLOAD:=$(call AutoProbe,snd-soc-dmic)
+  $(call AddDepends/sound,+kmod-sound-soc-core)
+endef
+
+$(eval $(call KernelPackage,sound-soc-dmic))
+
+
 define KernelPackage/pcspkr
   DEPENDS:=@TARGET_x86 +kmod-input-core
   TITLE:=PC speaker support
@@ -372,6 +383,20 @@ endef
 
 $(eval $(call KernelPackage,sound-hda-core))
 
+define KernelPackage/snd-hda-scodec-component
+  SUBMENU:=$(SOUND_MENU)
+  TITLE:= HD Audio Codec Component
+  DEPENDS:=@LINUX_6_12
+  KCONFIG:= \
+	CONFIG_SND_HDA_SCODEC_COMPONENT
+  FILES:= \
+	$(LINUX_DIR)/sound/pci/hda/snd-hda-scodec-component.ko
+  AUTOLOAD:=$(call AutoProbe,snd-hda-scodec-component)
+  $(call AddDepends/sound,kmod-sound-hda-core)
+endef
+
+$(eval $(call KernelPackage,snd-hda-scodec-component))
+
 define KernelPackage/sound-hda-codec-realtek
   SUBMENU:=$(SOUND_MENU)
   TITLE:= HD Audio Realtek Codec
@@ -380,7 +405,7 @@ define KernelPackage/sound-hda-codec-realtek
   FILES:= \
 	$(LINUX_DIR)/sound/pci/hda/snd-hda-codec-realtek.ko
   AUTOLOAD:=$(call AutoProbe,snd-hda-codec-realtek)
-  $(call AddDepends/sound,kmod-sound-hda-core)
+  $(call AddDepends/sound,kmod-sound-hda-core +LINUX_6_12:kmod-snd-hda-scodec-component)
 endef
 
 define KernelPackage/sound-hda-codec-realtek/description

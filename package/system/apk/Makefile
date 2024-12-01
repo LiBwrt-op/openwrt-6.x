@@ -5,9 +5,9 @@ PKG_RELEASE:=2
 
 PKG_SOURCE_URL=https://gitlab.alpinelinux.org/alpine/apk-tools.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-11-08
-PKG_SOURCE_VERSION:=d9c24813d983df9524fa7a2b78fc3132c159a20f
-PKG_MIRROR_HASH:=3d1a79c08ef8c8b9404f9287d9acda6468b8b1c2a99dd384287f522ed3b1a047
+PKG_SOURCE_DATE:=2024-11-13
+PKG_SOURCE_VERSION:=e3464d096708b270138653ef93db59134bb24813
+PKG_MIRROR_HASH:=cc633e5c294c9d92391fba5537dfe2f12f82011b55d282beb0d5d7ceba212962
 
 PKG_VERSION=3.0.0_pre$(subst -,,$(PKG_SOURCE_DATE))
 
@@ -53,10 +53,12 @@ MESON_HOST_VARS+=VERSION=$(PKG_VERSION)
 MESON_VARS+=VERSION=$(PKG_VERSION)
 
 MESON_COMMON_ARGS = \
+	-Db_lto=true \
 	-Dcompressed-help=false \
 	-Ddocs=disabled \
 	-Dhelp=enabled \
 	-Dlua_version=5.1 \
+	-Ddefault_library=static \
 	-Durl_backend=wget \
 	-Dzstd=false
 
@@ -80,9 +82,6 @@ define Package/apk/default/install
 
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/apk $(1)/usr/bin/apk
-
-	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libapk.so.* $(1)/usr/lib/
 
 	$(INSTALL_DIR) $(1)/etc/apk/repositories.d
 	$(INSTALL_DATA) ./files/customfeeds.list $(1)/etc/apk/repositories.d/customfeeds.list

@@ -42,6 +42,24 @@ endef
 $(eval $(call KernelPackage,atmtcp))
 
 
+define KernelPackage/appletalk
+  SUBMENU:=$(NETWORK_SUPPORT_MENU)
+  TITLE:=Appletalk protocol support
+  KCONFIG:= \
+        CONFIG_ATALK \
+        CONFIG_DEV_APPLETALK \
+        CONFIG_IPDDP=n
+  FILES:=$(LINUX_DIR)/net/appletalk/appletalk.ko
+  AUTOLOAD:=$(call AutoLoad,40,appletalk)
+endef
+
+define KernelPackage/appletalk/description
+  Kernel module for AppleTalk protocol.
+endef
+
+$(eval $(call KernelPackage,appletalk))
+
+
 define KernelPackage/bonding
   SUBMENU:=$(NETWORK_SUPPORT_MENU)
   TITLE:=Ethernet bonding driver
@@ -1357,6 +1375,7 @@ $(eval $(call KernelPackage,mpls))
 define KernelPackage/9pnet
   SUBMENU:=$(NETWORK_SUPPORT_MENU)
   TITLE:=Plan 9 Resource Sharing Support (9P2000)
+  DEPENDS:=+LINUX_6_12:kmod-fs-netfs
   KCONFIG:= \
 	CONFIG_NET_9P \
 	CONFIG_NET_9P_DEBUG=n \

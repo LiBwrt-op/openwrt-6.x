@@ -249,6 +249,15 @@ endef
 
 $(eval $(call KernelPackage,crypto-echainiv))
 
+define KernelPackage/crypto-engine
+  TITLE:=Crypto engine
+  KCONFIG:=CONFIG_CRYPTO_ENGINE
+  FILES:=$(LINUX_DIR)/crypto/crypto_engine.ko
+  AUTOLOAD:=$(call AutoLoad,09,crypto_engine)
+  $(call AddDepends/crypto, +kmod-crypto-rsa +kmod-crypto-kpp)
+endef
+
+$(eval $(call KernelPackage,crypto-engine))
 
 define KernelPackage/crypto-essiv
   TITLE:=ESSIV support for block encryption
@@ -528,6 +537,17 @@ define KernelPackage/crypto-kpp
 endef
 
 $(eval $(call KernelPackage,crypto-kpp))
+
+define KernelPackage/crypto-lib-aescfb
+  TITLE:=AES cipher operations feedback mode library
+  DEPENDS:=@LINUX_6_12
+  KCONFIG:=CONFIG_CRYPTO_LIB_AESCFB
+  FILES:=$(LINUX_DIR)/lib/crypto/libaescfb.ko
+  AUTOLOAD:=$(call AutoLoad,09,libaescfb)
+  $(call AddDepends/crypto)
+endef
+
+$(eval $(call KernelPackage,crypto-lib-aescfb))
 
 define KernelPackage/crypto-lib-chacha20
   TITLE:=ChaCha library interface

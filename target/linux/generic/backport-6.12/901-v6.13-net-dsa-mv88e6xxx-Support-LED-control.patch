@@ -973,8 +973,8 @@ Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 +	dp = dsa_to_port(p->chip->ds, p->port);
 +	if (!dp)
 +		return NULL;
-+	if (dp->slave)
-+		return &dp->slave->dev;
++	if (dp->user)
++		return &dp->user->dev;
 +	return NULL;
 +}
 +
