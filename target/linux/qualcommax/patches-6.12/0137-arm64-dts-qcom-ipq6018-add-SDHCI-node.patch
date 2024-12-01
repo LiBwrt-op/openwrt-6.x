@@ -13,33 +13,36 @@ Tested-by: Robert Marko <robimarko@gmail.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -476,6 +476,29 @@
- 			status = "disabled";
+@@ -457,11 +457,12 @@
+ 			};
  		};
  
+-		sdhc: mmc@7804000 {
 +		sdhc_1: mmc@7804000 {
-+			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0x0 0x07804000 0x0 0x1000>,
+ 			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0x0 0x07804000 0x0 0x1000>,
+-			      <0x0 0x07805000 0x0 0x1000>;
+-			reg-names = "hc", "cqhci";
 +			      <0x0 0x07805000 0x0 0x1000>,
 +			      <0x0 0x07808000 0x0 0x2000>;
 +			reg-names = "hc", "cqhci", "ice";
-+
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
+ 
+ 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+@@ -469,10 +470,13 @@
+ 
+ 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+ 				 <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&xo>;
+-			clock-names = "iface", "core", "xo";
 +				 <&xo>,
 +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
 +			clock-names = "iface", "core", "xo", "ice";
 +
-+			resets = <&gcc GCC_SDCC1_BCR>;
+ 			resets = <&gcc GCC_SDCC1_BCR>;
+-			max-frequency = <192000000>;
 +			supports-cqe;
 +			bus-width = <8>;
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma-controller@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x0 0x07884000 0x0 0x2b000>;
+ 			status = "disabled";
+ 		};
+ 
