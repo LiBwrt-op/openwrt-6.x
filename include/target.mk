@@ -25,7 +25,7 @@ DEFAULT_PACKAGES:=\
 	fstools \
 	libc \
 	libgcc \
-	libustream-mbedtls \
+	libustream-openssl \
 	logd \
 	mtd \
 	netifd \
@@ -51,14 +51,26 @@ DEFAULT_PACKAGES.nas:=\
 ##
 DEFAULT_PACKAGES.router:=\
 	dnsmasq-full \
-	firewall \
+	firewall4 \
 	nftables \
 	kmod-nft-offload \
 	odhcp6c \
 	odhcpd-ipv6only \
 	ppp \
-	ppp-mod-pppoe \
-  default-settings-chn \
+	ppp-mod-pppoe
+# For easy usage
+DEFAULT_PACKAGES.tweak:=\
+	autocore \
+	block-mount \
+	default-settings-chn \
+	kmod-nf-nathelper \
+	kmod-nf-nathelper-extra \
+	luci-light \
+	luci-app-cpufreq \
+	luci-app-package-manager \
+	luci-compat \
+	luci-lib-base \
+	luci-lib-ipkg
 
 ifneq ($(DUMP),)
   all: dumpinfo
@@ -98,6 +110,9 @@ endif
 
 # Add device specific packages (here below to allow device type set from subtarget)
 DEFAULT_PACKAGES += $(DEFAULT_PACKAGES.$(DEVICE_TYPE))
+
+# Add tweaked packages
+# DEFAULT_PACKAGES += $(DEFAULT_PACKAGES.tweak)
 
 ##@
 # @brief Filter out packages, prepended with `-`.
@@ -376,6 +391,7 @@ define BuildTargets/DumpCurrent
 	 echo 'Target-Description:'; \
 	 echo "$$$$DESCRIPTION"; \
 	 echo '@@'; \
+	 $(if $(DEFAULT_PROFILE),echo 'Target-Default-Profile: $(DEFAULT_PROFILE)';) \
 	 echo 'Default-Packages: $(DEFAULT_PACKAGES) $(call extra_packages,$(DEFAULT_PACKAGES))'; \
 	 $(DUMPINFO)
 	$(if $(CUR_SUBTARGET),$(SUBMAKE) -r --no-print-directory -C image -s DUMP=1 SUBTARGET=$(CUR_SUBTARGET))
