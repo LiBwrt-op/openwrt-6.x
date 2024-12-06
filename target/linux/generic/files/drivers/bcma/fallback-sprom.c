@@ -16,6 +16,7 @@
 #include <linux/mtd/mtd.h>
 #include <linux/of_net.h>
 #include <linux/of_platform.h>
+#include "fallback-sprom.h"
 
 int __init bcma_fbs_register(void);
 int bcma_get_fallback_sprom(struct bcma_bus *dev, struct ssb_sprom *out);

@@ -16,6 +16,7 @@
 #include <linux/of_net.h>
 #include <linux/of_platform.h>
 #include <linux/ssb/ssb.h>
+#include "fallback-sprom.h"
 
 int __init ssb_fbs_register(void);
 int ssb_get_fallback_sprom(struct ssb_bus *dev, struct ssb_sprom *out);
