@@ -18,9 +18,6 @@
 #include <linux/ssb/ssb.h>
 #include "fallback-sprom.h"
 
-int __init ssb_fbs_register(void);
-int ssb_get_fallback_sprom(struct ssb_bus *dev, struct ssb_sprom *out);
-
 #define SSB_FBS_MAX_SIZE 440
 
 /* Get the word-offset for a SSB_SPROM_XXX define. */
