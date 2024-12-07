@@ -13,7 +13,7 @@ Tested-by: Robert Marko <robimarko@gmail.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -457,11 +457,12 @@
+@@ -471,11 +471,12 @@
  			};
  		};
  
@@ -29,7 +29,7 @@ Tested-by: Robert Marko <robimarko@gmail.com>
  
  			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
  				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-@@ -469,10 +470,13 @@
+@@ -483,10 +484,13 @@
  
  			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
  				 <&gcc GCC_SDCC1_APPS_CLK>,

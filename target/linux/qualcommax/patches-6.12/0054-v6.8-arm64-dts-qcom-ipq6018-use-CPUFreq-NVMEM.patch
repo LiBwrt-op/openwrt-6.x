@@ -1,6 +1,16 @@
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -122,28 +122,28 @@
+@@ -119,31 +119,45 @@
+ 			clock-latency-ns = <200000>;
+ 		};
+ 
++		opp-1200000000 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <850000>;
++			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
  		opp-1320000000 {
  			opp-hz = /bits/ 64 <1320000000>;
  			opp-microvolt = <862500>;
@@ -13,6 +23,13 @@
  			opp-hz = /bits/ 64 <1440000000>;
  			opp-microvolt = <925000>;
 -			opp-supported-hw = <0x3>;
++			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1512000000 {
++			opp-hz = /bits/ 64 <1512000000>;
++			opp-microvolt = <937500>;
 +			opp-supported-hw = <0xf>;
  			clock-latency-ns = <200000>;
  		};
