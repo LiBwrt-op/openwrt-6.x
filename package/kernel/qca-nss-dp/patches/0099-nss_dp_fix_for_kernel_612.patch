@@ -100,3 +100,13 @@
  }
  
  static struct of_device_id nss_dp_dt_ids[] = {
+--- a/hal/dp_ops/edma_dp/edma_v2/edma.c
++++ b/hal/dp_ops/edma_dp/edma_v2/edma.c
+@@ -1222,7 +1222,6 @@ static struct ctl_table edma_sub[] = {
+ 		.mode           =       0644,
+ 		.proc_handler   =       edma_hang_recovery_handler
+ 	},
+-	{}
+ };
+ 
+ /*
