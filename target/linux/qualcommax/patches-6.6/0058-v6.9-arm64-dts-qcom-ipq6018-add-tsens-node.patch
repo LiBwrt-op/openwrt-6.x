@@ -15,7 +15,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -343,6 +343,16 @@
+@@ -357,6 +357,16 @@
  			clock-names = "core";
  		};
  

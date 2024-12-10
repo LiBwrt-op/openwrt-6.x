@@ -20,7 +20,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -96,42 +96,49 @@
+@@ -96,42 +96,63 @@
  	};
  
  	cpu_opp_table: opp-table-cpu {
@@ -40,6 +40,13 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  			opp-hz = /bits/ 64 <1056000000>;
  			opp-microvolt = <787500>;
 +			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1200000000 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <850000>;
++			opp-supported-hw = <0xf>;
  			clock-latency-ns = <200000>;
  		};
  
@@ -53,6 +60,13 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  		opp-1440000000 {
  			opp-hz = /bits/ 64 <1440000000>;
  			opp-microvolt = <925000>;
++			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1512000000 {
++			opp-hz = /bits/ 64 <1512000000>;
++			opp-microvolt = <937500>;
 +			opp-supported-hw = <0xf>;
  			clock-latency-ns = <200000>;
  		};
@@ -71,7 +85,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  			clock-latency-ns = <200000>;
  		};
  	};
-@@ -322,6 +329,11 @@
+@@ -322,6 +343,11 @@
  			reg = <0x0 0x000a4000 0x0 0x2000>;
  			#address-cells = <1>;
  			#size-cells = <1>;

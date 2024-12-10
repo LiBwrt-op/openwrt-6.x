@@ -55,7 +55,7 @@ Signed-off-by: Bjorn Andersson <andersson@kernel.org>
  		};
  
  		L2_0: l2-cache {
-@@ -890,6 +895,122 @@
+@@ -904,6 +909,122 @@
  		};
  	};
  
