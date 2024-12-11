@@ -1,0 +1,42 @@
+From ff4aa3bc98258a240b9bbab53fd8d2fb8184c485 Mon Sep 17 00:00:00 2001
+From: Robert Marko <robimarko@gmail.com>
+Date: Wed, 16 Aug 2023 18:45:39 +0200
+Subject: firmware: qcom_scm: disable SDI if required
+
+IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
+means that WDT being asserted or just trying to reboot will hang the board
+in the debug mode and only pulling the power and repowering will help.
+Some IPQ4019 boards like Google WiFI have it enabled as well.
+
+Luckily, SDI can be disabled via an SCM call.
+
+So, lets use the boolean DT property to identify boards that have SDI
+enabled by default and use the SCM call to disable SDI during SCM probe.
+It is important to disable it as soon as possible as we might have a WDT
+assertion at any time which would then leave the board in debug mode,
+thus disabling it during SCM removal is not enough.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+Link: https://lore.kernel.org/r/20230816164641.3371878-2-robimarko@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+---
+ drivers/firmware/qcom_scm.c | 7 +++++++
+ 1 files changed, 7 insertions(+)
+
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1565,6 +1565,13 @@ static int qcom_scm_qseecom_call(const s
+ {
+ 	int status;
+ 
++
++	/*
++	 * Disable SDI if indicated by DT that it is enabled by default.
++	 */
++	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
++		qcom_scm_disable_sdi();
++
+ 	/*
+ 	 * Note: Multiple QSEECOM SCM calls should not be executed same time,
+ 	 * so lock things here. This needs to be extended to callback/listener
