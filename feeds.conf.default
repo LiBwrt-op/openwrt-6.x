@@ -5,5 +5,5 @@ src-git telephony https://git.openwrt.org/feed/telephony.git
 src-git video https://github.com/openwrt/video.git
 src-git nss_packages https://github.com/LiBwrt/nss-packages.git
 src-git helloworld https://github.com/fw876/helloworld.git
-# src-git mosdns https://github.com/sbwml/luci-app-mosdns.git
+src-git mosdns https://github.com/sbwml/luci-app-mosdns.git
 # src-git passwall https://github.com/xiaorouji/openwrt-passwall.git
