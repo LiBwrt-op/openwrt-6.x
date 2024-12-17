@@ -208,7 +208,7 @@ mac80211_hostapd_setup_base() {
 				dsss_cck_40:1
 
 			ht_cap_mask=0
-			for cap in $(iw phy "$phy" info | grep 'Capabilities:' | cut -d: -f2); do
+			for cap in $(iw phy "$phy" info | grep -E '^\s*Capabilities:' | cut -d: -f2); do
 				ht_cap_mask="$(($ht_cap_mask | $cap))"
 			done
 
@@ -1017,7 +1017,7 @@ mac80211_setup_vif() {
 			json_get_vars $MP_CONFIG_INT $MP_CONFIG_BOOL $MP_CONFIG_STRING
 			wireless_vif_parse_encryption
 			[ -z "$htmode" ] && htmode="NOHT";
-			if wpa_supplicant -vmesh; then
+			if [ -x /usr/sbin/wpa_supplicant ] && wpa_supplicant -vmesh; then
 				mac80211_setup_supplicant || failed=1
 			else
 				mac80211_setup_mesh
