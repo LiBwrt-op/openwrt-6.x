@@ -235,7 +235,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	if (!pe)
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -5031,6 +5031,8 @@ static int __init proc_vmalloc_init(void
+@@ -5032,6 +5032,8 @@ static int __init proc_vmalloc_init(void
  {
  	void *priv_data = NULL;
  
