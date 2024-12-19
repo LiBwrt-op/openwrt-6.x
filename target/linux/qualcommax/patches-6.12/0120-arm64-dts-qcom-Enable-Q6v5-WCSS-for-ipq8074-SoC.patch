@@ -49,7 +49,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
  	soc: soc@0 {
  		#address-cells = <1>;
  		#size-cells = <1>;
-@@ -417,6 +443,11 @@
+@@ -415,6 +441,11 @@
  			reg = <0x01937000 0x21000>;
  		};
  
@@ -61,7 +61,7 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
  		spmi_bus: spmi@200f000 {
  			compatible = "qcom,spmi-pmic-arb";
  			reg = <0x0200f000 0x001000>,
-@@ -996,6 +1027,56 @@
+@@ -994,6 +1025,56 @@
  				ranges;
  			};
  		};
