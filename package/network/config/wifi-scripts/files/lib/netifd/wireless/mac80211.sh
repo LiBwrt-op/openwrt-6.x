@@ -663,15 +663,15 @@ mac80211_check_ap() {
 }
 
 mac80211_set_ifname() {
-	local phy="$1"
-	local prefix="$2"
-	eval "ifname=\"$phy-$prefix\${idx_$prefix:-0}\"; idx_$prefix=\$((\${idx_$prefix:-0 } + 1))"
+	local prefix="$1"
+	local type="$2"
+	eval "ifname=\"$prefix$type\${idx_$type:-0}\"; idx_$type=\$((\${idx_$type:-0 } + 1))"
 }
 
 mac80211_prepare_vif() {
 	json_select config
 
-	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file vlan_file
+	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file sae_password_file vlan_file
 
 	[ -n "$ifname" ] || {
 		local prefix;
@@ -682,7 +682,7 @@ mac80211_prepare_vif() {
 		monitor) prefix=mon;;
 		esac
 
-		mac80211_set_ifname "$phy$vif_phy_suffix" "$prefix"
+		mac80211_set_ifname "$ifname_prefix" "$prefix"
 	}
 
 	append active_ifnames "$ifname"
@@ -704,7 +704,12 @@ mac80211_prepare_vif() {
 
 
 	[ "$mode" == "ap" ] && {
+		json_select config
+		wireless_vif_parse_encryption
+		json_select ..
+
 		[ -z "$wpa_psk_file" ] && hostapd_set_psk "$ifname"
+		[ -z "$sae_password_file" ] && hostapd_set_sae "$ifname"
 		[ -z "$vlan_file" ] && hostapd_set_vlan "$ifname"
 	}
 
@@ -1128,6 +1133,8 @@ drv_mac80211_setup() {
 		wireless_set_retry 0
 		return 1
 	}
+
+	set_default ifname_prefix "$phy$vif_phy_suffix-"
 
 	local wdev
 	local cwdev
