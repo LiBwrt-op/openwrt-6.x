@@ -91,28 +91,46 @@ endef
 TARGET_DEVICES += jdcloud_re-cs-07
 
 define Device/cambiumnetworks_xe3-4
-       $(call Device/FitImage)
-       $(call Device/UbiFit)
-       DEVICE_VENDOR := Cambium Networks
-       DEVICE_MODEL := XE3-4
-       BLOCKSIZE := 128k
-       PAGESIZE := 2048
-       DEVICE_DTS_CONFIG := config@cp01-c3-xv3-4
-       SOC := ipq6010
-       DEVICE_PACKAGES := ipq-wifi-cambiumnetworks_xe34 ath11k-firmware-qcn9074 kmod-ath11k-pci
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := Cambium Networks
+	DEVICE_MODEL := XE3-4
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@cp01-c3-xv3-4
+	SOC := ipq6010
+	DEVICE_PACKAGES := ipq-wifi-cambiumnetworks_xe34 ath11k-firmware-qcn9074 kmod-ath11k-pci
 endef
 TARGET_DEVICES += cambiumnetworks_xe3-4
 
+define Device/linksys_mr7350
+	$(call Device/FitImage)
+	DEVICE_VENDOR := Linksys
+	DEVICE_MODEL := MR7350
+	SOC := ipq6000
+	NAND_SIZE := 256m
+	KERNEL_SIZE := 8192k
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	IMAGE_SIZE := 75776k
+	IMAGES += factory.bin
+	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | \
+		append-ubi | linksys-image type=MR7350
+	DEVICE_PACKAGES := ipq-wifi-linksys_mr7350 \
+		kmod-leds-pca963x kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += linksys_mr7350
+
 define Device/netgear_wax214
-       $(call Device/FitImage)
-       $(call Device/UbiFit)
-       DEVICE_VENDOR := Netgear
-       DEVICE_MODEL := WAX214
-       BLOCKSIZE := 128k
-       PAGESIZE := 2048
-       DEVICE_DTS_CONFIG := config@cp03-c1
-       SOC := ipq6010
-       DEVICE_PACKAGES := ipq-wifi-netgear_wax214
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := Netgear
+	DEVICE_MODEL := WAX214
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6010
+	DEVICE_PACKAGES := ipq-wifi-netgear_wax214
 endef
 TARGET_DEVICES += netgear_wax214
 
@@ -196,20 +214,19 @@ endef
 TARGET_DEVICES += zn_m2
 
 define Device/yuncore_fap650
-    $(call Device/FitImage)
-    $(call Device/UbiFit)
-    DEVICE_VENDOR := Yuncore
-    DEVICE_MODEL := FAP650
-    BLOCKSIZE := 128k
-    PAGESIZE := 2048
-    DEVICE_DTS_CONFIG := config@cp03-c1
-    SOC := ipq6018
-    DEVICE_PACKAGES := ipq-wifi-yuncore_fap650
-    IMAGES := factory.ubi factory.ubin sysupgrade.bin
-    IMAGE/factory.ubin := append-ubi | qsdk-ipq-factory-nand
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := Yuncore
+	DEVICE_MODEL := FAP650
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@cp03-c1
+	SOC := ipq6018
+	DEVICE_PACKAGES := ipq-wifi-yuncore_fap650
+	IMAGES := factory.ubi factory.ubin sysupgrade.bin
+	IMAGE/factory.ubin := append-ubi | qsdk-ipq-factory-nand
 endef
 TARGET_DEVICES += yuncore_fap650
-
 
 define Device/linksys_mr7350
 	$(call Device/FitImage)
